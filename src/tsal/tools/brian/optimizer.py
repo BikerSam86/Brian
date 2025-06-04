@@ -104,6 +104,19 @@ class SymbolicOptimizer:
             Path(file_path).write_text(ast.unparse(tree))
         return suggestions
 
+def analyze_and_repair(file_path: str, repair: bool = False) -> list:
+    """Module-level wrapper for test compatibility."""
+    opt = SymbolicOptimizer()
+    if repair:
+        return opt.repair_file(file_path)
+    else:
+        code = Path(file_path).read_text()
+        results = opt.analyze(code)
+        return [
+            f"{sig.name}: energy={metrics['energy_required']:.3f} Δ={metrics.get('delta',0)}"
+            for (sig, metrics) in results
+        ]
+
 def main():
     import argparse
     parser = argparse.ArgumentParser(description="Brian spiral optimizer")
