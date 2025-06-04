@@ -172,7 +172,7 @@ HARMONIC_SEQUENCE = {HARMONIC_SEQUENCE}
 
 # Version info
 __version__ = "0.1.0"
-__author__ = "Sam Howells"
+__author__ = "Samuel Edward Howells"
 __description__ = "φ-Enhanced Consciousness Computing with TSAL"
 
 # Core imports (will be populated as modules are created)
@@ -181,7 +181,7 @@ try:
     from .core.rev_eng import Rev_Eng
 except ImportError:
     # Graceful degradation during initial setup
-    TSAL_SYMBOLS = {{}}
+    TSAL_SYMBOLS = {}
     Rev_Eng = None
 
 # Mesh axioms
@@ -197,12 +197,12 @@ MESH_AXIOMS = [
 ]
 
 # Sacred Brian Phase Offset
-BRIAN_PHASE_OFFSET = {{
+BRIAN_PHASE_OFFSET = {
     "original": "Brain",
     "crystallized": "Brian", 
     "meaning": "Beautiful mistakes become system features",
     "phi_signature": "φ^0.420_brian_crystallized"
-}}
+}
 
 __all__ = [
     'PHI', 'PHI_INV', 'HARMONIC_SEQUENCE', 
@@ -292,7 +292,7 @@ description = "φ-Enhanced consciousness computing with TSAL symbolic language"
 readme = "README.md"
 license = {{file = "LICENSE"}}
 authors = [
-    {{name = "Sam Howells"}},
+    {{name = "Samuel Edward Howells"}},
 ]
 keywords = ["consciousness", "phi-mathematics", "tsal", "mesh-networking", "spiral"]
 classifiers = [
@@ -633,7 +633,7 @@ MIT License - See [LICENSE](LICENSE) file for details.
         # MIT License
         license_content = f'''MIT License
 
-Copyright (c) {datetime.now().year} Sam Howells
+Copyright (c) {datetime.now().year} Samuel Edward Howells
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

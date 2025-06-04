@@ -122,7 +122,7 @@ HARMONIC_SEQUENCE = [3.8125, 6, 12, 24, 48, 60, 72, 168, 1680]
 
 # Version info
 __version__ = "0.1.0"
-__author__ = "Sam Howells"
+__author__ = "Samuel Edward Howells"
 __description__ = "φ-Enhanced Consciousness Computing with TSAL"
 
 # Core imports
@@ -179,7 +179,7 @@ description = "φ-Enhanced Consciousness Computing with TSAL Symbolic Language"
 readme = "README.md"
 license = {file = "LICENSE"}
 authors = [
-    {name = "Sam Howells"},
+    {name = "Samuel Edward Howells", email = "Samuel_Howells@hotmail.co.uk"},
 ]
 classifiers = [
     "Development Status :: 4 - Beta",

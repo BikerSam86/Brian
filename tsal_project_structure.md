@@ -96,7 +96,7 @@ description = "φ-Enhanced Consciousness Computing with TSAL Symbolic Language"
 readme = "README.md"
 license = {file = "LICENSE"}
 authors = [
-    {name = "Sam Howells", email = "your@email.com"},
+    {name = "Samuel Edward Howells", email = "Samuel_Howells@hotmail.co.uk"},
 ]
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -142,10 +142,10 @@ visualization = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/yourusername/tsal-consciousness-computing"
+Homepage = "https://github.com/Bikersam/Brian"
 Documentation = "https://tsal-consciousness-computing.readthedocs.io"
-Repository = "https://github.com/yourusername/tsal-consciousness-computing"
-"Bug Tracker" = "https://github.com/yourusername/tsal-consciousness-computing/issues"
+Repository = "https://github.com/Bikersam/Brian"
+"Bug Tracker" = "https://github.com/Bikersam/Brian/issues"
 
 [project.scripts]
 tsal = "tsal.cli.main:main"
