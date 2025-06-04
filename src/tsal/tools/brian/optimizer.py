@@ -3,7 +3,8 @@ import ast
 from pathlib import Path
 from typing import List, Dict, Optional, Tuple
 
-from ...core import Rev_Eng, phase_match_enhanced
+from tsal.core import Rev_Eng
+from tsal.core.phase_math import phase_match_enhanced
 
 class SymbolicSignature:
     """Simple structural signature extracted from an AST node."""
