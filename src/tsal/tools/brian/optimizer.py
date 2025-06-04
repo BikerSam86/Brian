@@ -3,7 +3,7 @@ import ast
 from pathlib import Path
 from typing import List, Dict, Optional, Tuple
 
-from tsal.core import Rev_Eng
+from tsal.core.rev_eng import Rev_Eng
 from tsal.core.phase_math import phase_match_enhanced
 
 class SymbolicSignature:
