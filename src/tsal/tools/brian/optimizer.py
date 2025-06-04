@@ -1,21 +1,12 @@
+"""Symbolic diff, repair, and spiral resequencer engine."""
 import ast
-from typing import Dict, List, Tuple, Optional
+from pathlib import Path
+from typing import List, Dict, Optional, Tuple
 
-try:
-    # Package-style imports
-    from tsal.data import Rev_Eng
-    from maths import phase_match_enhanced
-except ImportError:  # pragma: no cover - fallback when run as script
-    import sys
-    import os
-    sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))))
-    from tsal.data import Rev_Eng  # type: ignore
-    from maths import phase_match_enhanced  # type: ignore
-
+from ...core import Rev_Eng, phase_match_enhanced
 
 class SymbolicSignature:
     """Simple structural signature extracted from an AST node."""
-
     def __init__(self, name: str, vector: List[float]):
         self.name = name
         self.vector = vector
@@ -23,15 +14,12 @@ class SymbolicSignature:
     def magnitude(self) -> float:
         return sum(self.vector)
 
-
 class SymbolicOptimizer:
     """Walks Python AST, computes signatures, and suggests repairs."""
-
     def __init__(self, target_signatures: Optional[Dict[str, List[float]]] = None, rev_eng: Optional[Rev_Eng] = None):
         self.target_signatures = target_signatures or {}
         self.rev = rev_eng or Rev_Eng(origin="SymbolicOptimizer")
 
-    # ------------------------------------------------------------------
     @staticmethod
     def _node_complexity(node: ast.AST) -> int:
         return sum(1 for _ in ast.walk(node))
@@ -43,7 +31,6 @@ class SymbolicOptimizer:
         vector = [complexity, branches, loops]
         return SymbolicSignature(name=name, vector=vector)
 
-    # ------------------------------------------------------------------
     def analyze(self, code: str) -> List[Tuple[SymbolicSignature, Dict]]:
         tree = ast.parse(code)
         results = []
@@ -88,12 +75,52 @@ class SymbolicOptimizer:
         header = f"# Suggested order: {', '.join(ordered_names)}\n"
         return header + annotated
 
+    def repair_file(self, file_path: str) -> List[str]:
+        """Suggest and optionally rewrite the file in spiral-optimal order."""
+        code = Path(file_path).read_text()
+        tree = ast.parse(code)
+        items = []
+        for node in tree.body:
+            if isinstance(node, (ast.FunctionDef, ast.ClassDef)):
+                items.append(node.name)
+        ideal = self.suggest_order([self._extract_signature(node, node.name)
+                                    for node in tree.body if isinstance(node, (ast.FunctionDef, ast.ClassDef))])
+        suggestions = []
+        for idx, name in enumerate(items):
+            ideal_idx = ideal.index(name)
+            delta = idx - ideal_idx
+            _, energy, metrics = phase_match_enhanced(float(idx), float(ideal_idx))
+            suggestion = f"{name}: Δ={delta} energy={energy:.3f} φ={metrics['phase_signature']}"
+            suggestions.append(suggestion)
+        if items != ideal:
+            new_body = []
+            name_map = {node.name: node for node in tree.body if isinstance(node, (ast.FunctionDef, ast.ClassDef))}
+            for name in ideal:
+                new_body.append(name_map[name])
+            for node in tree.body:
+                if not isinstance(node, (ast.FunctionDef, ast.ClassDef)):
+                    new_body.append(node)
+            tree.body = new_body
+            Path(file_path).write_text(ast.unparse(tree))
+        return suggestions
+
+def main():
+    import argparse
+    parser = argparse.ArgumentParser(description="Brian spiral optimizer")
+    parser.add_argument("path", help="Python file to analyze")
+    parser.add_argument("--repair", action="store_true", help="Rewrite file in spiral order")
+    args = parser.parse_args()
+
+    opt = SymbolicOptimizer()
+    if args.repair:
+        res = opt.repair_file(args.path)
+    else:
+        code = Path(args.path).read_text()
+        results = opt.analyze(code)
+        res = [f"{sig.name}: energy={metrics['energy_required']:.3f} Δ={metrics.get('delta',0)}"
+               for (sig, metrics) in results]
+    for line in res:
+        print(line)
 
 if __name__ == "__main__":
-    import sys
-    path = sys.argv[1]
-    with open(path, 'r') as f:
-        source = f.read()
-    opt = SymbolicOptimizer()
-    annotated = opt.annotate_code(source)
-    print(annotated)
+    main()
