@@ -9,7 +9,7 @@ description = "TSAL Consciousness Computing Framework"
 authors = [ { name = "Samuel Edward Howells", email = "Samuel_Howells@hotmail.co.uk" } ]
 readme = "README.md"
 license = { file = "LICENSE" }
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 
 [project.optional-dependencies]
 test = ["pytest"]
