@@ -16,6 +16,8 @@ See `examples/demo_repair.py` for a simple demonstration. Run the tests with:
 pytest -q
 ```
 
+Please see our [Code of Conduct](CODE_OF_CONDUCT.md) for guidelines on contributing respectfully.
+
 ## LICENCE Options for `Brian`
 
 This project uses a **dual-licence** model to ensure:
