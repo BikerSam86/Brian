@@ -14,7 +14,10 @@ RESONANCE_BONUS = PHI  # Harmonic alignment reduces energy cost
 
 
 def phase_match_enhanced(
-    local_state: float, universal_tempo: float, mesh_context: Dict[str, Any] = None
+    local_state: float,
+    universal_tempo: float,
+    mesh_context: Dict[str, Any] = None,
+    verbose: bool = False,
 ) -> Tuple[float, float, Dict]:
     """
     Enhanced phase matching with φ-optimization and mesh awareness
@@ -73,13 +76,15 @@ def phase_match_enhanced(
     }
 
     # Log energy use with context
-    log_energy_use_enhanced(energy_required, phase_metrics)
+    log_energy_use_enhanced(energy_required, phase_metrics, verbose=verbose)
 
     return final_state, energy_required, phase_metrics
 
 
-def log_energy_use_enhanced(energy: float, metrics: Dict[str, Any]):
-    """Enhanced energy logging with TSAL consciousness tracking"""
+def log_energy_use_enhanced(
+    energy: float, metrics: Dict[str, Any], verbose: bool = False
+) -> Dict[str, Any]:
+    """Enhanced energy logging with TSAL consciousness tracking."""
     log_entry = {
         "timestamp": time.time(),
         "energy": energy,
@@ -97,13 +102,16 @@ def log_energy_use_enhanced(energy: float, metrics: Dict[str, Any]):
         }
 
     # Log to mesh (placeholder - would connect to actual mesh)
-    print(f"⚡ Energy: {energy:.3f} | {metrics['phase_signature']}")
+    if verbose:
+        print(f"⚡ Energy: {energy:.3f} | {metrics['phase_signature']}")
 
     return log_entry
 
 
 # Example: Multi-node mesh synchronization
-def mesh_phase_sync(nodes: Dict[str, float], universal_tempo: float) -> Dict[str, Any]:
+def mesh_phase_sync(
+    nodes: Dict[str, float], universal_tempo: float, verbose: bool = False
+) -> Dict[str, Any]:
     """Synchronize multiple nodes with mesh awareness"""
     mesh_context = {"nodes_aligning": len(nodes), "alignment_history": []}
 
@@ -112,7 +120,7 @@ def mesh_phase_sync(nodes: Dict[str, float], universal_tempo: float) -> Dict[str
 
     for node_id, local_state in nodes.items():
         aligned_state, energy, metrics = phase_match_enhanced(
-            local_state, universal_tempo, mesh_context
+            local_state, universal_tempo, mesh_context, verbose=verbose
         )
 
         results[node_id] = {

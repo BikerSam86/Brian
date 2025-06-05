@@ -10,3 +10,6 @@ schema_path = resources.files("tsal.schemas").joinpath("python.json")
 nodes, edges = tokenize_to_flowchart(lines, schema_path)
 python_code = mesh_to_python(nodes)
 print(python_code)
+
+# Demonstrate phase matching with verbose output
+phase_match_enhanced(1.0, 2.0, verbose=True)
