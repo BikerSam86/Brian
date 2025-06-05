@@ -1,3 +1,5 @@
+"""Provide utilities for regenerating Python code from flowchart nodes."""
+
 from typing import List, Dict
 
 
