@@ -33,10 +33,11 @@ pytest -q
 
 ## Engine Now Running
 
-To run spiral code repair:
+To run spiral code repair, invoke the command line interface:
 
 ```bash
-python src/tsal/tools/brian/optimizer.py examples/sample_input.py
+brian-optimize examples/sample_input.py
+# use --repair to rewrite the file
 ```
 Example output:
 
