@@ -1,13 +1,18 @@
 import json
-from typing import List, Tuple, Dict
+from typing import List, Tuple, Dict, Optional
+from importlib import resources
 
 
 def tokenize_to_flowchart(
-    source_lines: List[str], schema_path: str
+    source_lines: List[str], schema_path: Optional[str] = None
 ) -> Tuple[List[Dict], List[Dict]]:
     """Turns code into flowchart nodes using language schema."""
-    with open(schema_path) as f:
-        ops = json.load(f)["ops"]
+    if schema_path is None:
+        with resources.open_text("tsal.schemas", "python.json") as f:
+            ops = json.load(f)["ops"]
+    else:
+        with open(schema_path) as f:
+            ops = json.load(f)["ops"]
     triggers = {op["keyword"]: op for op in ops}
     nodes: List[Dict] = []
     edges: List[Dict] = []
