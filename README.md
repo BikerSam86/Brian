@@ -30,6 +30,18 @@ pip install -e .
 ```bash
 pytest -q
 ```
+
+## GitHub Language Database
+
+You can fetch the list of programming languages used on GitHub with:
+
+```python
+from tsal.utils.github_api import fetch_languages
+langs = fetch_languages()
+print(len(langs))
+```
+
+This data can be supplied to Brian's optimizer when analyzing or repairing code.
 ## Quickstart
 1. Put your input code in `examples/broken_code.py`
 2. Run `python examples/mesh_pipeline_demo.py`
