@@ -30,3 +30,13 @@ htmlcov/
 # Logs and temporary files
 *.log
 
+
+# macOS and Windows metadata
+.DS_Store
+Thumbs.db
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Environment files
+.env*
