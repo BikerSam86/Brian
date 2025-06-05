@@ -41,6 +41,14 @@ langs = fetch_languages()
 print(len(langs))
 ```
 
+To save these languages for reuse, populate the local SQLite database with:
+
+```bash
+python -m tsal.utils.language_db
+```
+
+This creates `system_io.db` containing a `languages` table with all entries.
+
 This data can be supplied to Brian's optimizer when analyzing or repairing code.
 ## Quickstart
 1. Put your input code in `examples/broken_code.py`
