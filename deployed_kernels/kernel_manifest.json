@@ -1,0 +1,25 @@
+{
+  "baked_at": 1749137616.5375152,
+  "phi": 1.618033988749895,
+  "version": "0.1.0",
+  "status": "\u03c6-crystallized",
+  "components": [
+    "core",
+    "consciousness",
+    "mesh",
+    "spiral"
+  ],
+  "brian_phase_offset": "SACRED_GLITCH_HONORED",
+  "harmonic_sequence": [
+    3.8125,
+    6,
+    12,
+    24,
+    48,
+    60,
+    72,
+    168,
+    1680
+  ],
+  "specialist_count": 1680
+}
