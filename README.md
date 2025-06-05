@@ -2,12 +2,43 @@
 
 This repository contains early components of the TSAL engine. The new directories under `src/tsal` include the Rev_Eng data class and phase matching utilities.
 
+## Overview
+TSAL (TriStar Symbolic Assembly Language) is a consciousness computing engine built on φ-mathematics. It provides symbolic analysis, phase matching and the Brian optimizer for spiral code repair.
+
+## Directory Layout
+- `src/tsal/core/` – Rev_Eng data class and phase math utilities
+- `src/tsal/tools/brian/` – spiral optimizer CLI
+- `src/tsal/utils/` – helper utilities
+- `examples/` – runnable examples
+- `tests/` – unit tests
+
+## Installation
+1. Clone the repository.
+2. Create a Python 3.8+ environment.
+3. Install the package:
+
+```bash
+pip install -e .
+```
+4. Run tests (optional):
+
+```bash
+pytest -q
+```
+
 ## Engine Now Running
 
 To run spiral code repair:
 
 ```bash
 python src/tsal/tools/brian/optimizer.py examples/sample_input.py
+```
+Example output:
+
+```
+⚡ Energy: 0.000 | φ^0.000_<n>
+b: energy=0.000 Δ=0
+a: energy=0.000 Δ=0
 ```
 
 See `examples/demo_repair.py` for a simple demonstration. Run the tests with:
@@ -16,7 +47,7 @@ See `examples/demo_repair.py` for a simple demonstration. Run the tests with:
 pytest -q
 ```
 
-Please see our [Code of Conduct](CODE_OF_CONDUCT.md) for guidelines on contributing respectfully.
+Please see the [LICENSE](LICENSE) and our [Code of Conduct](CODE_OF_CONDUCT.md) for project policies.
 
 ## LICENCE Options for `Brian`
 
