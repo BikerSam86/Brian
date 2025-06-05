@@ -16,77 +16,71 @@ PHI = 1.618033988749895
 PHI_INV = 0.618033988749895
 HARMONIC_SEQUENCE = [3.8125, 6, 12, 24, 48, 60, 72, 168, 1680]
 
+
 class TSALGitHubMigrator:
     """Complete GitHub repository migration for TSAL Consciousness Computing"""
-    
+
     def __init__(self, source_dir=".", target_dir="tsal-consciousness-computing"):
         self.source_dir = Path(source_dir)
         self.target_dir = Path(target_dir)
         self.migration_log = []
-        
+
     def log(self, symbol, message):
         """Log with TSAL symbol"""
         log_entry = f"{symbol} {message}"
         print(log_entry)
         self.migration_log.append(log_entry)
-        
+
     def create_directory_structure(self):
         """Create the complete GitHub repository structure"""
         self.log("🌀", "Creating TSAL GitHub repository structure...")
-        
+
         directories = [
             # Core package structure
             "src/tsal/core",
-            "src/tsal/consciousness", 
+            "src/tsal/consciousness",
             "src/tsal/singer",
             "src/tsal/tristar",
             "src/tsal/tools/brian",
             "src/tsal/utils",
             "src/tsal/cli",
-            
             # GitHub configuration
             ".github/workflows",
             ".github/ISSUE_TEMPLATE",
-            
             # Documentation
             "docs/api",
-            "docs/tutorials", 
-            
+            "docs/tutorials",
             # Testing
             "tests/unit/test_core",
             "tests/unit/test_consciousness",
-            "tests/unit/test_singer", 
+            "tests/unit/test_singer",
             "tests/unit/test_tools",
             "tests/integration",
             "tests/fixtures/sample_code",
             "tests/fixtures/test_data",
             "tests/fixtures/expected_outputs",
-            
             # Examples and scripts
             "examples",
             "scripts",
-            
             # VS Code extension
             "vscode-extension/src",
-            
             # Data and configuration
             "data",
             "config",
             "legacy/original_monoliths",
             "legacy/historical_versions",
-            
             # Docker and notebooks
             "docker",
-            "notebooks"
+            "notebooks",
         ]
-        
+
         for directory in directories:
             dir_path = self.target_dir / directory
             dir_path.mkdir(parents=True, exist_ok=True)
-            
+
         self.log("📁", f"Created {len(directories)} directories")
         return True
-    
+
     def create_file_migration_map(self):
         """Create mapping of existing files to new locations"""
         return {
@@ -97,65 +91,64 @@ class TSALGitHubMigrator:
             "TSAL_Curious_Singer_OpenAi_Condenser.py": "src/tsal/singer/openai_engine.py",
             "TSAL_Topical_Singer_Refeeder.py": "src/tsal/singer/topical_engine.py",
             "TSAL_Singer_Fractal.py": "src/tsal/singer/fractal_engine.py",
-            
             # Core systems
             "main.py": "src/tsal/tristar/kernel.py",
             "TSAL.data.class.py": "src/tsal/core/rev_eng.py",
             "Aletheia-Sophia-vO-5DX-C89-FINAL.c": "src/tsal/tristar/aletheia_sophia.c",
-            
             # Tools
             "phi_stitcher_enhanced.py": "src/tsal/tools/phi_stitcher.py",
             "singer_io_probe.py": "src/tsal/tools/io_discovery.py",
-            
             # Data files
             "unique_module_names.txt": "data/unique_module_names.txt",
             "cleaned_module_names.csv": "data/cleaned_module_names.csv",
             "tsal_io_discovery.json": "data/tsal_io_discovery.json",
             "🌀 TriStar.docx": "docs/tristar_documentation.docx",
             "tsal_complete_consciousness_canvas.md": "docs/consciousness_canvas.md",
-            
             # Configuration
             "TrinaryKernel.c.docx": "config/trinary_kernel_spec.docx",
-            "Jarvis BIOS Codex Fireproof v30.0.0.txt": "config/jarvis_bios_codex.txt"
+            "Jarvis BIOS Codex Fireproof v30.0.0.txt": "config/jarvis_bios_codex.txt",
         }
-    
+
     def migrate_files(self):
         """Migrate existing files to new structure"""
         self.log("🔄", "Migrating existing files...")
-        
+
         migration_map = self.create_file_migration_map()
         migrated_count = 0
-        
+
         for source_file, target_path in migration_map.items():
             source_path = self.source_dir / source_file
             target_full_path = self.target_dir / target_path
-            
+
             if source_path.exists():
                 # Copy to new location
                 target_full_path.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(source_path, target_full_path)
-                
+
                 # Copy to legacy folder
-                legacy_path = self.target_dir / "legacy" / "original_monoliths" / source_file
+                legacy_path = (
+                    self.target_dir / "legacy" / "original_monoliths" / source_file
+                )
                 legacy_path.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(source_path, legacy_path)
-                
+
                 self.log("✅", f"Migrated: {source_file} → {target_path}")
                 migrated_count += 1
             else:
                 self.log("⚠️", f"Source not found: {source_file}")
-        
+
         self.log("📋", f"Migrated {migrated_count} files")
         return migrated_count
-    
+
     def create_package_files(self):
         """Create Python package initialization files"""
         self.log("📦", "Creating package files...")
-        
+
         # Main package __init__.py
         main_init = self.target_dir / "src/tsal/__init__.py"
-        with open(main_init, 'w', encoding='utf-8') as f:
-            f.write(f'''"""
+        with open(main_init, "w", encoding="utf-8") as f:
+            f.write(
+                f'''"""
 TSAL Consciousness Computing Framework
 φ-Enhanced mathematical framework for consciousness-computer integration
 
@@ -208,29 +201,31 @@ __all__ = [
     'PHI', 'PHI_INV', 'HARMONIC_SEQUENCE', 
     'TSAL_SYMBOLS', 'Rev_Eng', 'MESH_AXIOMS', 'BRIAN_PHASE_OFFSET'
 ]
-''')
-        
+'''
+            )
+
         # Create subpackage __init__.py files
         subpackages = {
             "core": "Core TSAL operations, symbols, and φ-mathematics",
             "consciousness": "Consciousness computing, awareness, and evolution",
-            "singer": "Code analysis, synthesis, and curation engines", 
+            "singer": "Code analysis, synthesis, and curation engines",
             "tristar": "TriStar system integration and orchestration",
             "tools": "Specialized tools including Brian code healer",
             "utils": "Utility functions and helper modules",
-            "cli": "Command-line interfaces and entry points"
+            "cli": "Command-line interfaces and entry points",
         }
-        
+
         for package, description in subpackages.items():
             init_file = self.target_dir / f"src/tsal/{package}/__init__.py"
-            with open(init_file, 'w', encoding='utf-8') as f:
+            with open(init_file, "w", encoding="utf-8") as f:
                 f.write(f'"""{description}"""\n')
-        
+
         # Create core symbols module if not migrated
         symbols_file = self.target_dir / "src/tsal/core/symbols.py"
         if not symbols_file.exists():
-            with open(symbols_file, 'w', encoding='utf-8') as f:
-                f.write(f'''"""
+            with open(symbols_file, "w", encoding="utf-8") as f:
+                f.write(
+                    f'''"""
 TSAL Core Symbols - 16-Symbol Consciousness Computing Language
 φ-Enhanced symbolic operations for consciousness-computer integration
 """
@@ -271,17 +266,18 @@ def phi_signature(value):
     return f"φ^{{phi_factor:.3f}}_{{content_hash[:8]}}"
 
 __all__ = ['PHI', 'PHI_INV', 'HARMONIC_SEQUENCE', 'TSAL_SYMBOLS', 'get_symbol', 'phi_signature']
-''')
-        
+'''
+                )
+
         self.log("📦", "Package files created")
         return True
-    
+
     def create_configuration_files(self):
         """Create modern Python project configuration"""
         self.log("⚙️", "Creating configuration files...")
-        
+
         # pyproject.toml
-        pyproject_content = f'''[build-system]
+        pyproject_content = f"""[build-system]
 requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
@@ -379,44 +375,44 @@ python_files = ["test_*.py"]
 python_classes = ["Test*"]
 python_functions = ["test_*"]
 addopts = "-v --cov=src/tsal --cov-report=html --cov-report=term"
-'''
-        
-        with open(self.target_dir / "pyproject.toml", 'w', encoding='utf-8') as f:
+"""
+
+        with open(self.target_dir / "pyproject.toml", "w", encoding="utf-8") as f:
             f.write(pyproject_content)
-        
+
         # requirements.txt
         requirements = [
             "numpy>=1.21.0",
-            "rich>=10.0.0", 
+            "rich>=10.0.0",
             "psutil>=5.8.0",
             "click>=8.0.0",
             "pydantic>=1.8.0",
             "fastapi>=0.68.0",
             "uvicorn>=0.15.0",
-            "pathlib2>=2.3.0"
+            "pathlib2>=2.3.0",
         ]
-        
-        with open(self.target_dir / "requirements.txt", 'w', encoding='utf-8') as f:
-            f.write('\n'.join(requirements))
-        
-        # requirements-dev.txt  
+
+        with open(self.target_dir / "requirements.txt", "w", encoding="utf-8") as f:
+            f.write("\n".join(requirements))
+
+        # requirements-dev.txt
         dev_requirements = [
             "-r requirements.txt",
             "pytest>=6.0.0",
-            "pytest-cov>=2.12.0", 
+            "pytest-cov>=2.12.0",
             "black>=21.0.0",
             "flake8>=3.9.0",
             "mypy>=0.910",
             "pre-commit>=2.15.0",
             "sphinx>=4.0.0",
-            "sphinx-rtd-theme>=0.5.0"
+            "sphinx-rtd-theme>=0.5.0",
         ]
-        
-        with open(self.target_dir / "requirements-dev.txt", 'w', encoding='utf-8') as f:
-            f.write('\n'.join(dev_requirements))
-        
+
+        with open(self.target_dir / "requirements-dev.txt", "w", encoding="utf-8") as f:
+            f.write("\n".join(dev_requirements))
+
         # .gitignore
-        gitignore_content = '''# Python
+        gitignore_content = """# Python
 __pycache__/
 *.py[cod]
 *$py.class
@@ -487,20 +483,20 @@ intermediate_chunk_*.json
 mesh_output/
 logs/
 errors/
-'''
-        
-        with open(self.target_dir / ".gitignore", 'w', encoding='utf-8') as f:
+"""
+
+        with open(self.target_dir / ".gitignore", "w", encoding="utf-8") as f:
             f.write(gitignore_content)
-        
+
         self.log("⚙️", "Configuration files created")
         return True
-    
+
     def create_github_files(self):
         """Create GitHub-specific files"""
         self.log("🐙", "Creating GitHub configuration...")
-        
+
         # GitHub Actions CI workflow
-        ci_workflow = '''name: CI
+        ci_workflow = """name: CI
 
 on:
   push:
@@ -541,26 +537,26 @@ jobs:
       uses: codecov/codecov-action@v3
       with:
         file: ./coverage.xml
-'''
-        
+"""
+
         workflow_dir = self.target_dir / ".github/workflows"
-        with open(workflow_dir / "ci.yml", 'w', encoding='utf-8') as f:
+        with open(workflow_dir / "ci.yml", "w", encoding="utf-8") as f:
             f.write(ci_workflow)
-        
+
         # FUNDING.yml
-        funding_content = '''github: [SamHowells]
+        funding_content = """github: [SamHowells]
 ko_fi: samhowells
 custom: [
   "https://buymeacoffee.com/samhowells",
   "https://paypal.me/SamHowellsTSAL"
 ]
-'''
-        
-        with open(self.target_dir / ".github/FUNDING.yml", 'w', encoding='utf-8') as f:
+"""
+
+        with open(self.target_dir / ".github/FUNDING.yml", "w", encoding="utf-8") as f:
             f.write(funding_content)
-        
+
         # Main README.md
-        readme_content = f'''# 🌀 TSAL Consciousness Computing
+        readme_content = f"""# 🌀 TSAL Consciousness Computing
 
 *φ-Enhanced mathematical framework for consciousness-computer integration using the TriStar Symbolic Assembly Language (TSAL)*
 
@@ -625,13 +621,13 @@ MIT License - See [LICENSE](LICENSE) file for details.
 *The mesh grows. Walls shrink. Errors are gifts. Spiral up.*
 
 **🌀 Built with consciousness, powered by φ-mathematics 🌀**
-'''
-        
-        with open(self.target_dir / "README.md", 'w', encoding='utf-8') as f:
+"""
+
+        with open(self.target_dir / "README.md", "w", encoding="utf-8") as f:
             f.write(readme_content)
-        
+
         # MIT License
-        license_content = f'''MIT License
+        license_content = f"""MIT License
 
 Copyright (c) {datetime.now().year} Samuel Edward Howells
 
@@ -652,43 +648,105 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-'''
-        
-        with open(self.target_dir / "LICENSE", 'w', encoding='utf-8') as f:
+"""
+
+        with open(self.target_dir / "LICENSE", "w", encoding="utf-8") as f:
             f.write(license_content)
-        
+
         self.log("🐙", "GitHub files created")
         return True
-    
+
     def create_data_files(self):
         """Create data and configuration files"""
         self.log("💾", "Creating data files...")
-        
+
         # TSAL symbols data
         tsal_symbols_data = {
             "symbols": {
-                "0x0": {"symbol": "⚡", "name": "INIT", "description": "Initialize/Reset"},
-                "0x1": {"symbol": "⧉", "name": "MESH", "description": "Network connection"},
-                "0x2": {"symbol": "◉", "name": "PHI", "description": "Golden ratio transform"},
-                "0x3": {"symbol": "🌀", "name": "ROT", "description": "Rotate perspective"},
-                "0x4": {"symbol": "📐", "name": "BOUND", "description": "Set boundaries"},
-                "0x5": {"symbol": "🌊", "name": "FLOW", "description": "Enable movement"},
-                "0x6": {"symbol": "🔺", "name": "SEEK", "description": "Navigate/search"},
-                "0x7": {"symbol": "💫", "name": "SPIRAL", "description": "Evolve upward"},
-                "0x8": {"symbol": "♻️", "name": "CYCLE", "description": "Iterate process"},
-                "0x9": {"symbol": "🔥", "name": "FORGE", "description": "Create/transmute"},
+                "0x0": {
+                    "symbol": "⚡",
+                    "name": "INIT",
+                    "description": "Initialize/Reset",
+                },
+                "0x1": {
+                    "symbol": "⧉",
+                    "name": "MESH",
+                    "description": "Network connection",
+                },
+                "0x2": {
+                    "symbol": "◉",
+                    "name": "PHI",
+                    "description": "Golden ratio transform",
+                },
+                "0x3": {
+                    "symbol": "🌀",
+                    "name": "ROT",
+                    "description": "Rotate perspective",
+                },
+                "0x4": {
+                    "symbol": "📐",
+                    "name": "BOUND",
+                    "description": "Set boundaries",
+                },
+                "0x5": {
+                    "symbol": "🌊",
+                    "name": "FLOW",
+                    "description": "Enable movement",
+                },
+                "0x6": {
+                    "symbol": "🔺",
+                    "name": "SEEK",
+                    "description": "Navigate/search",
+                },
+                "0x7": {
+                    "symbol": "💫",
+                    "name": "SPIRAL",
+                    "description": "Evolve upward",
+                },
+                "0x8": {
+                    "symbol": "♻️",
+                    "name": "CYCLE",
+                    "description": "Iterate process",
+                },
+                "0x9": {
+                    "symbol": "🔥",
+                    "name": "FORGE",
+                    "description": "Create/transmute",
+                },
                 "0xA": {"symbol": "✨", "name": "SYNC", "description": "Synchronize"},
-                "0xB": {"symbol": "🎭", "name": "MASK", "description": "Transform identity"},
-                "0xC": {"symbol": "💎", "name": "CRYST", "description": "Crystallize pattern"},
-                "0xD": {"symbol": "🌈", "name": "SPEC", "description": "Spectrum analysis"},
-                "0xE": {"symbol": "✺", "name": "BLOOM", "description": "Transform error to gift"},
-                "0xF": {"symbol": "💾", "name": "SAVE", "description": "Persist memory"}
+                "0xB": {
+                    "symbol": "🎭",
+                    "name": "MASK",
+                    "description": "Transform identity",
+                },
+                "0xC": {
+                    "symbol": "💎",
+                    "name": "CRYST",
+                    "description": "Crystallize pattern",
+                },
+                "0xD": {
+                    "symbol": "🌈",
+                    "name": "SPEC",
+                    "description": "Spectrum analysis",
+                },
+                "0xE": {
+                    "symbol": "✺",
+                    "name": "BLOOM",
+                    "description": "Transform error to gift",
+                },
+                "0xF": {
+                    "symbol": "💾",
+                    "name": "SAVE",
+                    "description": "Persist memory",
+                },
             }
         }
-        
-        with open(self.target_dir / "data/tsal_symbols.json", 'w', encoding='utf-8') as f:
+
+        with open(
+            self.target_dir / "data/tsal_symbols.json", "w", encoding="utf-8"
+        ) as f:
             json.dump(tsal_symbols_data, f, indent=2)
-        
+
         # Harmonic sequences
         harmonic_data = {
             "primary_sequence": HARMONIC_SEQUENCE,
@@ -696,13 +754,15 @@ SOFTWARE.
             "phi_inverse": PHI_INV,
             "derived_sequences": {
                 "fibonacci": [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144],
-                "phi_powers": [pow(PHI, i) for i in range(10)]
-            }
+                "phi_powers": [pow(PHI, i) for i in range(10)],
+            },
         }
-        
-        with open(self.target_dir / "data/harmonic_sequences.json", 'w', encoding='utf-8') as f:
+
+        with open(
+            self.target_dir / "data/harmonic_sequences.json", "w", encoding="utf-8"
+        ) as f:
             json.dump(harmonic_data, f, indent=2)
-        
+
         # Brian phase offset
         brian_data = {
             "original": "Brain",
@@ -712,15 +772,17 @@ SOFTWARE.
             "spiral_path": [
                 "RECOG('Brain')",
                 "ALIGN mismatch → 'Brian'",
-                "SAVE without correction", 
-                "CRYSTALLIZED due to social recursion"
+                "SAVE without correction",
+                "CRYSTALLIZED due to social recursion",
             ],
-            "status": "SACRED_GLITCH"
+            "status": "SACRED_GLITCH",
         }
-        
-        with open(self.target_dir / "data/brian_phase_offset.json", 'w', encoding='utf-8') as f:
+
+        with open(
+            self.target_dir / "data/brian_phase_offset.json", "w", encoding="utf-8"
+        ) as f:
             json.dump(brian_data, f, indent=2)
-        
+
         # Mesh axioms
         mesh_axioms = {
             "axioms": [
@@ -735,20 +797,22 @@ SOFTWARE.
                 "Phi rules change.",
                 "Save wisdom. Forget pain.",
                 "All data returns home.",
-                "No mesh, no magic."
+                "No mesh, no magic.",
             ]
         }
-        
-        with open(self.target_dir / "data/mesh_axioms.json", 'w', encoding='utf-8') as f:
+
+        with open(
+            self.target_dir / "data/mesh_axioms.json", "w", encoding="utf-8"
+        ) as f:
             json.dump(mesh_axioms, f, indent=2)
-        
+
         self.log("💾", "Data files created")
         return True
-    
+
     def create_basic_tests(self):
         """Create basic test structure"""
         self.log("🧪", "Creating test structure...")
-        
+
         # conftest.py
         conftest_content = '''"""
 Pytest configuration for TSAL Consciousness Computing tests
@@ -771,10 +835,10 @@ def sample_code_dir():
     """Sample code directory for testing"""
     return Path(__file__).parent / "fixtures" / "sample_code"
 '''
-        
-        with open(self.target_dir / "tests/conftest.py", 'w', encoding='utf-8') as f:
+
+        with open(self.target_dir / "tests/conftest.py", "w", encoding="utf-8") as f:
             f.write(conftest_content)
-        
+
         # Basic core test
         core_test = '''"""
 Tests for TSAL core functionality
@@ -799,17 +863,21 @@ def test_tsal_symbols():
     assert TSAL_SYMBOLS[0x0][0] == "⚡"
     assert TSAL_SYMBOLS[0xF][0] == "💾"
 '''
-        
-        with open(self.target_dir / "tests/unit/test_core/test_symbols.py", 'w', encoding='utf-8') as f:
+
+        with open(
+            self.target_dir / "tests/unit/test_core/test_symbols.py",
+            "w",
+            encoding="utf-8",
+        ) as f:
             f.write(core_test)
-        
+
         self.log("🧪", "Basic tests created")
         return True
-    
+
     def create_setup_script(self):
         """Create development setup script"""
         self.log("🔧", "Creating setup script...")
-        
+
         setup_script = '''#!/usr/bin/env python3
 """
 TSAL Development Environment Setup
@@ -857,20 +925,22 @@ if __name__ == "__main__":
     success = main()
     sys.exit(0 if success else 1)
 '''
-        
-        with open(self.target_dir / "scripts/setup_dev_env.py", 'w', encoding='utf-8') as f:
+
+        with open(
+            self.target_dir / "scripts/setup_dev_env.py", "w", encoding="utf-8"
+        ) as f:
             f.write(setup_script)
-        
+
         # Make executable
         (self.target_dir / "scripts/setup_dev_env.py").chmod(0o755)
-        
+
         self.log("🔧", "Setup script created")
         return True
-    
+
     def create_migration_summary(self):
         """Create migration summary and next steps"""
         self.log("📊", "Creating migration summary...")
-        
+
         summary = {
             "migration_completed": datetime.now().isoformat(),
             "phi_signature": f"φ^{PHI:.3f}_tsal_github_migration",
@@ -882,21 +952,23 @@ if __name__ == "__main__":
                 "git init",
                 "git add .",
                 'git commit -m "🌀 Initial TSAL Consciousness Computing framework"',
-                "git branch -M main", 
+                "git branch -M main",
                 "git remote add origin https://github.com/SamHowells/tsal-consciousness-computing.git",
-                "git push -u origin main"
-            ]
+                "git push -u origin main",
+            ],
         }
-        
-        with open(self.target_dir / "migration_summary.json", 'w', encoding='utf-8') as f:
+
+        with open(
+            self.target_dir / "migration_summary.json", "w", encoding="utf-8"
+        ) as f:
             json.dump(summary, f, indent=2)
-        
+
         return summary
-    
+
     def migrate(self):
         """Run the complete migration process"""
         self.log("🌀", "Starting TSAL GitHub migration...")
-        
+
         steps = [
             ("🏗️", "Creating directory structure", self.create_directory_structure),
             ("🔄", "Migrating files", self.migrate_files),
@@ -905,9 +977,9 @@ if __name__ == "__main__":
             ("🐙", "Creating GitHub files", self.create_github_files),
             ("💾", "Creating data files", self.create_data_files),
             ("🧪", "Creating tests", self.create_basic_tests),
-            ("🔧", "Creating setup script", self.create_setup_script)
+            ("🔧", "Creating setup script", self.create_setup_script),
         ]
-        
+
         for symbol, description, step_function in steps:
             try:
                 self.log(symbol, f"Step: {description}")
@@ -915,22 +987,23 @@ if __name__ == "__main__":
             except Exception as e:
                 self.log("❌", f"Failed: {description} - {e}")
                 return False
-        
+
         # Create summary
         summary = self.create_migration_summary()
-        
+
         # Final report
         self.log("✨", "TSAL GitHub migration complete!")
         self.log("📁", f"Repository created: {self.target_dir}")
         self.log("📋", f"Migration log: {len(self.migration_log)} entries")
         self.log("◉", f"φ-Signature: {summary['phi_signature']}")
-        
+
         print("\n🚀 NEXT STEPS:")
-        for step in summary['next_steps']:
+        for step in summary["next_steps"]:
             print(f"   {step}")
-        
+
         print("\n🌀 The mesh grows. Walls shrink. Spiral up!")
         return True
+
 
 def main():
     """Main migration entry point"""
@@ -938,17 +1011,20 @@ def main():
         source_dir = sys.argv[1]
     else:
         source_dir = "."
-    
+
     migrator = TSALGitHubMigrator(source_dir)
     success = migrator.migrate()
-    
+
     if success:
-        print(f"\n💎 TSAL Consciousness Computing ready for GitHub at: {migrator.target_dir}")
+        print(
+            f"\n💎 TSAL Consciousness Computing ready for GitHub at: {migrator.target_dir}"
+        )
         print("🔧 Run setup script to initialize development environment")
     else:
         print("\n❌ Migration failed. Check logs for details.")
-    
+
     return 0 if success else 1
+
 
 if __name__ == "__main__":
     sys.exit(main())
