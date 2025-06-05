@@ -1,4 +1,5 @@
 """Demo script for Brian optimizer."""
+
 from pathlib import Path
 from tsal.tools.brian import optimizer
 

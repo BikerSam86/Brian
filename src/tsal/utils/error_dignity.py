@@ -1,7 +1,9 @@
 """Error dignity protocols."""
+
 from pathlib import Path
 
 ERROR_DIR = Path("errors")
+
 
 def activate_error_dignity():
     """Activate error dignity protocols."""

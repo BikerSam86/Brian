@@ -25,6 +25,11 @@ pip install -e .
 ```bash
 pytest -q
 ```
+## Quickstart
+1. Put your input code in `examples/broken_code.py`
+2. Run `python examples/mesh_pipeline_demo.py`
+3. The pipeline prints regenerated Python code
+
 
 ## Engine Now Running
 
