@@ -6,7 +6,7 @@ from .core.voxel import MeshVoxel
 from .core.tokenize_flowchart import tokenize_to_flowchart
 from .core.json_dsl import LanguageMap, SymbolicProcessor
 from .renderer.code_render import mesh_to_python
-from .utils.github_api import fetch_repo_files
+from .utils.github_api import fetch_repo_files, fetch_languages
 
 PHI = 1.618033988749895
 PHI_INV = 0.618033988749895
@@ -24,5 +24,6 @@ __all__ = [
     "LanguageMap",
     "SymbolicProcessor",
     "fetch_repo_files",
+    "fetch_languages",
     "mesh_to_python",
 ]

@@ -1,5 +1,6 @@
 import requests
 from typing import Dict, List, Optional
+import yaml
 
 
 def _get_json(url: str, headers: Dict[str, str]) -> List[Dict]:
@@ -30,5 +31,13 @@ def fetch_repo_files(repo: str, extensions: Optional[List[str]] = None, token: O
         return files
 
     return recurse("")
+
+
+def fetch_languages(url: str = "https://raw.githubusercontent.com/github/linguist/master/lib/linguist/languages.yml") -> List[str]:
+    """Return the list of programming languages from GitHub's Linguist database."""
+    resp = requests.get(url)
+    resp.raise_for_status()
+    data = yaml.safe_load(resp.text)
+    return list(data.keys())
 
 
