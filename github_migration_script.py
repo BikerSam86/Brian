@@ -181,7 +181,7 @@ try:
     from .core.rev_eng import Rev_Eng
 except ImportError:
     # Graceful degradation during initial setup
-    TSAL_SYMBOLS = {}
+    TSAL_SYMBOLS = {{}}
     Rev_Eng = None
 
 # Mesh axioms
