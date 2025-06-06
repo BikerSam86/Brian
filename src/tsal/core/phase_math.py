@@ -45,7 +45,7 @@ def phase_match_enhanced(
     # Spiral optimization - smaller corrections over time
     if mesh_context and "alignment_history" in mesh_context:
         history = mesh_context["alignment_history"]
-        if len(history) > 1 and abs(delta) < abs(history[-1]):
+        if history and abs(delta) < abs(history[-1]):
             # Converging spiral - energy bonus
             base_energy *= PHI_INV
 

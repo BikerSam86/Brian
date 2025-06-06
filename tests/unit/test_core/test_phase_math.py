@@ -16,3 +16,10 @@ def test_mesh_phase_sync_structure():
     assert set(summary["nodes"].keys()) == set(nodes.keys())
     for info in summary["nodes"].values():
         assert {"initial", "final", "energy", "metrics"} <= info.keys()
+
+
+def test_spiral_bonus_applied_on_first_history_entry():
+    context = {"alignment_history": [10.0]}
+    baseline = phase_match_enhanced(5.0, 0.0)[1]
+    energy = phase_match_enhanced(5.0, 0.0, context)[1]
+    assert energy < baseline
