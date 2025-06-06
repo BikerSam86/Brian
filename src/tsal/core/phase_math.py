@@ -113,6 +113,13 @@ def mesh_phase_sync(
     nodes: Dict[str, float], universal_tempo: float, verbose: bool = False
 ) -> Dict[str, Any]:
     """Synchronize multiple nodes with mesh awareness"""
+    if not nodes:
+        return {
+            "nodes": {},
+            "total_energy": 0.0,
+            "mesh_resonance": 0.0,
+            "φ_signature": "φ^0.000_mesh",
+        }
     mesh_context = {"nodes_aligning": len(nodes), "alignment_history": []}
 
     results = {}
