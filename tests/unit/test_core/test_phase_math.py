@@ -23,3 +23,14 @@ def test_spiral_bonus_applied_on_first_history_entry():
     baseline = phase_match_enhanced(5.0, 0.0)[1]
     energy = phase_match_enhanced(5.0, 0.0, context)[1]
     assert energy < baseline
+
+
+def test_mesh_phase_sync_empty():
+    summary = mesh_phase_sync({}, 0.0)
+
+    assert summary == {
+        "nodes": {},
+        "total_energy": 0.0,
+        "mesh_resonance": 0.0,
+        "φ_signature": "φ^0.000_mesh",
+    }
