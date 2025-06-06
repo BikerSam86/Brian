@@ -143,9 +143,9 @@ pytest -q
 
 Please see the [LICENSE](LICENSE) and our [Code of Conduct](CODE_OF_CONDUCT.md) for project policies.
 
-## LICENCE Options for `Brian`
+## LICENSE Options for `Brian`
 
-This project uses a **dual-licence** model to ensure:
+This project uses a **dual-license** model to ensure:
 
 * ✅ **Free access for individuals, researchers, educators, and non-profit use**
 * 💼 **Sustainable commercial use via explicit licensing**
@@ -164,7 +164,7 @@ Under the following conditions:
 * **Attribution**: You must give appropriate credit to *Samuel Edward Howells*
 * **NonCommercial**: You may not use the material for commercial purposes
 
-Full licence terms: <https://creativecommons.org/licenses/by-nc/4.0/>
+Full license terms: <https://creativecommons.org/licenses/by-nc/4.0/>
 
 ---
 
@@ -178,11 +178,11 @@ If you are a **company, commercial entity, or using this for profit**, including
 * Energy system design
 * Integration into proprietary software or platforms
 
-You must obtain a **separate commercial licence**.
+You must obtain a **separate commercial license**.
 
 Contact: <samuel_howells@hotmail.com>
 
-This commercial licence grants:
+This commercial license grants:
 
 * Rights to integrate the equations into commercial tools/products
 * Support for integration and technical questions
