@@ -5,6 +5,7 @@ from .core.phase_math import phase_match_enhanced, mesh_phase_sync
 from .core.voxel import MeshVoxel
 from .core.tokenize_flowchart import tokenize_to_flowchart
 from .core.json_dsl import LanguageMap, SymbolicProcessor
+from .core.ethics_engine import EthicsEngine
 from .renderer.code_render import mesh_to_python
 from .utils.github_api import fetch_repo_files, fetch_languages
 
@@ -20,6 +21,7 @@ __all__ = [
     "phase_match_enhanced",
     "mesh_phase_sync",
     "MeshVoxel",
+    "EthicsEngine",
     "tokenize_to_flowchart",
     "LanguageMap",
     "SymbolicProcessor",
