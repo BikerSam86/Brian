@@ -94,7 +94,13 @@ class SymbolicOptimizer:
         return header + annotated
 
     def repair_file(self, file_path: str) -> List[str]:
-        """Rewrite the file if needed and return a list of ordering suggestions."""
+        """Rewrites the file when reordering is required and returns suggestions.
+
+        The function analyzes the order of functions and classes in ``file_path``.
+        If the current ordering differs from the ideal, the file is rewritten with
+        the reordered definitions. A list of string suggestions describing the
+        deltas is returned regardless of whether rewriting occurred.
+        """
         code = Path(file_path).read_text()
         tree = ast.parse(code)
         items = []
