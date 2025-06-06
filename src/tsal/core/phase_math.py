@@ -112,14 +112,19 @@ def log_energy_use_enhanced(
 def mesh_phase_sync(
     nodes: Dict[str, float], universal_tempo: float, verbose: bool = False
 ) -> Dict[str, Any]:
-    """Synchronize multiple nodes with mesh awareness"""
+    """Synchronize multiple nodes with mesh awareness
+
+    An empty ``nodes`` mapping should return a zeroed summary instead of
+    triggering a division by zero when calculating mesh resonance.
+    """
     if not nodes:
-        return {
+        empty_summary = {
             "nodes": {},
             "total_energy": 0.0,
             "mesh_resonance": 0.0,
             "φ_signature": "φ^0.000_mesh",
         }
+        return empty_summary
     mesh_context = {"nodes_aligning": len(nodes), "alignment_history": []}
 
     results = {}
