@@ -94,7 +94,7 @@ class SymbolicOptimizer:
         return header + annotated
 
     def repair_file(self, file_path: str) -> List[str]:
-        """Suggest and optionally rewrite the file in spiral-optimal order."""
+        """Rewrite the file if needed and return a list of ordering suggestions."""
         code = Path(file_path).read_text()
         tree = ast.parse(code)
         items = []
