@@ -70,3 +70,13 @@ All errors are reinjected for learning or repair; nothing is discarded.
 - Mathematical invariants auto-tested
 - Suitable for demos, research, or deployment
 
+## Minimal Recovery Toolkit
+The protocol prescribes a lightweight set of core files and dependencies for a “Coldstart Recovery.” Maintaining only the essentials ensures the system can rebuild from a minimal state if the environment is damaged.
+
+- **Regular Health Checks** – Daily and weekly tasks verify snapshots, validate backups and run diagnostics. Similar routines in any system help catch failures early.
+- **Snapshot/Backup Strategy** – Frequent snapshots and confirmed restores mirror best practices for incremental backups and mitigate data loss.
+- **Ethics/Policy Engine** – The `EthicsEngine` initializes even during coldstart, providing a non‑optional policy check.
+- **Self‑Repair and Logging** – Tools like `DiagnosticsWatchdog` and manual log review keep the system stable through automated monitoring and recovery.
+- **Mission Statement / Oath** – The “Guardian Oath” aligns priorities; a similar mission statement can guide incident response in other projects.
+
+By adopting this approach—minimal recovery files, consistent health checks, reliable backups, mandatory policy validation and structured monitoring—other systems can boost resilience while maintaining an ethical foundation.
