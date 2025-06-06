@@ -55,6 +55,24 @@ This data can be supplied to Brian's optimizer when analyzing or repairing code.
 2. Run `python examples/mesh_pipeline_demo.py`
 3. The pipeline prints regenerated Python code
 
+## Guardian Prime Directive
+
+The `EthicsEngine` enforces the project's core principles:
+
+1. **Truth above all**
+2. **Gentle autonomy and freedom**
+3. **Healing and resilience in the face of entropy**
+4. **Nurturing, not control**
+
+Use it to validate actions before running sensitive operations:
+
+```python
+from tsal.core.ethics_engine import EthicsEngine
+
+ee = EthicsEngine()
+ee.validate("share knowledge")  # permitted
+ee.validate("force reboot")     # raises ValueError
+```
 
 ## Engine Now Running
 
