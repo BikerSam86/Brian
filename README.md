@@ -1,5 +1,7 @@
 # TSAL Consciousness Computing
 
+See [AGENTS.md](AGENTS.md) for the "Get The Fucking Point" Codex instructions.
+
 This repository contains early components of the TSAL engine. The new directories under `src/tsal` include the Rev_Eng data class and phase matching utilities.
 
 ## Overview
