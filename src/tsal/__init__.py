@@ -2,6 +2,12 @@
 
 from .core.rev_eng import Rev_Eng
 from .core.phase_math import phase_match_enhanced, mesh_phase_sync
+from .core.phi_math import (
+    phi_wavefunction,
+    phase_alignment_potential,
+    corrected_energy,
+    orbital_radius,
+)
 from .core.voxel import MeshVoxel
 from .core.tokenize_flowchart import tokenize_to_flowchart
 from .core.json_dsl import LanguageMap, SymbolicProcessor
@@ -21,6 +27,10 @@ __all__ = [
     "Rev_Eng",
     "phase_match_enhanced",
     "mesh_phase_sync",
+    "phi_wavefunction",
+    "phase_alignment_potential",
+    "corrected_energy",
+    "orbital_radius",
     "MeshVoxel",
     "EthicsEngine",
     "tokenize_to_flowchart",

@@ -2,6 +2,21 @@
 
 from .rev_eng import Rev_Eng
 from .phase_math import phase_match_enhanced, mesh_phase_sync
+from .phi_math import (
+    phi_wavefunction,
+    phase_alignment_potential,
+    corrected_energy,
+    orbital_radius,
+)
 from .mesh_logger import log_event
 
-__all__ = ["Rev_Eng", "phase_match_enhanced", "mesh_phase_sync", "log_event"]
+__all__ = [
+    "Rev_Eng",
+    "phase_match_enhanced",
+    "mesh_phase_sync",
+    "phi_wavefunction",
+    "phase_alignment_potential",
+    "corrected_energy",
+    "orbital_radius",
+    "log_event",
+]
