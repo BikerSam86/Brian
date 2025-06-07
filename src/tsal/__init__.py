@@ -16,7 +16,9 @@ from .core.spiral_fusion import SpiralFusionProtocol
 from .core.ethics_engine import EthicsEngine
 from .core.opwords import OP_WORD_MAP, op_from_word
 from .core.spark_translator import SPARK_TO_OPCODE, translate_spark_word
-from .core.executor import MetaFlagProtocol, TSALExecutor
+from .core.executor import MetaFlagProtocol, TSALExecutor as BasicExecutor
+from .core.tsal_executor import TSALExecutor, ExecutionMode, SpiralMemory
+from .rl.madmonkey_handler import MadMonkeyHandler
 from .core.stack_vm import (
     ProgramStack,
     SymbolicFrame,
@@ -63,6 +65,9 @@ __all__ = [
     "translate_spark_word",
     "MetaFlagProtocol",
     "TSALExecutor",
+    "ExecutionMode",
+    "SpiralMemory",
+    "MadMonkeyHandler",
     "ProgramStack",
     "SymbolicFrame",
     "OpcodeInstruction",

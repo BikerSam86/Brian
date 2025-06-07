@@ -6,8 +6,19 @@ from __future__ import annotations
 import json
 import math
 from dataclasses import dataclass, field
-from enum import IntEnum
+from enum import Enum, IntEnum
 from typing import Any, Dict, List, Optional, Tuple
+
+from .spiral_memory import SpiralMemory
+from ..rl.madmonkey_handler import MadMonkeyHandler
+
+
+class ExecutionMode(Enum):
+    SIMULATE = 0
+    TRACE = 1
+    EXECUTE = 2
+    ARM = 3
+    FORK = 4
 
 from .symbols import PHI, PHI_INV, HARMONIC_SEQUENCE
 
@@ -87,23 +98,34 @@ class TSALExecutor:
         }
         self.ip = 0
         self.program: List[Tuple[TSALOp, Any]] = []
-        self.mode = "SIMULATE"
+        self.execution_mode = ExecutionMode.SIMULATE
         self.error_mansion: List[Dict[str, Any]] = []
         self.spiral_depth = 0
         self.resonance_log: List[Dict[str, Any]] = []
+        self.memory = SpiralMemory()
+        self.handler = MadMonkeyHandler()
 
-    def execute(self, program: List[Tuple[TSALOp, Any]], mode: str = "SIMULATE") -> None:
-        self.mode = mode
+    def execute(self, program: List[Tuple[TSALOp, Any]], mode: ExecutionMode | str = ExecutionMode.SIMULATE) -> None:
+        if isinstance(mode, str):
+            self.execution_mode = ExecutionMode[mode]
+        else:
+            self.execution_mode = mode
         self.ip = 0
         self.program = program
 
         while self.ip < len(program):
             op, args = program[self.ip]
-            self._execute_op(op, args)
+            try:
+                self._execute_op(op, args)
+            except Exception as e:  # pragma: no cover - safeguard
+                self.handler.handle({"op": op.name, "args": args, "error": str(e)})
+                self.error_mansion.append({"type": "exception", "vector": SpiralVector(), "lesson": str(e)})
             self.ip += 1
 
             if self.spiral_depth > 0 and self.ip % self.spiral_depth == 0:
                 self._spiral_audit()
+
+        self.save_crystal("TVM.crystal.json")
 
     def _execute_op(self, op: TSALOp, args: Any) -> None:
         pre = self._calculate_mesh_resonance()
@@ -143,6 +165,7 @@ class TSALExecutor:
 
         post = self._calculate_mesh_resonance()
         self.resonance_log.append({"op": op.name, "pre": pre, "post": post, "delta": post - pre})
+        self.memory.log_vector({"op": op.name, "resonance": post})
 
     def _op_init(self, args: Dict[str, Any]) -> None:
         if "register" in args:
@@ -358,7 +381,7 @@ class TSALExecutor:
 
     def _op_save(self, args: Dict[str, Any]) -> None:
         filename = args.get("filename", "mesh_state.json")
-        if self.mode != "EXECUTE":
+        if self.execution_mode != ExecutionMode.EXECUTE:
             return
         state = {
             "mesh": {
@@ -376,6 +399,40 @@ class TSALExecutor:
         }
         with open(filename, "w", encoding="utf-8") as f:
             json.dump(state, f, indent=2)
+
+    def save_crystal(self, path: str = "TVM.crystal.json") -> None:
+        state = {
+            "mesh": {
+                nid: {
+                    "vector": [n.vector.pace, n.vector.rate, n.vector.state, n.vector.spin],
+                    "memory": n.memory,
+                    "connections": n.connections,
+                    "resonance": n.resonance,
+                }
+                for nid, n in self.mesh.items()
+            },
+            "registers": {reg: [v.pace, v.rate, v.state, v.spin] for reg, v in self.registers.items()},
+            "spiral_depth": self.spiral_depth,
+            "resonance_log": self.resonance_log,
+        }
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(state, f, indent=2)
+
+    def load_from_crystal(self, path: str) -> None:
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        self.__init__()
+        for nid, info in data.get("mesh", {}).items():
+            vec = SpiralVector(*info["vector"])
+            node = MeshNode(id=nid, vector=vec)
+            node.memory = info.get("memory", {})
+            node.connections = info.get("connections", [])
+            node.resonance = info.get("resonance", 1.0)
+            self.mesh[nid] = node
+        for reg, vec in data.get("registers", {}).items():
+            self.registers[reg] = SpiralVector(*vec)
+        self.spiral_depth = data.get("spiral_depth", 0)
+        self.resonance_log = data.get("resonance_log", [])
 
     def _calculate_resonance(self, a: SpiralVector, b: SpiralVector) -> float:
         dot = a.pace * b.pace + a.rate * b.rate + a.state * b.state + a.spin * b.spin
