@@ -14,28 +14,33 @@ def optimize_spiral_order(vectors: list[SpiralVector]) -> list[SpiralVector]:
 
 
 
-def brian_repairs_brian(safe: bool = False) -> list[str]:
-    """Run ``analyze_and_repair`` on every Python file in ``src/tsal``."""
+def brian_repairs_brian(base: Path | str = Path("src/tsal"), safe: bool = False) -> list[str]:
+    """Run ``analyze_and_repair`` on every Python file under ``base``."""
 
     print("🧠 Initiating self-audit and repair sequence…")
     repaired: list[str] = []
-    for file in Path("src/tsal").rglob("*.py"):
+    base_path = Path(base)
+    for file in base_path.rglob("*.py"):
         repaired.extend(analyze_and_repair(file, repair=not safe))
     rev.log_event("Self-audit complete", state="repair", spin="φ")
     return repaired
 
 
-def brian_improves_brian(safe: bool = False) -> list[str]:
-    """Run repair cycle and log the event."""
+def brian_improves_brian(base: Path | str = Path("src/tsal"), safe: bool = False) -> list[str]:
+    """Run repair cycle under ``base`` and log the event."""
 
     print("🧠 Evaluating improvements post-repair...")
-    suggestions = brian_repairs_brian(safe=safe)
+    suggestions = brian_repairs_brian(base=base, safe=safe)
     rev.log_event("Improvement loop triggered", state="optimize", spin="up")
     return suggestions
 
 
-def recursive_bestest_beast_loop(cycles: int = 3, safe: bool = False) -> None:
-    """Repeat ``brian_improves_brian`` ``cycles`` times."""
+def recursive_bestest_beast_loop(
+    cycles: int = 3,
+    base: Path | str = Path("src/tsal"),
+    safe: bool = False,
+) -> None:
+    """Repeat ``brian_improves_brian`` ``cycles`` times under ``base``."""
 
     if len(sys.argv) > 1:
         try:
@@ -45,12 +50,13 @@ def recursive_bestest_beast_loop(cycles: int = 3, safe: bool = False) -> None:
 
     for i in range(cycles):
         print(f"🔁 Brian loop {i+1}/{cycles}")
-        brian_improves_brian(safe=safe)
+        brian_improves_brian(base=base, safe=safe)
 
 
 def cli_main() -> None:
     parser = argparse.ArgumentParser(description="Run bestest beast loop")
     parser.add_argument("cycles", nargs="?", type=int, default=1)
+    parser.add_argument("path", nargs="?", default="src/tsal")
     parser.add_argument("--safe", "--safe-mode", dest="safe", action="store_true")
     args = parser.parse_args()
-    recursive_bestest_beast_loop(args.cycles, safe=args.safe)
+    recursive_bestest_beast_loop(args.cycles, Path(args.path), safe=args.safe)
