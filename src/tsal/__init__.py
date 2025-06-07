@@ -17,6 +17,13 @@ from .core.ethics_engine import EthicsEngine
 from .core.opwords import OP_WORD_MAP, op_from_word
 from .core.spark_translator import SPARK_TO_OPCODE, translate_spark_word
 from .core.executor import MetaFlagProtocol, TSALExecutor
+from .core.stack_vm import (
+    ProgramStack,
+    SymbolicFrame,
+    OpcodeInstruction,
+    FlowRouter,
+    tsal_run,
+)
 from .renderer.code_render import mesh_to_python
 from .tristar.handshake import handshake as tristar_handshake
 from .utils.github_api import fetch_repo_files, fetch_languages
@@ -50,6 +57,11 @@ __all__ = [
     "translate_spark_word",
     "MetaFlagProtocol",
     "TSALExecutor",
+    "ProgramStack",
+    "SymbolicFrame",
+    "OpcodeInstruction",
+    "FlowRouter",
+    "tsal_run",
     "fetch_repo_files",
     "fetch_languages",
     "mesh_to_python",
