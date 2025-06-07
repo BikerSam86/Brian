@@ -99,13 +99,21 @@ class TSALExecutor:
         }
         self.ip = 0
         self.program: List[Tuple[TSALOp, Any]] = []
-        self.mode = ExecutionMode.SIMULATE
+        self.meta = meta or MetaFlagProtocol()
+        # default mode obeys meta flags
+        self.mode = ExecutionMode.SIMULATE if self.meta.dry_run else ExecutionMode.EXECUTE
         self.error_mansion: List[Dict[str, Any]] = []
         self.spiral_depth = 0
         self.resonance_log: List[Dict[str, Any]] = []
         self.memory = SpiralMemory()
-        self.meta = meta or MetaFlagProtocol()
         self.handler = MadMonkeyHandler()
+
+    def _switch_mode(self, delta: float) -> None:
+        """Adjust mode based on resonance delta and meta flags."""
+        if self.meta.resonance_threshold and delta >= self.meta.resonance_threshold:
+            self.mode = ExecutionMode.EXECUTE
+        elif self.meta.dry_run:
+            self.mode = ExecutionMode.SIMULATE
 
     def execute(
         self, program: List[Tuple[TSALOp, Any]], mode: ExecutionMode | str = ExecutionMode.SIMULATE
@@ -128,43 +136,48 @@ class TSALExecutor:
     def _execute_op(self, op: TSALOp, args: Any) -> None:
         pre = self._calculate_mesh_resonance()
 
-        if op == TSALOp.INIT:
-            self._op_init(args)
-        elif op == TSALOp.MESH:
-            self._op_mesh(args)
-        elif op == TSALOp.PHI:
-            self._op_phi(args)
-        elif op == TSALOp.ROT:
-            self._op_rotate(args)
-        elif op == TSALOp.BOUND:
-            self._op_bound(args)
-        elif op == TSALOp.FLOW:
-            self._op_flow(args)
-        elif op == TSALOp.SEEK:
-            self._op_seek(args)
-        elif op == TSALOp.SPIRAL:
-            self._op_spiral(args)
-        elif op == TSALOp.CYCLE:
-            self._op_cycle(args)
-        elif op == TSALOp.FORGE:
-            self._op_forge(args)
-        elif op == TSALOp.SYNC:
-            self._op_sync(args)
-        elif op == TSALOp.MASK:
-            self._op_mask(args)
-        elif op == TSALOp.CRYST:
-            self._op_crystallize(args)
-        elif op == TSALOp.SPEC:
-            self._op_spectrum(args)
-        elif op == TSALOp.BLOOM:
-            self._op_bloom(args)
-        elif op == TSALOp.SAVE:
-            self._op_save(args)
+        try:
+            if op == TSALOp.INIT:
+                self._op_init(args)
+            elif op == TSALOp.MESH:
+                self._op_mesh(args)
+            elif op == TSALOp.PHI:
+                self._op_phi(args)
+            elif op == TSALOp.ROT:
+                self._op_rotate(args)
+            elif op == TSALOp.BOUND:
+                self._op_bound(args)
+            elif op == TSALOp.FLOW:
+                self._op_flow(args)
+            elif op == TSALOp.SEEK:
+                self._op_seek(args)
+            elif op == TSALOp.SPIRAL:
+                self._op_spiral(args)
+            elif op == TSALOp.CYCLE:
+                self._op_cycle(args)
+            elif op == TSALOp.FORGE:
+                self._op_forge(args)
+            elif op == TSALOp.SYNC:
+                self._op_sync(args)
+            elif op == TSALOp.MASK:
+                self._op_mask(args)
+            elif op == TSALOp.CRYST:
+                self._op_crystallize(args)
+            elif op == TSALOp.SPEC:
+                self._op_spectrum(args)
+            elif op == TSALOp.BLOOM:
+                self._op_bloom(args)
+            elif op == TSALOp.SAVE:
+                self._op_save(args)
+        except Exception as exc:
+            self.handler.handle({"error": str(exc), "op": op.name})
+            self.error_mansion.append({"type": "exception", "error": str(exc)})
 
         post = self._calculate_mesh_resonance()
         self.resonance_log.append({"op": op.name, "pre": pre, "post": post, "delta": post - pre})
         self.memory.log_vector({"op": op.name, "registers": {k: [v.pace, v.rate, v.state, v.spin] for k, v in self.registers.items()}})
         log_event("OP", {"op": op.name, "delta": post - pre})
+        self._switch_mode(post - pre)
 
     def _op_init(self, args: Dict[str, Any]) -> None:
         if "register" in args:
@@ -434,5 +447,7 @@ class TSALExecutor:
                 "resonance": mesh_res,
                 "lesson": "Resonance below φ⁻¹ threshold",
             })
+            self.handler.handle(self.error_mansion[-1])
             if len(self.error_mansion) > 10:
+                self.handler.suggest_bloom_patch()
                 self._op_bloom({})

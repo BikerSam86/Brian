@@ -150,6 +150,11 @@ print(metrics)
 PYTHONPATH=src python -m tsal.tools.aletheia_checker
 ```
 
+## Execution Flags
+`MetaFlagProtocol` controls the VM mode. Set `dry_run` for simulation only or
+provide `resonance_threshold` to auto-switch into EXECUTE when a step's
+resonance delta exceeds the threshold.
+
 ## Guardian Prime Directive
 
 The `EthicsEngine` enforces the project's core principles:
