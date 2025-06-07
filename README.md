@@ -96,6 +96,13 @@ tsal-bestest-beast 3 src/tsal --safe
 tsal-meshkeeper --render
 ```
 
+### How to run Bestest Beast
+
+```
+tsal-bestest-beast 5 --safe
+tsal-bestest-beast 9
+```
+
 ## GitHub Language Database
 
 You can fetch the list of programming languages used on GitHub with:

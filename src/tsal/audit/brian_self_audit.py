@@ -62,10 +62,22 @@ def brian_improves_brian(base: Path | str = Path("src/tsal"), safe: bool = False
         rev.log_event("Improvement loop triggered", state="optimize", spin="up")
         return optimized
 
-def recursive_bestest_beast_loop(cycles: int = 3, base: Path | str = Path("src/tsal"), safe: bool = False) -> None:
+def recursive_bestest_beast_loop(
+    cycles: int = 3, base: Path | str = Path("src/tsal"), safe: bool = False
+) -> None:
+    repaired_total = 0
+    skipped_total = 0
+    flagged_total = 0
     for i in range(cycles):
         print(f"🔁 Brian loop {i+1}/{cycles}")
-        brian_improves_brian(base=base, safe=safe)
+        results = brian_repairs_brian(base=base, safe=safe)
+        flagged = [r for r in results if isinstance(r, str) and r.startswith("ANTISPIRAL")]
+        flagged_total += len(flagged)
+        if safe:
+            skipped_total += len(results) - len(flagged)
+        else:
+            repaired_total += len(results) - len(flagged)
+    print(f"Summary → repaired={repaired_total} skipped={skipped_total} flagged={flagged_total}")
 
 def cli_main() -> None:
     parser = argparse.ArgumentParser(description="Run Bestest Beast Brian loop")
