@@ -22,6 +22,7 @@ from .spark_translator import SPARK_TO_OPCODE, translate_spark_word
 from .executor import MetaFlagProtocol, TSALExecutor
 from .connectivity import Node, verify_connectivity
 from .logic_gate import DynamicLogicGate
+from .module_registry import registry as module_registry, ModuleMeta
 
 __all__ = [
     "Rev_Eng",
@@ -47,4 +48,6 @@ __all__ = [
     "Node",
     "verify_connectivity",
     "DynamicLogicGate",
+    "module_registry",
+    "ModuleMeta",
 ]
