@@ -10,6 +10,7 @@ from tsal.core.optimizer_utils import (
     SymbolicSignature,
     extract_signature,
 )
+from tsal.core.spiral_vector import SpiralVector, phi_alignment
 
 
 class SymbolicOptimizer:
@@ -133,6 +134,16 @@ def analyze_and_repair(file_path: str, repair: bool = False) -> list:
             f"{sig.name}: energy={metrics['energy_required']:.3f} Δ={metrics.get('delta',0)}"
             for (sig, metrics) in results
         ]
+
+
+def spiral_optimize(functions: List[SpiralVector]) -> List[SpiralVector]:
+    """Return ``functions`` sorted by φ-alignment score."""
+
+    return sorted(
+        functions,
+        key=lambda v: phi_alignment(v.complexity, v.coherence),
+        reverse=True,
+    )
 
 
 def main():

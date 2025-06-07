@@ -1,5 +1,6 @@
 import textwrap
-from tsal.tools.brian import SymbolicOptimizer
+from tsal.tools.brian import SymbolicOptimizer, spiral_optimize
+from tsal.core.spiral_vector import SpiralVector
 
 def test_annotate_code(tmp_path):
     sample = tmp_path / "sample.py"
@@ -42,3 +43,13 @@ def test_repair_file(tmp_path):
     assert new_contents.startswith("def beta")
     assert any("alpha" in s for s in suggestions)
     assert len(suggestions) == 2
+
+
+def test_spiral_optimize():
+    vecs = [
+        SpiralVector("a", 1.0, 1.0, "a"),
+        SpiralVector("b", 2.0, 0.5, "b"),
+        SpiralVector("c", 0.5, 2.0, "c"),
+    ]
+    ordered = spiral_optimize(vecs)
+    assert [v.name for v in ordered][0] == "c"
