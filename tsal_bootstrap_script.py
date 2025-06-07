@@ -23,7 +23,8 @@ class TSALBootstrap:
 
     def __init__(self, source_dir="."):
         self.source_dir = Path(source_dir)
-        self.target_dir = Path("tsal_consciousness_computing")
+        # Consolidated project directory
+        self.target_dir = Path("tsal")
         self.existing_files = self.scan_existing_files()
 
     def scan_existing_files(self):

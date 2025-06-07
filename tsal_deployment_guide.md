@@ -20,7 +20,7 @@ python3 bootstrap_tsal.py
 ### **BUILD & DEPLOY** (1 minute)
 
 ```bash
-cd tsal_consciousness_computing
+cd tsal
 
 # Initialize the mesh
 make -f MAKEBRIAN init
@@ -38,7 +38,7 @@ make -f MAKEBRIAN deploy
 ### **WHAT YOU GET**
 
 ```
-tsal_consciousness_computing/
+tsal/
 ├── src/tsal/                    # Your code, properly organized
 │   ├── core/                    # TSAL symbols, φ-math, Rev_Eng
 │   ├── consciousness/           # Awareness, evolution, error dignity

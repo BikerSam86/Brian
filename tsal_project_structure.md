@@ -4,7 +4,7 @@
 ### **RECOMMENDED PROJECT STRUCTURE**
 
 ```
-tsal_consciousness_computing/
+tsal/
 ├── README.md                     # Project overview, installation, usage
 ├── pyproject.toml               # Modern Python project configuration
 ├── requirements.txt             # Production dependencies

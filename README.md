@@ -99,6 +99,12 @@ This data can be supplied to Brian's optimizer when analyzing or repairing code.
 1. Put your input code in `examples/broken_code.py`
 2. Run `python examples/mesh_pipeline_demo.py`
 3. The pipeline prints regenerated Python code
+4. Or call the optimizer directly:
+
+```bash
+brian-optimize examples/broken_code.py --repair -o fixed.py
+```
+The repaired file is written to `fixed.py`.
 
 ## Guardian Prime Directive
 

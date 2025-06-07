@@ -1,1 +1,0 @@
-"""TSAL Voxel Module"""
