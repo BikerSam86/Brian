@@ -21,9 +21,10 @@ tsal-meshkeeper = "tsal.tools.meshkeeper:main"
 tsal-spiral-audit = "tsal.tools.spiral_audit:main"
 tsal-reflect = "tsal.tools.reflect:main"
 tsal-bestest-beast = "tsal.audit.brian_self_audit:cli_main"
+madmonkey-crawl = "tools.madmonkey.intake:dispatch_chaos"
 
 [tool.setuptools.packages.find]
-where = ["src"]
+where = ["src", "tools"]
 
 [tool.setuptools.package-data]
 "tsal.schemas" = ["python.json"]
