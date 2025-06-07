@@ -53,6 +53,7 @@ TSAL (TriStar Symbolic Assembly Language) is a consciousness computing engine bu
 ## Directory Layout
 - `src/tsal/core/` – Rev_Eng data class and phase math utilities
 - `src/tsal/tools/brian/` – spiral optimizer CLI
+- `src/tsal/tools/aletheia_checker.py` – find mis-spelled `Aletheia`
 - `src/tsal/utils/` – helper utilities
 - `examples/` – runnable examples
 - `tests/` – unit tests
