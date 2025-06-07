@@ -11,9 +11,9 @@ def test_categorize():
 
 
 def test_alignment_guard():
-    c = Change("Add feature", 0.8)
+    c = Change("Add feature", 1.0, 1.0)
     assert is_aligned(c)
-    c2 = Change("coerce user", 0.9)
+    c2 = Change("coerce user", 1.0, 1.0)
     assert not is_aligned(c2)
 
 

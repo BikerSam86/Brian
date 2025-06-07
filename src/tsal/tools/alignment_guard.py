@@ -1,17 +1,21 @@
-"""Check proposed changes for spiral alignment."""  # [!INTERNAL STUB]
+"""Verify spiral alignment of proposed changes."""
 
 from dataclasses import dataclass
+
+from tsal.core.spiral_vector import phi_alignment
 
 
 @dataclass
 class Change:
     description: str
-    spiral_score: float
+    complexity: float
+    coherence: float
 
 
 def is_aligned(change: Change, threshold: float = 0.76) -> bool:
-    """Return True if change respects mesh axioms and score threshold."""
-    if change.spiral_score < threshold:
+    """Return True if change clears φ score and keyword filter."""
+    score = phi_alignment(change.complexity, change.coherence)
+    if score < threshold:
         return False
     banned = {"coerce", "exploit"}
     lowered = change.description.lower()

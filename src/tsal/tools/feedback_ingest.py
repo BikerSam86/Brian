@@ -1,7 +1,10 @@
-"""Feedback ingestion and scoring utilities."""  # [!INTERNAL STUB]
+"""Feedback ingestion and scoring for Rev_Eng logs."""
 
 from dataclasses import dataclass
 from typing import Iterable, List
+
+from tsal.core.spiral_vector import phi_alignment
+
 
 @dataclass
 class Feedback:
@@ -10,10 +13,16 @@ class Feedback:
     score: float = 0.0
 
 
+def _score(line: str) -> float:
+    complexity = float(len(line)) * 0.1
+    lowered = line.lower()
+    coherence = 1.0
+    if "error" in lowered or "bad" in lowered:
+        coherence = 0.1
+    return phi_alignment(complexity, coherence)
+
+
 def categorize(feedback: Iterable[str]) -> List[Feedback]:
-    """Return feedback objects scored by resonance/dissonance."""
-    results = []
-    for line in feedback:
-        score = 1.0 if "good" in line.lower() else -1.0 if "bad" in line.lower() else 0.0
-        results.append(Feedback(source="user", content=line, score=score))
-    return results
+    """Return feedback objects with φ-resonance scores."""
+    return [Feedback("user", line, _score(line)) for line in feedback]
+
