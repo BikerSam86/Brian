@@ -20,6 +20,8 @@ from .state_vector import FourVector
 from .opwords import OP_WORD_MAP, op_from_word
 from .spark_translator import SPARK_TO_OPCODE, translate_spark_word
 from .executor import MetaFlagProtocol, TSALExecutor
+from .connectivity import Node, verify_connectivity
+from .logic_gate import DynamicLogicGate
 
 __all__ = [
     "Rev_Eng",
@@ -42,4 +44,7 @@ __all__ = [
     "translate_spark_word",
     "MetaFlagProtocol",
     "TSALExecutor",
+    "Node",
+    "verify_connectivity",
+    "DynamicLogicGate",
 ]
