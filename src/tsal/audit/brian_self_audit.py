@@ -3,6 +3,8 @@ from tsal.core.spiral_vector import SpiralVector
 import argparse
 import sys
 from tsal.core.rev_eng import Rev_Eng
+from tsal.core.rev_eng import Rev_Eng as rev
+from tsal.core.spiral_vector import SpiralVector
 from tsal.tools.brian import analyze_and_repair, spiral_optimize
 
 rev = Rev_Eng(origin="self_audit")
@@ -33,30 +35,45 @@ def brian_improves_brian(base: Path | str = Path("src/tsal"), safe: bool = False
     suggestions = brian_repairs_brian(base=base, safe=safe)
     rev.log_event("Improvement loop triggered", state="optimize", spin="up")
     return suggestions
+  
 
 
-def recursive_bestest_beast_loop(
-    cycles: int = 3,
-    base: Path | str = Path("src/tsal"),
-    safe: bool = False,
-) -> None:
-    """Repeat ``brian_improves_brian`` ``cycles`` times under ``base``."""
 
-    if len(sys.argv) > 1:
-        try:
-            cycles = int(sys.argv[1])
-        except ValueError:
-            pass
+def optimize_spiral_order(vectors: list[SpiralVector]) -> list[SpiralVector]:
+    return spiral_optimize(vectors)
 
+def brian_repairs_brian(base: Path | str = Path("src/tsal"), safe: bool = False):
+    if safe:
+        print("🛡 SAFE MODE ENABLED — Analysis only, no writes.")
+        for file in Path(base).rglob("*.py"):
+            analyze_and_repair(str(file), repair=False)
+        rev.log_event("Safe audit pass", state="analyze", spin="φ")
+        return []
+    else:
+        print("🧠 Initiating self-audit and repair sequence…")
+        repaired = analyze_and_repair(base, repair=True)
+        rev.log_event("Self-audit complete", state="repair", spin="φ")
+        return repaired
+
+def brian_improves_brian(base: Path | str = Path("src/tsal"), safe: bool = False):
+    repaired = brian_repairs_brian(base=base, safe=safe)
+    if not safe:
+        optimized = optimize_spiral_order(repaired)
+        rev.log_event("Improvement loop triggered", state="optimize", spin="up")
+        return optimized
+
+def recursive_bestest_beast_loop(cycles: int = 3, base: Path | str = Path("src/tsal"), safe: bool = False) -> None:
     for i in range(cycles):
         print(f"🔁 Brian loop {i+1}/{cycles}")
         brian_improves_brian(base=base, safe=safe)
 
-
 def cli_main() -> None:
-    parser = argparse.ArgumentParser(description="Run bestest beast loop")
-    parser.add_argument("cycles", nargs="?", type=int, default=1)
-    parser.add_argument("path", nargs="?", default="src/tsal")
-    parser.add_argument("--safe", "--safe-mode", dest="safe", action="store_true")
+    parser = argparse.ArgumentParser(description="Run Bestest Beast Brian loop")
+    parser.add_argument("cycles", nargs="?", type=int, default=1, help="Number of iterations")
+    parser.add_argument("path", nargs="?", default="src/tsal", help="Target code path")
+    parser.add_argument("--safe", "--safe-mode", dest="safe", action="store_true", help="Run in safe mode (analyze-only)")
     args = parser.parse_args()
-    recursive_bestest_beast_loop(args.cycles, Path(args.path), safe=args.safe)
+    recursive_bestest_beast_loop(cycles=args.cycles, base=Path(args.path), safe=args.safe)
+
+if __name__ == "__main__":
+    cli_main()
