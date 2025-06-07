@@ -34,10 +34,14 @@ def brian_improves_brian(safe: bool = False) -> list[str]:
     return suggestions
 
 
-def recursive_bestest_beast_loop(cycles: int = 3, safe: bool = False) -> None:
+import sys
+
+
+def recursive_bestest_beast_loop(cycles: int = 3, safe_mode: bool = False) -> None:
+
     """Repeat ``brian_improves_brian`` ``cycles`` times."""
 
-    if len(sys.argv) > 1:
+    if len(sys.argv) > 1 and not safe_mode:
         try:
             cycles = int(sys.argv[1])
         except ValueError:
@@ -45,6 +49,7 @@ def recursive_bestest_beast_loop(cycles: int = 3, safe: bool = False) -> None:
 
     for i in range(cycles):
         print(f"🔁 Brian loop {i+1}/{cycles}")
+
         brian_improves_brian(safe=safe)
 
 
@@ -54,3 +59,13 @@ def cli_main() -> None:
     parser.add_argument("--safe", action="store_true")
     args = parser.parse_args()
     recursive_bestest_beast_loop(args.cycles, safe=args.safe)
+
+        if safe_mode:
+            print("🛡 SAFE MODE ENABLED — Analysis only, no writes.")
+            for file in Path("src/tsal").rglob("*.py"):
+                analyze_and_repair(str(file), repair=False)
+            rev.log_event("Safe audit pass", state="analyze", spin="φ")
+        else:
+            brian_improves_brian()
+
+
