@@ -15,6 +15,7 @@ from .core.spiral_vector import SpiralVector, phi_alignment
 from .core.spiral_fusion import SpiralFusionProtocol
 from .core.ethics_engine import EthicsEngine
 from .core.opwords import OP_WORD_MAP, op_from_word
+from .core.spark_translator import SPARK_TO_OPCODE, translate_spark_word
 from .core.executor import MetaFlagProtocol, TSALExecutor
 from .renderer.code_render import mesh_to_python
 from .tristar.handshake import handshake as tristar_handshake
@@ -45,6 +46,8 @@ __all__ = [
     "phi_alignment",
     "OP_WORD_MAP",
     "op_from_word",
+    "SPARK_TO_OPCODE",
+    "translate_spark_word",
     "MetaFlagProtocol",
     "TSALExecutor",
     "fetch_repo_files",

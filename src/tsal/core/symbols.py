@@ -7,6 +7,26 @@ PHI = 1.618033988749895
 PHI_INV = 0.6180339887498948
 HARMONIC_SEQUENCE = [3.8125, 6, 12, 24, 48, 60, 72, 168, 1680]
 
+from enum import IntEnum
+
+class TSALOp(IntEnum):
+    INIT = 0x0
+    MESH = 0x1
+    PHI = 0x2
+    ROT = 0x3
+    BOUND = 0x4
+    FLOW = 0x5
+    SEEK = 0x6
+    SPIRAL = 0x7
+    CYCLE = 0x8
+    FORGE = 0x9
+    SYNC = 0xA
+    MASK = 0xB
+    CRYST = 0xC
+    SPEC = 0xD
+    BLOOM = 0xE
+    SAVE = 0xF
+
 # 16-Symbol TSAL Operation Set (Hex-aligned)
 TSAL_SYMBOLS = {
     0x0: ("⚡", "INIT", "Initialize/Reset"),
@@ -38,4 +58,4 @@ def phi_signature(value):
     phi_factor = (hash(value) % 1000) * PHI_INV
     return f"φ^{phi_factor:.3f}_{content_hash[:8]}"
 
-__all__ = ['PHI', 'PHI_INV', 'HARMONIC_SEQUENCE', 'TSAL_SYMBOLS', 'get_symbol', 'phi_signature']
+__all__ = ['PHI', 'PHI_INV', 'HARMONIC_SEQUENCE', 'TSAL_SYMBOLS', 'TSALOp', 'get_symbol', 'phi_signature']
