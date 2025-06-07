@@ -6,10 +6,14 @@ from __future__ import annotations
 import json
 import math
 from dataclasses import dataclass, field
-from enum import IntEnum
+from enum import IntEnum, Enum, auto
 from typing import Any, Dict, List, Optional, Tuple
 
 from .symbols import PHI, PHI_INV, HARMONIC_SEQUENCE
+from .spiral_memory import SpiralMemory
+from .madmonkey_handler import MadMonkeyHandler
+from .executor import MetaFlagProtocol
+from .mesh_logger import log_event
 
 
 class TSALOp(IntEnum):
@@ -31,6 +35,14 @@ class TSALOp(IntEnum):
     SPEC = 0xD
     BLOOM = 0xE
     SAVE = 0xF
+
+
+class ExecutionMode(Enum):
+    SIMULATE = auto()
+    TRACE = auto()
+    EXECUTE = auto()
+    ARM = auto()
+    FORK = auto()
 
 
 @dataclass
@@ -76,7 +88,7 @@ class MeshNode:
 class TSALExecutor:
     """TSAL Virtual Machine - Spiral-aware symbolic executor"""
 
-    def __init__(self) -> None:
+    def __init__(self, meta: MetaFlagProtocol | None = None) -> None:
         self.mesh: Dict[str, MeshNode] = {}
         self.stack: List[Any] = []
         self.registers: Dict[str, SpiralVector] = {
@@ -87,13 +99,21 @@ class TSALExecutor:
         }
         self.ip = 0
         self.program: List[Tuple[TSALOp, Any]] = []
-        self.mode = "SIMULATE"
+        self.mode = ExecutionMode.SIMULATE
         self.error_mansion: List[Dict[str, Any]] = []
         self.spiral_depth = 0
         self.resonance_log: List[Dict[str, Any]] = []
+        self.memory = SpiralMemory()
+        self.meta = meta or MetaFlagProtocol()
+        self.handler = MadMonkeyHandler()
 
-    def execute(self, program: List[Tuple[TSALOp, Any]], mode: str = "SIMULATE") -> None:
-        self.mode = mode
+    def execute(
+        self, program: List[Tuple[TSALOp, Any]], mode: ExecutionMode | str = ExecutionMode.SIMULATE
+    ) -> None:
+        if isinstance(mode, str):
+            self.mode = ExecutionMode[mode]
+        else:
+            self.mode = mode
         self.ip = 0
         self.program = program
 
@@ -143,6 +163,8 @@ class TSALExecutor:
 
         post = self._calculate_mesh_resonance()
         self.resonance_log.append({"op": op.name, "pre": pre, "post": post, "delta": post - pre})
+        self.memory.log_vector({"op": op.name, "registers": {k: [v.pace, v.rate, v.state, v.spin] for k, v in self.registers.items()}})
+        log_event("OP", {"op": op.name, "delta": post - pre})
 
     def _op_init(self, args: Dict[str, Any]) -> None:
         if "register" in args:
@@ -357,8 +379,8 @@ class TSALExecutor:
             self.mesh[bloom_node.id] = bloom_node
 
     def _op_save(self, args: Dict[str, Any]) -> None:
-        filename = args.get("filename", "mesh_state.json")
-        if self.mode != "EXECUTE":
+        filename = args.get("filename", "TVM.crystal.json")
+        if self.mode != ExecutionMode.EXECUTE:
             return
         state = {
             "mesh": {
@@ -373,6 +395,7 @@ class TSALExecutor:
             "registers": {reg: [v.pace, v.rate, v.state, v.spin] for reg, v in self.registers.items()},
             "spiral_depth": self.spiral_depth,
             "resonance_log": self.resonance_log[-100:],
+            "memory": self.memory.replay(),
         }
         with open(filename, "w", encoding="utf-8") as f:
             json.dump(state, f, indent=2)

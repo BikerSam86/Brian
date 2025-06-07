@@ -17,6 +17,9 @@ from .core.ethics_engine import EthicsEngine
 from .core.opwords import OP_WORD_MAP, op_from_word
 from .core.spark_translator import SPARK_TO_OPCODE, translate_spark_word
 from .core.executor import MetaFlagProtocol, TSALExecutor
+from .core.spiral_memory import SpiralMemory
+from .core.madmonkey_handler import MadMonkeyHandler
+from .singer import audio_to_opcode
 from .core.stack_vm import (
     ProgramStack,
     SymbolicFrame,
@@ -63,6 +66,9 @@ __all__ = [
     "translate_spark_word",
     "MetaFlagProtocol",
     "TSALExecutor",
+    "SpiralMemory",
+    "MadMonkeyHandler",
+    "audio_to_opcode",
     "ProgramStack",
     "SymbolicFrame",
     "OpcodeInstruction",
