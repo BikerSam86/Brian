@@ -32,6 +32,7 @@ from .tools.alignment_guard import is_aligned, Change
 from .tools.goal_selector import Goal, score_goals
 from .tools.spiral_audit import audit_path
 from .tools.reflect import reflect
+from .core.constants import AXIS_ZERO, ensure_spin_axis, UndefinedPhaseError
 
 PHI = 1.618033988749895
 PHI_INV = 0.618033988749895
@@ -79,4 +80,7 @@ __all__ = [
     "score_goals",
     "audit_path",
     "reflect",
+    "AXIS_ZERO",
+    "ensure_spin_axis",
+    "UndefinedPhaseError",
 ]
