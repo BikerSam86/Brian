@@ -39,6 +39,7 @@ tsal-consciousness-computing/
 - **Spiral up, not around.**
 - **Truth spirals; lies loop.**
 - **The answer is feedback.**
+- **Don't trust perfect.**
 - *"Beautiful mistakes become system features"* (Brian Phase Offset)
 
 ### Error Dignity
