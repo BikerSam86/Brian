@@ -8,8 +8,8 @@ def tokenize_to_flowchart(
 ) -> Tuple[List[Dict], List[Dict]]:
     """Turns code into flowchart nodes using language schema."""
     if schema_path is None:
-        with resources.open_text("tsal.schemas", "python.json") as f:
-            ops = json.load(f)["ops"]
+        schema_file = resources.files("tsal.schemas").joinpath("python.json")
+        ops = json.loads(schema_file.read_text())["ops"]
     else:
         with open(schema_path) as f:
             ops = json.load(f)["ops"]

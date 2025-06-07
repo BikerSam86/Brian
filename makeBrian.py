@@ -33,12 +33,17 @@ DEPLOY_DIR = Path("deployed_kernels")
 class TSALBuilder:
     """φ-Enhanced TSAL build system"""
 
-    def __init__(self):
+    def __init__(self, *, glyphs: bool = False):
         self.start_time = time.time()
+        self.use_glyphs = glyphs
+        self.phi_verified = self.verify_phi()
 
     def log(self, symbol, message):
         """Log with TSAL symbol"""
-        print(f"{symbol} {message}")
+        if self.use_glyphs:
+            print(f"{symbol} {message}")
+        else:
+            print(message)
 
     def verify_phi(self):
         """Verify φ-mathematical alignment"""
@@ -403,7 +408,6 @@ def main():
 
     # Command routing
     if command == "all":
-        builder.verify_phi()
         builder.init_directories()
         builder.create_manifest()
         builder.build_core_symbols()
@@ -414,7 +418,7 @@ def main():
         builder.init_directories()
 
     elif command == "phi_align":
-        builder.verify_phi()
+        builder.log("◉", f"φ alignment previously verified: {builder.phi_verified}")
 
     elif command == "mesh":
         builder.build_core_symbols()
