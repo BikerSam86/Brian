@@ -1,0 +1,19 @@
+{
+  "name": "brian-spiral-helper",
+  "displayName": "Brian Spiral Helper",
+  "description": "Run Brian's spiral repair and self-reflection directly from VS Code",
+  "version": "0.1.0",
+  "publisher": "bikersam",
+  "engines": { "vscode": "^1.85.0" },
+  "activationEvents": ["onCommand:brian.runSelfAudit"],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      { "command": "brian.runSelfAudit", "title": "\ud83e\udde0 Brian: Run Self-Audit Spiral" }
+    ]
+  },
+  "scripts": { "compile": "tsc -p ." },
+  "categories": ["Other"],
+  "repository": { "type": "git", "url": "https://github.com/Bikersam/Brian" },
+  "funding": "https://ko-fi.com/bikersam86"
+}
