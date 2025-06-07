@@ -16,6 +16,7 @@ from .optimizer_utils import (
     extract_signature,
 )
 from .spiral_fusion import SpiralFusionProtocol
+from .state_vector import FourVector
 
 __all__ = [
     "Rev_Eng",
@@ -31,4 +32,5 @@ __all__ = [
     "node_complexity",
     "extract_signature",
     "SpiralFusionProtocol",
+    "FourVector",
 ]
