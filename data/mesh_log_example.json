@@ -1,0 +1,10 @@
+{
+  "timestamp": 1620000000.0,
+  "event_type": "TEST",
+  "phase": "init",
+  "payload": {
+    "foo": 1,
+    "bar": "baz"
+  },
+  "origin": "unit-test"
+}

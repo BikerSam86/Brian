@@ -2,6 +2,8 @@ import math
 import time
 from typing import Tuple, Dict, Any
 
+from .mesh_logger import log_event
+
 # TSAL Mathematical Constants
 PHI = 1.618033988749895
 PHI_INV = 0.618033988749895
@@ -101,9 +103,14 @@ def log_energy_use_enhanced(
             "gift": "Phase mismatch reveals new harmonic possibility",
         }
 
-    # Log to mesh (placeholder - would connect to actual mesh)
-    if verbose:
-        print(f"⚡ Energy: {energy:.3f} | {metrics['phase_signature']}")
+    # Log to mesh
+    log_event(
+        "ENERGY_USE",
+        log_entry,
+        phase="energy",
+        origin="phase_math",
+        verbose=verbose,
+    )
 
     return log_entry
 
