@@ -1,5 +1,5 @@
 import textwrap
-from tsal.tools.brian.optimizer import SymbolicOptimizer
+from tsal.tools.brian import SymbolicOptimizer
 
 def test_annotate_code(tmp_path):
     sample = tmp_path / "sample.py"

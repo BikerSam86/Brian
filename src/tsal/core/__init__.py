@@ -10,6 +10,11 @@ from .phi_math import (
 )
 from .mesh_logger import log_event
 from .intent_metric import calculate_idm
+from .optimizer_utils import (
+    SymbolicSignature,
+    node_complexity,
+    extract_signature,
+)
 
 __all__ = [
     "Rev_Eng",
@@ -21,4 +26,7 @@ __all__ = [
     "orbital_radius",
     "log_event",
     "calculate_idm",
+    "SymbolicSignature",
+    "node_complexity",
+    "extract_signature",
 ]

@@ -6,17 +6,10 @@ from typing import List, Dict, Optional, Tuple
 
 from tsal.core.rev_eng import Rev_Eng
 from tsal.core.phase_math import phase_match_enhanced
-
-
-class SymbolicSignature:
-    """Simple structural signature extracted from an AST node."""
-
-    def __init__(self, name: str, vector: List[float]):
-        self.name = name
-        self.vector = vector
-
-    def magnitude(self) -> float:
-        return sum(self.vector)
+from tsal.core.optimizer_utils import (
+    SymbolicSignature,
+    extract_signature,
+)
 
 
 class SymbolicOptimizer:
@@ -30,25 +23,13 @@ class SymbolicOptimizer:
         self.target_signatures = target_signatures or {}
         self.rev = rev_eng or Rev_Eng(origin="SymbolicOptimizer")
 
-    @staticmethod
-    def _node_complexity(node: ast.AST) -> int:
-        return sum(1 for _ in ast.walk(node))
-
-    def _extract_signature(self, node: ast.AST, name: str) -> SymbolicSignature:
-        complexity = self._node_complexity(node)
-        branches = len(
-            [n for n in ast.walk(node) if isinstance(n, (ast.If, ast.For, ast.While))]
-        )
-        loops = len([n for n in ast.walk(node) if isinstance(n, (ast.For, ast.While))])
-        vector = [complexity, branches, loops]
-        return SymbolicSignature(name=name, vector=vector)
 
     def analyze(self, code: str) -> List[Tuple[SymbolicSignature, Dict]]:
         tree = ast.parse(code)
         results = []
         for node in ast.walk(tree):
             if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
-                sig = self._extract_signature(node, node.name)
+                sig = extract_signature(node, node.name)
                 target_vec = self.target_signatures.get(sig.name, sig.vector)
                 local_state = sig.magnitude()
                 target_state = sum(target_vec)
@@ -76,7 +57,7 @@ class SymbolicOptimizer:
         signatures = []
         for node in ast.walk(tree):
             if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
-                sig = self._extract_signature(node, node.name)
+                sig = extract_signature(node, node.name)
                 signatures.append(sig)
                 target_vec = self.target_signatures.get(sig.name, sig.vector)
                 local_state = sig.magnitude()
@@ -109,7 +90,7 @@ class SymbolicOptimizer:
                 items.append(node.name)
         ideal = self.suggest_order(
             [
-                self._extract_signature(node, node.name)
+                extract_signature(node, node.name)
                 for node in tree.body
                 if isinstance(node, (ast.FunctionDef, ast.ClassDef))
             ]
