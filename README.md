@@ -96,6 +96,9 @@ tsal-bestest-beast 3 src/tsal --safe
 tsal-meshkeeper --render
 ```
 
+### VSCode Extension Integration
+| Visual mesh heatmap (planned) | `tsal-meshkeeper --render` | Add via matplotlib overlay |
+
 ### How to run Bestest Beast
 
 ```
