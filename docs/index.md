@@ -12,3 +12,17 @@ tsal-meshkeeper data/mesh_log.jsonl --render
 ```
 
 The viewer uses `matplotlib` and `numpy` to display voxels representing each logged data event.
+
+## Self reflection
+
+Run a spiral audit on the codebase:
+
+```bash
+tsal-spiral-audit src/tsal
+```
+
+For a summary of the current revision log:
+
+```bash
+tsal-reflect
+```
