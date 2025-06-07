@@ -29,5 +29,5 @@ def test_goal_selector():
 def test_reflect(tmp_path):
     sample = tmp_path / "m.py"
     sample.write_text("def x():\n    pass\n")
-    res = reflect(str(tmp_path))
+    res = reflect(str(tmp_path), as_json=True)
     assert "m.py" in res
