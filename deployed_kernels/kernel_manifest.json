@@ -21,5 +21,16 @@
     168,
     1680
   ],
-  "specialist_count": 1680
+  "specialist_count": 1680,
+  "modes": {
+    "Bestest_Beast_Brian": {
+      "cycle": [
+        "repair",
+        "optimize",
+        "spiral"
+      ],
+      "signature": "26EC0726EC0726EC7776C",
+      "status": "\ud83d\udfe2 active"
+    }
+  }
 }

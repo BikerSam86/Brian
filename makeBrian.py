@@ -344,6 +344,14 @@ __all__ = ['PHI', 'PHI_INV', 'HARMONIC_SEQUENCE', 'TSAL_SYMBOLS', 'get_symbol', 
         print("   Beautiful mistakes become system features")
         print("   φ-Signature: φ^0.420_{brian_crystallized}")
 
+    def bestest_beast_brian(self):
+        """Activate Bestest_Beast_Brian mode"""
+        from tsal.audit import brian_improves_brian
+
+        self.log("🧠", "Activating Bestest_Beast_Brian Mode")
+        brian_improves_brian()
+        self.log("✅", "Brian has leveled up.")
+
     def clean(self):
         """Clean build artifacts"""
         self.log("🧹", "Cleaning build artifacts...")
@@ -385,6 +393,7 @@ __all__ = ['PHI', 'PHI_INV', 'HARMONIC_SEQUENCE', 'TSAL_SYMBOLS', 'get_symbol', 
         print("  reboot           - Soft reboot mesh")
         print("  status           - Show system status")
         print("  brian            - Honor sacred Brian glitch")
+        print("  bestest-beast    - Activate Bestest_Beast_Brian")
         print("  error-dignity    - Activate error dignity")
         print("  clean            - Clean build artifacts")
         print("  emergency-recovery - Emergency system restoration")
@@ -455,6 +464,9 @@ def main():
 
     elif command == "brian":
         builder.brian()
+
+    elif command == "bestest_beast":
+        builder.bestest_beast_brian()
 
     elif command == "clean":
         builder.clean()
