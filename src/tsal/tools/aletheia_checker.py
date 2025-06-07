@@ -3,12 +3,20 @@ import re
 from pathlib import Path
 
 TARGET = "aletheia"
+# Known common misspellings that should be flagged immediately
+COMMON_TYPOS = {
+    "athalaya",  # seen in various docs
+    "athaleia",
+    "alethei",  # truncated
+}
 
 
 def is_typo(word: str) -> bool:
     lw = word.lower()
     if lw == TARGET:
         return False
+    if lw in COMMON_TYPOS:
+        return True
     ratio = difflib.SequenceMatcher(None, lw, TARGET).ratio()
     return ratio >= 0.7
 
