@@ -20,6 +20,8 @@ from .state_vector import FourVector
 from .opwords import OP_WORD_MAP, op_from_word
 from .spark_translator import SPARK_TO_OPCODE, translate_spark_word
 from .executor import MetaFlagProtocol, TSALExecutor
+from .spiral_memory import SpiralMemory
+from .madmonkey_handler import MadMonkeyHandler
 from .connectivity import Node, verify_connectivity
 from .logic_gate import DynamicLogicGate
 from .module_registry import registry as module_registry, ModuleMeta
@@ -45,6 +47,8 @@ __all__ = [
     "translate_spark_word",
     "MetaFlagProtocol",
     "TSALExecutor",
+    "SpiralMemory",
+    "MadMonkeyHandler",
     "Node",
     "verify_connectivity",
     "DynamicLogicGate",

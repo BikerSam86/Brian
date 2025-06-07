@@ -10,3 +10,4 @@ This document sketches the modules that let Brian observe and repair itself.
 - `memory/core_brian_manifest.md` records Brian's purpose and history.
 
 Run `tsal-spiral-audit` or `tsal-reflect` to exercise these tools from the CLI.
+They require the `tsal` package to be installed with Matplotlib available.
