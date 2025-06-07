@@ -100,6 +100,9 @@ This data can be supplied to Brian's optimizer when analyzing or repairing code.
 2. Run `python examples/mesh_pipeline_demo.py`
 3. The pipeline prints regenerated Python code
 
+For a direct repair:
+`brian-optimize examples/broken_code.py --repair`
+
 ## Guardian Prime Directive
 
 The `EthicsEngine` enforces the project's core principles:
