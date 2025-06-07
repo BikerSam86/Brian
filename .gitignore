@@ -40,3 +40,7 @@ Thumbs.db
 
 # Environment files
 .env*
+
+system_io.db
+system_io.db.not.a.txt
+data/mesh_log.jsonl
