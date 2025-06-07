@@ -92,7 +92,7 @@ Run the optimizers and self-audit commands directly:
 ```bash
 tsal-spiral-audit path/to/code
 tsal-reflect --origin demo
-tsal-bestest-beast 3 --safe
+tsal-bestest-beast 3 --safe-mode
 tsal-meshkeeper --render
 ```
 

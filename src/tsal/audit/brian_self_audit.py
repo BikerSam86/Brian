@@ -34,7 +34,7 @@ def brian_improves_brian(safe: bool = False) -> list[str]:
     return suggestions
 
 
-import sys
+    parser.add_argument("--safe", "--safe-mode", dest="safe", action="store_true")
 
 def recursive_bestest_beast_loop(cycles: int = 3, safe_mode: bool = False) -> None:
 
