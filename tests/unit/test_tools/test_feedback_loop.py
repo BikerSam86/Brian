@@ -31,4 +31,3 @@ def test_reflect(tmp_path):
     sample.write_text("def x():\n    pass\n")
     res = reflect(str(tmp_path))
     assert "m.py" in res
-
