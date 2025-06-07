@@ -6,6 +6,7 @@ from typing import Optional, Dict, List, Any
 
 from .mesh_logger import log_event
 from .voxel import MeshVoxel
+from .constants import ensure_spin_axis
 
 
 class Rev_Eng:
@@ -57,6 +58,7 @@ class Rev_Eng:
             state=direction,
             spin=updown or direction,
         )
+        ensure_spin_axis(voxel)
         self.voxel_log.append(voxel.as_dict())
         log_event(
             "DATA",
