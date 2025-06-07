@@ -148,6 +148,11 @@ For a direct repair:
 See [USAGE.md](USAGE.md) for a minimal CLI rundown.
 Flowchart: [docs/SPIRAL_GUIDE.md](docs/SPIRAL_GUIDE.md).
 
+## VSCode Extension
+For instant bug fixes, install the built-in extension and run:
+`brian-optimize filename.py` – this triggers Rev_Eng + repair.
+See [docs/vscode_extension_integration.md](docs/vscode_extension_integration.md) for details.
+
 ### TriStar Handshake Example
 ```python
 from tsal.tristar import handshake
