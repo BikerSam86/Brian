@@ -1,25 +1,19 @@
-
-"""Feedback ingestion and scoring for Rev_Eng logs."""
-
-from typing import Iterable, List, Dict
+"""Feedback ingestion and scoring utilities."""
 from dataclasses import dataclass
-from tsal.core.spiral_vector import phi_alignment
+from typing import Iterable, List
 
-
-def score_feedback(text: str) -> float:
-    """Return a basic φ-resonance score for feedback text."""
-    complexity = float(len(text)) * 0.1
-    coherence = 1.0 if "error" not in text.lower() else 0.1
-    return phi_alignment(complexity, coherence)
-
-
-def ingest_lines(lines: Iterable[str]) -> List[Dict[str, float]]:
-    """Return scored feedback objects."""
-    return [{"text": t, "score": score_feedback(t)} for t in lines]
-
-
-def ingest_file(path: str) -> List[Dict[str, float]]:
-    with open(path, "r", encoding="utf-8") as fh:
+@dataclass
+class Feedback:
+    source: str
+    content: str
+    score: float = 0.0
+def categorize(feedback: Iterable[str]) -> List[Feedback]:
+    """Return feedback objects scored by resonance/dissonance."""
+    results = []
+    for line in feedback:
+        score = 1.0 if "good" in line.lower() else -1.0 if "bad" in line.lower() else 0.0
+        results.append(Feedback(source="user", content=line, score=score))
+    return results
         return ingest_lines(fh.read().splitlines())
 
 

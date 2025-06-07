@@ -1,18 +1,14 @@
+"""Run spiral analysis across the codebase."""
 
-"""Directory auditor using SymbolicOptimizer."""
-
-import argparse
-import json
-from pathlib import Path
 from tsal.tools.brian.optimizer import SymbolicOptimizer
-
-
-def audit_directory(path: str) -> dict[str, int]:
-    files = list(Path(path).rglob("*.py"))
-    opt = SymbolicOptimizer()
-    total_sigs = 0
-    for fp in files:
-        res = opt.analyze(fp.read_text())
+def audit_path(path: Path) -> None:
+    for file in path.rglob("*.py"):
+        results = opt.analyze(file.read_text())
+        print(file, "->", len(results), "items")
+    parser.add_argument("--self", action="store_true", dest="self_flag")
+    audit_path(Path(args.path))
+    if args.self_flag:
+        audit_path(Path("src/tsal"))
         total_sigs += len(res)
     return {"files": len(files), "signatures": total_sigs}
   
