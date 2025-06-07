@@ -108,6 +108,9 @@ brian-optimize examples/broken_code.py --repair -o fixed.py
 ```
 The repaired file is written to `fixed.py`.
 
+For a direct repair:
+`brian-optimize examples/broken_code.py --repair`
+
 ## Guardian Prime Directive
 
 The `EthicsEngine` enforces the project's core principles:

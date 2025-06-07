@@ -1,8 +1,11 @@
 from tsal.core.tokenize_flowchart import tokenize_to_flowchart
 
 
+
 def test_tokenize_basic_flow(tmp_path):
     code = [
+    lines = [
+
         "def foo():",
         "    pass",
         "if True:",
@@ -18,6 +21,8 @@ def test_tokenize_basic_flow(tmp_path):
         ],
     }
     (tmp_path / "schema.json").write_text(__import__('json').dumps(schema_data))
-    nodes, edges = tokenize_to_flowchart(code, schema)
     assert len(nodes) == 2
+    nodes, edges = tokenize_to_flowchart(lines)
+    types = [n["type"] for n in nodes]
+    assert types == ["def", "if"]
     assert edges == [{"from": 0, "to": 2}]

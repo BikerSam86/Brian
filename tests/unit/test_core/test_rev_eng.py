@@ -1,4 +1,5 @@
 from tsal.core.rev_eng import Rev_Eng
+
 from tsal.core import mesh_logger
 
 
@@ -16,3 +17,5 @@ def test_log_data_and_summary(tmp_path, monkeypatch):
     assert summary["collisions"]["xor"] == 1
     assert len(summary["voxels"]) == 2
     assert log_file.exists()
+
+

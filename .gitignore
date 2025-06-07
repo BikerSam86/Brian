@@ -40,7 +40,9 @@ Thumbs.db
 
 # Environment files
 .env*
+
 # Generated SQLite DB
 system_io.db*
+
 # Mesh log output
 data/mesh_log.jsonl
