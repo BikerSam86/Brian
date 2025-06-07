@@ -1,7 +1,8 @@
+
 """Feedback ingestion and scoring for Rev_Eng logs."""
 
 from typing import Iterable, List, Dict
-
+from dataclasses import dataclass
 from tsal.core.spiral_vector import phi_alignment
 
 
@@ -23,3 +24,25 @@ def ingest_file(path: str) -> List[Dict[str, float]]:
 
 
 __all__ = ["score_feedback", "ingest_lines", "ingest_file"]
+
+=======
+
+"""Feedback ingestion and scoring utilities."""
+
+
+
+@dataclass
+class Feedback:
+    source: str
+    content: str
+    score: float = 0.0
+
+
+def categorize(feedback: Iterable[str]) -> List[Feedback]:
+    """Return feedback objects scored by resonance/dissonance."""
+    results = []
+    for line in feedback:
+        score = 1.0 if "good" in line.lower() else -1.0 if "bad" in line.lower() else 0.0
+        results.append(Feedback(source="user", content=line, score=score))
+    return results
+
