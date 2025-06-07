@@ -1,4 +1,4 @@
-"""Feedback ingestion and scoring utilities."""
+"""Feedback ingestion and scoring utilities."""  # [!INTERNAL STUB]
 
 from dataclasses import dataclass
 from typing import Iterable, List

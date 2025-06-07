@@ -1,4 +1,4 @@
-"""Score goals for priority based on mesh and alignment."""
+"""Score goals for priority based on mesh and alignment."""  # [!INTERNAL STUB]
 
 from dataclasses import dataclass
 from typing import Iterable, List
