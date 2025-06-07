@@ -191,6 +191,15 @@ See `examples/demo_repair.py` for a simple demonstration. Run the tests with:
 pytest -q
 ```
 
+## Self-Reflection Tools
+
+Audit the repo and view a state summary:
+
+```bash
+tsal-spiral-audit src/tsal
+tsal-reflect --json
+```
+
 Please see the [LICENSE](LICENSE) and our [Code of Conduct](CODE_OF_CONDUCT.md) for project policies.
 
 ## Status & Support
