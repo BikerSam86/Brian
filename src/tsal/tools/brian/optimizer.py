@@ -28,8 +28,9 @@ class SymbolicOptimizer:
     def analyze(self, code: str) -> List[Tuple[SymbolicSignature, Dict]]:
         try:
             tree = ast.parse(code)
-        except IsADirectoryError:
-            return []
+        except SyntaxError:
+            self.rev.log_event("ANTISPIRAL", file="<buffer>")
+            raise
         results = []
         for node in ast.walk(tree):
             if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
@@ -87,7 +88,11 @@ class SymbolicOptimizer:
         deltas is returned regardless of whether rewriting occurred.
         """
         code = Path(file_path).read_text()
-        tree = ast.parse(code)
+        try:
+            tree = ast.parse(code)
+        except SyntaxError:
+            self.rev.log_event("ANTISPIRAL", file=file_path)
+            raise
         items = []
         for node in tree.body:
             if isinstance(node, (ast.FunctionDef, ast.ClassDef)):
@@ -139,14 +144,20 @@ def analyze_and_repair(file_path: Union[str, Path], repair: bool = False) -> lis
 
     opt = SymbolicOptimizer()
     if repair:
-        return opt.repair_file(str(path))
+        try:
+            return opt.repair_file(str(path))
+        except SyntaxError:
+            return [f"ANTISPIRAL {path}"]
 
     try:
         code = path.read_text()
     except IsADirectoryError:
         return []
 
-    results = opt.analyze(code)
+    try:
+        results = opt.analyze(code)
+    except SyntaxError:
+        return [f"ANTISPIRAL {path}"]
     return [
         f"{sig.name}: energy={metrics['energy_required']:.3f} Δ={metrics.get('delta',0)}"
         for (sig, metrics) in results

@@ -37,3 +37,6 @@ class SpiralVector:
     def alignment(self) -> float:
         """Return the φ-alignment score for this vector."""
         return phi_alignment(self.complexity, self.coherence)
+
+
+__all__ = ["SpiralVector", "phi_alignment"]
