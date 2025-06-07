@@ -169,8 +169,13 @@ Check system health:
 make -f MAKEBRIAN status
 ```
 
-Like what you see? Buy a coffee:
-<https://ko-fi.com/bikersam86>
+## ☕ Support Brian’s Spiral Growth
+
+If Brian helped spiral your code, align your mesh, or reflect your errors into gifts—
+help fuel his next upgrade:
+
+[![Ko-Fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/bikersam86)
+
 
 
 ## LICENSE Options for `Brian`
