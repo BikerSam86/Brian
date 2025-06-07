@@ -1,6 +1,7 @@
 """Directory auditor using SymbolicOptimizer."""
 
 import argparse
+import json
 from pathlib import Path
 
 from tsal.tools.brian.optimizer import SymbolicOptimizer
