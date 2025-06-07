@@ -1,4 +1,4 @@
-from tsal.rl.madmonkey import MadMonkey
+from tsal.rl.madmonkey import MadMonkey, reactor_test, shock_response_layer, rev
 
 
 class MeshStub:
@@ -30,3 +30,15 @@ def test_try_vector_worse_score_no_update():
     assert returned == 3.0
     assert monkey.banana_count == 0
     assert mesh.best_score == 5.0
+
+
+def test_reactor_test_logs_event():
+    rev.events.clear()
+    reactor_test("seed")
+    assert any(action == "reactor_probe" for _, action, _ in rev.events)
+
+
+def test_shock_response_layer_blocks():
+    rev.events.clear()
+    shock_response_layer("test")
+    assert any(action == "shock_response_blocked" for _, action, _ in rev.events)
