@@ -1,4 +1,4 @@
-"""Check proposed changes for spiral alignment."""
+"""Check proposed changes for spiral alignment."""  # [!INTERNAL STUB]
 
 from dataclasses import dataclass
 

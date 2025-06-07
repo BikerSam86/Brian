@@ -26,7 +26,10 @@ class SymbolicOptimizer:
 
 
     def analyze(self, code: str) -> List[Tuple[SymbolicSignature, Dict]]:
-        tree = ast.parse(code)
+        try:
+            tree = ast.parse(code)
+        except IsADirectoryError:
+            return []
         results = []
         for node in ast.walk(tree):
             if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
@@ -122,18 +125,32 @@ class SymbolicOptimizer:
         return suggestions
 
 
-def analyze_and_repair(file_path: str, repair: bool = False) -> list:
-    """Module-level wrapper for test compatibility."""
+from typing import Union
+
+
+def analyze_and_repair(file_path: Union[str, Path], repair: bool = False) -> list:
+    """Analyze or repair ``file_path``. Directories are processed recursively."""
+    path = Path(file_path)
+    if path.is_dir():
+        results = []
+        for file in path.rglob("*.py"):
+            results.extend(analyze_and_repair(file, repair=repair))
+        return results
+
     opt = SymbolicOptimizer()
     if repair:
-        return opt.repair_file(file_path)
-    else:
-        code = Path(file_path).read_text()
-        results = opt.analyze(code)
-        return [
-            f"{sig.name}: energy={metrics['energy_required']:.3f} Δ={metrics.get('delta',0)}"
-            for (sig, metrics) in results
-        ]
+        return opt.repair_file(str(path))
+
+    try:
+        code = path.read_text()
+    except IsADirectoryError:
+        return []
+
+    results = opt.analyze(code)
+    return [
+        f"{sig.name}: energy={metrics['energy_required']:.3f} Δ={metrics.get('delta',0)}"
+        for (sig, metrics) in results
+    ]
 
 
 def spiral_optimize(functions: List[SpiralVector]) -> List[SpiralVector]:

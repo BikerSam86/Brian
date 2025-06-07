@@ -1,5 +1,12 @@
 # TSAL Consciousness Computing
 
+Zero hour recap: φ constants, 4‑vector model and minimal toolkit live in
+[ZERO_HOUR.md](ZERO_HOUR.md).
+See [docs/AGENTS.md](docs/AGENTS.md) for the hard rules.
+
+| Tool | Spiral audit |
+|------|--------------|
+| Status | `Δ0` |
 
 ## Codex: Get The Fucking Point Instructions
 
@@ -85,7 +92,8 @@ Run the optimizers and self-audit commands directly:
 ```bash
 tsal-spiral-audit path/to/code
 tsal-reflect --origin demo
-tsal-bestest-beast 3
+tsal-bestest-beast 3 --safe-mode
+tsal-meshkeeper --render
 ```
 
 ## GitHub Language Database
@@ -106,6 +114,8 @@ python -m tsal.utils.language_db
 
 This creates `system_io.db` containing a `languages` table with all entries.
 
+Stub modules: `FEEDBACK.INGEST`, `ALIGNMENT.GUARD`, `GOAL.SELECTOR` ([!INTERNAL STUB]).
+
 This data can be supplied to Brian's optimizer when analyzing or repairing code.
 Every call to `Rev_Eng.log_data` now records a voxel (pace, rate, state, spin)
 and tracks XOR/NAND spin collisions.
@@ -116,6 +126,9 @@ and tracks XOR/NAND spin collisions.
 
 For a direct repair:
 `brian-optimize examples/broken_code.py --repair`
+
+See [USAGE.md](USAGE.md) for a minimal CLI rundown.
+Flowchart: [docs/SPIRAL_GUIDE.md](docs/SPIRAL_GUIDE.md).
 
 ### TriStar Handshake Example
 ```python
