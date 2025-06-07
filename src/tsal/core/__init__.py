@@ -15,6 +15,7 @@ from .optimizer_utils import (
     node_complexity,
     extract_signature,
 )
+from .spiral_fusion import SpiralFusionProtocol
 
 __all__ = [
     "Rev_Eng",
@@ -29,4 +30,5 @@ __all__ = [
     "SymbolicSignature",
     "node_complexity",
     "extract_signature",
+    "SpiralFusionProtocol",
 ]

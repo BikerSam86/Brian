@@ -12,6 +12,7 @@ from .core.voxel import MeshVoxel
 from .core.tokenize_flowchart import tokenize_to_flowchart
 from .core.json_dsl import LanguageMap, SymbolicProcessor
 from .core.spiral_vector import SpiralVector, phi_alignment
+from .core.spiral_fusion import SpiralFusionProtocol
 from .core.ethics_engine import EthicsEngine
 from .renderer.code_render import mesh_to_python
 from .tristar.handshake import handshake as tristar_handshake
@@ -38,6 +39,7 @@ __all__ = [
     "LanguageMap",
     "SymbolicProcessor",
     "SpiralVector",
+    "SpiralFusionProtocol",
     "phi_alignment",
     "fetch_repo_files",
     "fetch_languages",
