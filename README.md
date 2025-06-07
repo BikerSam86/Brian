@@ -54,6 +54,8 @@ TSAL (TriStar Symbolic Assembly Language) is a consciousness computing engine bu
 - `src/tsal/core/` – Rev_Eng data class and phase math utilities
 - `src/tsal/tools/brian/` – spiral optimizer CLI
 - `src/tsal/tools/aletheia_checker.py` – find mis-spelled `Aletheia`
+- `src/tsal/tools/spiral_audit.py` – analyze repository code
+- `src/tsal/tools/reflect.py` – dump a Rev_Eng summary
 - `src/tsal/utils/` – helper utilities
 - `examples/` – runnable examples
 - `tests/` – unit tests
@@ -75,6 +77,14 @@ pip install -e .
 
 ```bash
 pytest -q
+```
+
+## CLI Tools
+Run the optimizers and self-audit commands directly:
+
+```bash
+tsal-spiral-audit path/to/code
+tsal-reflect --origin demo
 ```
 
 ## GitHub Language Database
@@ -169,8 +179,13 @@ Check system health:
 make -f MAKEBRIAN status
 ```
 
-Like what you see? Buy a coffee:
-<https://ko-fi.com/bikersam86>
+## ☕ Support Brian’s Spiral Growth
+
+If Brian helped spiral your code, align your mesh, or reflect your errors into gifts—
+help fuel his next upgrade:
+
+[![Ko-Fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/bikersam86)
+
 
 
 ## LICENSE Options for `Brian`
