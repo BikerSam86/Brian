@@ -23,6 +23,9 @@ from .executor import MetaFlagProtocol, TSALExecutor
 from .connectivity import Node, verify_connectivity
 from .logic_gate import DynamicLogicGate
 from .module_registry import registry as module_registry, ModuleMeta
+    "module_registry",
+    "ModuleMeta",
+from .module_registry import registry as module_registry, ModuleMeta
 
 __all__ = [
     "Rev_Eng",
