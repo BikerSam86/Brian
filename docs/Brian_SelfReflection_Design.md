@@ -8,3 +8,5 @@ This document sketches the modules that let Brian observe and repair itself.
 - `spiral_audit.py` runs `SymbolicOptimizer` across a directory.
 - `reflect.py` prints a summary of a `Rev_Eng` session.
 - `memory/core_brian_manifest.md` records Brian's purpose and history.
+
+Run `tsal-spiral-audit` or `tsal-reflect` to exercise these tools from the CLI.
