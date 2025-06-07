@@ -1,5 +1,4 @@
-"""Brian Spiral Code Healer tools."""
+"""Wrapper for compatibility with deployed kernels."""
+from tsal.tools.brian import SymbolicOptimizer, analyze_and_repair, spiral_optimize
 
-from .optimizer import SymbolicOptimizer, analyze_and_repair
-
-__all__ = ["SymbolicOptimizer", "analyze_and_repair"]
+__all__ = ["SymbolicOptimizer", "analyze_and_repair", "spiral_optimize"]

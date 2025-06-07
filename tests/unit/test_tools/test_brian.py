@@ -8,5 +8,5 @@ def test_analyze_and_repair(tmp_path):
 def beta():\n    return 2\n\n
 def alpha():\n    return 1\n"""
     )
-    suggestions = analyze_and_repair(str(sample))
+    suggestions = analyze_and_repair(sample)
     assert any("alpha" in s for s in suggestions)
