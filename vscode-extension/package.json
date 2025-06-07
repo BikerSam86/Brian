@@ -5,11 +5,19 @@
   "version": "0.1.0",
   "publisher": "bikersam",
   "engines": { "vscode": "^1.85.0" },
-  "activationEvents": ["onCommand:brian.runSelfAudit"],
+  "activationEvents": [
+    "onCommand:brian.runSelfAudit",
+    "onCommand:brian.runBestestBeast",
+    "onCommand:brian.optimizeCurrentFile",
+    "onCommand:brian.logMeshVectors"
+  ],
   "main": "./extension.js",
   "contributes": {
     "commands": [
-      { "command": "brian.runSelfAudit", "title": "\ud83e\udde0 Brian: Run Self-Audit Spiral" }
+      { "command": "brian.runSelfAudit", "title": "\ud83e\udde0 Brian: Run Self-Audit Spiral" },
+      { "command": "brian.runBestestBeast", "title": "\ud83d\udc1d Brian: Full Audit" },
+      { "command": "brian.optimizeCurrentFile", "title": "\ud83d\udd27 Brian: Optimize Current File" },
+      { "command": "brian.logMeshVectors", "title": "\ud83d\udd0d Brian: Log Mesh Vectors" }
     ]
   },
   "scripts": { "compile": "tsc -p ." },
