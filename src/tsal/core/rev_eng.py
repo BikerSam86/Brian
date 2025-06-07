@@ -4,6 +4,9 @@ import uuid
 from collections import defaultdict
 from typing import Optional, Dict, List, Any
 
+from .mesh_logger import log_event
+from .voxel import MeshVoxel
+
 
 class Rev_Eng:
     """
@@ -24,6 +27,7 @@ class Rev_Eng:
         }
         self.rate_log = []  # (timestamp, bytes, rate) tuples
         self.spin_log = []  # (timestamp, spin_dir, I/O, updown)
+        self.voxel_log: List[Dict[str, Any]] = []  # pace/rate/state/spin snapshots
         self.mesh_coords = (
             {}
         )  # e.g., {x:..., y:..., z:..., vx:..., vy:..., vz:..., phase:..., mesh:...}
@@ -47,11 +51,43 @@ class Rev_Eng:
         self.data_stats["last_update"] = now
         self.rate_log.append((now, n_bytes, rate))
         self.log_spin(direction=direction, updown=updown, I_O=direction)
+        voxel = MeshVoxel(
+            pace=self.data_stats["chunk_count"],
+            rate=rate,
+            state=direction,
+            spin=updown or direction,
+        )
+        self.voxel_log.append(voxel.as_dict())
+        log_event(
+            "DATA",
+            voxel.as_dict(),
+            phase="io",
+            origin=self.origin,
+        )
 
     def log_spin(self, direction: str, updown: str = None, I_O: str = None):
         # direction: 'in', 'out', 'clockwise', 'counter', etc.
         now = time.time()
         self.spin_log.append((now, direction, I_O, updown))
+
+    def spin_collisions(self) -> Dict[str, int]:
+        """Return XOR/NAND/AND counts over sequential spin directions."""
+        counts = {"xor": 0, "nand": 0, "and": 0}
+        if len(self.spin_log) < 2:
+            return counts
+
+        def as_bool(v: Any) -> bool:
+            if isinstance(v, str):
+                return v.lower() in {"up", "in", "1", "true"}
+            return bool(v)
+
+        for (_, a, _, _), (_, b, _, _) in zip(self.spin_log, self.spin_log[1:]):
+            ba = as_bool(a)
+            bb = as_bool(b)
+            counts["xor"] += ba ^ bb
+            counts["and"] += ba and bb
+            counts["nand"] += not (ba and bb)
+        return counts
 
     # === STATE/CONTEXT TRACKING ===
     def set_state(self, **kwargs):
@@ -90,6 +126,8 @@ class Rev_Eng:
             "recent_rate": self.data_stats["last_rate"],
             "rate_log": self.rate_log[-5:],
             "spin_log": self.spin_log[-5:],
+            "voxels": self.voxel_log[-5:],
+            "collisions": self.spin_collisions(),
             "state": self.state,
             "mesh_coords": self.mesh_coords,
             "identity": self.identity,

@@ -95,6 +95,8 @@ python -m tsal.utils.language_db
 This creates `system_io.db` containing a `languages` table with all entries.
 
 This data can be supplied to Brian's optimizer when analyzing or repairing code.
+Every call to `Rev_Eng.log_data` now records a voxel (pace, rate, state, spin)
+and tracks XOR/NAND spin collisions.
 ## Quickstart
 1. Put your input code in `examples/broken_code.py`
 2. Run `python examples/mesh_pipeline_demo.py`
