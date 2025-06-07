@@ -3,6 +3,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Dict, Optional
 
+from .rev_eng import Rev_Eng
+
 
 @dataclass
 class LanguageMap:
@@ -21,11 +23,12 @@ class LanguageMap:
 
 
 class SymbolicProcessor:
-    """Decode and encode code using a language map."""
+    """Decode and encode code using a language map with optional logging."""
 
-    def __init__(self, lang_map: LanguageMap):
+    def __init__(self, lang_map: LanguageMap, rev_eng: Optional["Rev_Eng"] = None):
         self.lang_map = lang_map
         self.triggers = {op["keyword"]: op for op in lang_map.ops}
+        self.rev = rev_eng
 
     def decode(self, lines: List[str]) -> List[Dict]:
         tokens = []
@@ -33,8 +36,13 @@ class SymbolicProcessor:
             words = line.strip().split()
             if words and words[0] in self.triggers:
                 tokens.append({"type": self.triggers[words[0]]["type"], "raw": line})
+            if self.rev:
+                self.rev.log_data(len(line.encode()), direction="in")
         return tokens
 
     def encode(self, tokens: List[Dict]) -> str:
-        return "\n".join(t["raw"] for t in tokens)
+        out = "\n".join(t["raw"] for t in tokens)
+        if self.rev:
+            self.rev.log_data(len(out.encode()), direction="out")
+        return out
 
