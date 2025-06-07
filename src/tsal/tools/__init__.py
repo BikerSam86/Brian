@@ -7,6 +7,7 @@ from .alignment_guard import is_aligned, Change
 from .goal_selector import Goal, score_goals
 from .spiral_audit import audit_path
 from .reflect import reflect
+from .kintsugi.kintsugi import kintsugi_repair
 
 __all__ = [
     "real_time_codec",
@@ -23,4 +24,5 @@ __all__ = [
     "score_goals",
     "audit_path",
     "reflect",
+    "kintsugi_repair",
 ]
