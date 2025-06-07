@@ -1,4 +1,6 @@
 from tsal.core.phase_math import phase_match_enhanced, mesh_phase_sync
+from tsal.core.phase_math import mesh_phase_sync_vectorized
+import pytest
 
 
 def test_phase_match_already_in_phase():
@@ -55,3 +57,16 @@ def test_mesh_phase_sync_empty_dict_with_verbose():
         "mesh_resonance": 0.0,
         "φ_signature": "φ^0.000_mesh",
     }
+
+
+def test_mesh_phase_sync_vectorized_matches_original():
+    nodes = {"x": 1.0, "y": 2.5, "z": -3.3}
+    legacy = mesh_phase_sync(nodes, 0.5)
+    vect = mesh_phase_sync_vectorized(nodes, 0.5)
+
+    assert vect["total_energy"] == pytest.approx(legacy["total_energy"])
+    assert set(vect["nodes"].keys()) == set(legacy["nodes"].keys())
+    for name in nodes:
+        assert vect["nodes"][name]["final"] == pytest.approx(
+            legacy["nodes"][name]["final"]
+        )
