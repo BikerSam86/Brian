@@ -96,8 +96,19 @@ tsal-bestest-beast 3 src/tsal --safe
 tsal-meshkeeper --render
 ```
 
+
 ### VSCode Extension Integration
 | Visual mesh heatmap (planned) | `tsal-meshkeeper --render` | Add via matplotlib overlay |
+
+```bash
+cd vscode-extension
+npm install
+code .
+```
+
+Press `F5` in VS Code and run **Brian: Run Self-Audit Spiral**.
+See [docs/vscode_extension.md](docs/vscode_extension.md) for details.
+
 
 ### How to run Bestest Beast
 
@@ -139,6 +150,11 @@ For a direct repair:
 
 See [USAGE.md](USAGE.md) for a minimal CLI rundown.
 Flowchart: [docs/SPIRAL_GUIDE.md](docs/SPIRAL_GUIDE.md).
+
+## VSCode Extension
+For instant bug fixes, install the built-in extension and run:
+`brian-optimize filename.py` – this triggers Rev_Eng + repair.
+See [docs/vscode_extension_integration.md](docs/vscode_extension_integration.md) for details.
 
 ### TriStar Handshake Example
 ```python
