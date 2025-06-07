@@ -143,6 +143,17 @@ pytest -q
 
 Please see the [LICENSE](LICENSE) and our [Code of Conduct](CODE_OF_CONDUCT.md) for project policies.
 
+## Status & Support
+
+Check system health:
+```bash
+make -f MAKEBRIAN status
+```
+
+Like what you see? Buy a coffee:
+<https://ko-fi.com/bikersam>
+
+
 ## LICENSE Options for `Brian`
 
 This project uses a **dual-license** model to ensure:
