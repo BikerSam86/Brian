@@ -18,6 +18,7 @@ from .optimizer_utils import (
 from .spiral_fusion import SpiralFusionProtocol
 from .state_vector import FourVector
 from .opwords import OP_WORD_MAP, op_from_word
+from .executor import MetaFlagProtocol, TSALExecutor
 
 __all__ = [
     "Rev_Eng",
@@ -36,4 +37,6 @@ __all__ = [
     "FourVector",
     "OP_WORD_MAP",
     "op_from_word",
+    "MetaFlagProtocol",
+    "TSALExecutor",
 ]
