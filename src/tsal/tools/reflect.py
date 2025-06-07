@@ -13,10 +13,10 @@ def reflect(path: str = "src/tsal") -> str:
         lines.append(f"{file}: Δ{delta}")
     return "\n".join(lines)
 
-
 def main() -> None:
     print(reflect())
 
 
 if __name__ == "__main__":
     main()
+=======
