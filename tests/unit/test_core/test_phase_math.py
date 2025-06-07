@@ -45,3 +45,13 @@ def test_mesh_phase_sync_empty_dict_arguments():
         "mesh_resonance": 0.0,
         "φ_signature": "φ^0.000_mesh",
     }
+
+def test_mesh_phase_sync_empty_dict_with_verbose():
+    summary = mesh_phase_sync({}, {}, verbose=True)
+
+    assert summary == {
+        "nodes": {},
+        "total_energy": 0.0,
+        "mesh_resonance": 0.0,
+        "φ_signature": "φ^0.000_mesh",
+    }
