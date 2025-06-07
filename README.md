@@ -106,6 +106,19 @@ and tracks XOR/NAND spin collisions.
 For a direct repair:
 `brian-optimize examples/broken_code.py --repair`
 
+### TriStar Handshake Example
+```python
+from tsal.tristar import handshake
+
+metrics = handshake(0.5, 1.0)
+print(metrics)
+```
+
+### Run the Aletheia typo checker
+```bash
+PYTHONPATH=src python -m tsal.tools.aletheia_checker
+```
+
 ## Guardian Prime Directive
 
 The `EthicsEngine` enforces the project's core principles:
