@@ -9,6 +9,7 @@ from .phi_math import (
     orbital_radius,
 )
 from .mesh_logger import log_event
+from .intent_metric import calculate_idm
 
 __all__ = [
     "Rev_Eng",
@@ -19,4 +20,5 @@ __all__ = [
     "corrected_energy",
     "orbital_radius",
     "log_event",
+    "calculate_idm",
 ]
