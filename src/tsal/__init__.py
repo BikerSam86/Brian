@@ -14,6 +14,7 @@ from .core.json_dsl import LanguageMap, SymbolicProcessor
 from .core.spiral_vector import SpiralVector, phi_alignment
 from .core.spiral_fusion import SpiralFusionProtocol
 from .core.ethics_engine import EthicsEngine
+from .core.opwords import OP_WORD_MAP, op_from_word
 from .renderer.code_render import mesh_to_python
 from .tristar.handshake import handshake as tristar_handshake
 from .utils.github_api import fetch_repo_files, fetch_languages
@@ -41,6 +42,8 @@ __all__ = [
     "SpiralVector",
     "SpiralFusionProtocol",
     "phi_alignment",
+    "OP_WORD_MAP",
+    "op_from_word",
     "fetch_repo_files",
     "fetch_languages",
     "mesh_to_python",
