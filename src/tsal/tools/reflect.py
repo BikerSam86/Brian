@@ -9,6 +9,14 @@ def reflect(path: str = "src/tsal") -> str:
         delta = sum(m["delta"] for _, m in results)
         lines.append(f"{file}: Δ{delta}")
     return "\n".join(lines)
+
+
+def main() -> None:
+    print(reflect())
+
+
+if __name__ == "__main__":
+    main()
     print(reflect_summary(rev))
 
     
