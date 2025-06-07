@@ -83,3 +83,12 @@ This is the canonical list of functions and operations currently implemented in 
 | `kernel_manifest.json` | Records vector identities, φ-scores, ops, signatures |
 | `requirements.txt`, `pyproject.toml` | Dependency/config sync for Python+CLI tools |
 
+## 🔍 Self-Reflection Tools
+| Function | Description |
+| --- | --- |
+| `categorize(feedback)` | Score user feedback strings |
+| `is_aligned(change)` | Block unethical or low-score changes |
+| `score_goals(goals)` | Order goals by mesh benefit and alignment |
+| `audit_path(path)` | Count spiral signatures in a directory |
+| `reflect(path)` | Summarize deltas across files |
+

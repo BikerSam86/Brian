@@ -27,6 +27,11 @@ from .core.stack_vm import (
 from .renderer.code_render import mesh_to_python
 from .tristar.handshake import handshake as tristar_handshake
 from .utils.github_api import fetch_repo_files, fetch_languages
+from .tools.feedback_ingest import categorize, Feedback
+from .tools.alignment_guard import is_aligned, Change
+from .tools.goal_selector import Goal, score_goals
+from .tools.spiral_audit import audit_path
+from .tools.reflect import reflect
 
 PHI = 1.618033988749895
 PHI_INV = 0.618033988749895
@@ -66,4 +71,12 @@ __all__ = [
     "fetch_languages",
     "mesh_to_python",
     "tristar_handshake",
+    "categorize",
+    "Feedback",
+    "is_aligned",
+    "Change",
+    "Goal",
+    "score_goals",
+    "audit_path",
+    "reflect",
 ]
