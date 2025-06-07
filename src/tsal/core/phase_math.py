@@ -1,6 +1,7 @@
 import math
 import time
 from typing import Tuple, Dict, Any
+import numpy as np
 
 from .mesh_logger import log_event
 
@@ -156,6 +157,70 @@ def mesh_phase_sync(
     mesh_resonance = sum(
         r["metrics"]["resonance_score"] for r in results.values()
     ) / len(nodes)
+
+    return {
+        "nodes": results,
+        "total_energy": total_energy,
+        "mesh_resonance": mesh_resonance,
+        "φ_signature": f"φ^{mesh_resonance:.3f}_mesh",
+    }
+
+
+def mesh_phase_sync_vectorized(
+    nodes: Dict[str, float], universal_tempo: float, verbose: bool = False
+) -> Dict[str, Any]:
+    """Vectorized variant of :func:`mesh_phase_sync` using NumPy."""
+    if not nodes:
+        return {
+            "nodes": {},
+            "total_energy": 0.0,
+            "mesh_resonance": 0.0,
+            "φ_signature": "φ^0.000_mesh",
+        }
+
+    mesh_context = {"nodes_aligning": len(nodes), "alignment_history": []}
+
+    local_states = np.fromiter(nodes.values(), dtype=float)
+    deltas = local_states - universal_tempo
+
+    harmonics = np.array(HARMONIC_SEQUENCE)
+    harmonic_mask = (np.abs(deltas[:, None] % harmonics) < QUANTUM_THRESHOLD).any(axis=1)
+    harmonic_factor = np.where(harmonic_mask, PHI_INV, 1.0)
+
+    base_energy = np.abs(deltas) * PHASE_CONSTANT * harmonic_factor
+    if len(nodes) > 1:
+        mesh_factor = 1 / math.log(len(nodes), PHI)
+        base_energy *= mesh_factor
+
+    energy_required = np.where(np.abs(deltas) < QUANTUM_THRESHOLD, 0.0, base_energy)
+    final_state = np.where(np.abs(deltas) < QUANTUM_THRESHOLD, local_states, universal_tempo)
+    resonance_scores = 1.0 / (1.0 + np.abs(deltas))
+
+    results = {}
+    total_energy = float(energy_required.sum())
+
+    for idx, name in enumerate(nodes.keys()):
+        delta = float(deltas[idx])
+        energy = float(energy_required[idx])
+        metrics = {
+            "delta": delta,
+            "energy_required": energy,
+            "harmonic_aligned": bool(harmonic_mask[idx]),
+            "phase_locked": abs(delta) < QUANTUM_THRESHOLD,
+            "phase_signature": f"φ^{abs(delta):.3f}_{int(time.time()) % 1000}",
+            "resonance_score": float(resonance_scores[idx]),
+            "φ_efficiency": PHI_INV if energy < abs(delta) else 1.0,
+        }
+        log_energy_use_enhanced(energy, metrics, verbose=verbose)
+        results[name] = {
+            "initial": float(local_states[idx]),
+            "final": float(final_state[idx]),
+            "energy": energy,
+            "metrics": metrics,
+        }
+        mesh_context["alignment_history"].append(delta)
+
+    mesh_resonance = float(resonance_scores.mean())
 
     return {
         "nodes": results,
