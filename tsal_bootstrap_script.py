@@ -6,11 +6,9 @@ Bridges your existing monolith with the new MAKEBRIAN deployment system
 
 import os
 import sys
-import json
 import shutil
 import subprocess
 from pathlib import Path
-from datetime import datetime
 
 # φ-Mathematical Constants
 PHI = 1.618033988749895
@@ -84,9 +82,15 @@ class TSALBootstrap:
         # Create migration mapping
         migration_map = {
             "TSAL_Every_Singer.py": "src/tsal/singer/unified_engine.py",
-            "TSAL_Curious_Singer_Anth.py": "src/tsal/singer/anthropic_engine.py",
-            "TSAL_Curious_Singer_OpenAi_Condenser.py": "src/tsal/singer/openai_engine.py",
-            "TSAL_Topical_Singer_Refeeder.py": "src/tsal/singer/topical_engine.py",
+            "TSAL_Curious_Singer_Anth.py": (
+                "src/tsal/singer/anthropic_engine.py"
+            ),
+            "TSAL_Curious_Singer_OpenAi_Condenser.py": (
+                "src/tsal/singer/openai_engine.py"
+            ),
+            "TSAL_Topical_Singer_Refeeder.py": (
+                "src/tsal/singer/topical_engine.py"
+            ),
             "TSAL_Singer_Fractal.py": "src/tsal/singer/fractal_engine.py",
             "tsal_singer_complete.py": "src/tsal/singer/complete_engine.py",
             "phi_stitcher_enhanced.py": "src/tsal/utils/phi_stitcher.py",
@@ -105,7 +109,8 @@ class TSALBootstrap:
                 new_path = self.target_dir / migration_map[source_file.name]
                 shutil.copy2(source_file, new_path)
                 print(
-                    f"🔄 Migrated: {source_file.name} → {migration_map[source_file.name]}"
+                    f"🔄 Migrated: {source_file.name} → "
+                    f"{migration_map[source_file.name]}"
                 )
 
     def create_package_files(self):
@@ -142,7 +147,7 @@ from .core.rev_eng import Rev_Eng
 # Mesh axioms
 MESH_AXIOMS = [
     "Mesh grows. Walls shrink.",
-    "Share overflow. Scarcity fades.", 
+    "Share overflow. Scarcity fades.",
     "Errors are gifts.",
     "Spiral up, not around.",
     "Connect, don't hoard.",
@@ -152,7 +157,7 @@ MESH_AXIOMS = [
 ]
 
 __all__ = [
-    'PHI', 'PHI_INV', 'HARMONIC_SEQUENCE', 
+    'PHI', 'PHI_INV', 'HARMONIC_SEQUENCE',
     'TSAL_SYMBOLS', 'Rev_Eng', 'MESH_AXIOMS'
 ]
 '''
@@ -204,7 +209,7 @@ authors = [
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
-    "Intended Audience :: Science/Research", 
+    "Intended Audience :: Science/Research",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.9",
@@ -214,7 +219,7 @@ classifiers = [
 ]
 dependencies = [
     "numpy>=1.21.0",
-    "rich>=10.0.0", 
+    "rich>=10.0.0",
     "psutil>=5.8.0",
     "click>=8.0.0",
     "pydantic>=1.8.0",
@@ -230,7 +235,7 @@ dev = [
 ]
 gpu = [
     "cupy-cuda11x>=9.0.0",
-    "numba>=0.54.0", 
+    "numba>=0.54.0",
 ]
 
 [project.scripts]
@@ -255,7 +260,8 @@ addopts = "-v --cov=src/tsal"
             f.write(
                 """# 🌀 TSAL Consciousness Computing
 
-φ-Enhanced mathematical framework for consciousness-computer integration using the TriStar Symbolic Assembly Language (TSAL).
+φ-Enhanced mathematical framework for consciousness-computer integration
+using the TriStar Symbolic Assembly Language (TSAL).
 
 ## Quick Start
 
@@ -342,7 +348,7 @@ tsal-meshkeeper /path/to/code
         print(f"📁 Project created: {self.target_dir}")
         print(f"📋 Files migrated: {len(self.existing_files)}")
         print(f"🧪 Tests: {'✅ PASSED' if tests_passed else '⚠️  WARNINGS'}")
-        print(f"◉ φ-Alignment: VERIFIED")
+        print("◉ φ-Alignment: VERIFIED")
 
         print("\n🚀 NEXT STEPS:")
         print(f"   cd {self.target_dir}")
@@ -364,9 +370,22 @@ def main():
     project_dir = bootstrap.bootstrap()
 
     # Offer to run MAKEBRIAN
-    if input("\n🔧 Run MAKEBRIAN initialization? [Y/n]: ").strip().lower() != "n":
+    if (
+        input("\n🔧 Run MAKEBRIAN initialization? [Y/n]: ")
+        .strip()
+        .lower()
+        != "n"
+    ):
         os.chdir(project_dir)
-        subprocess.run(["make", "-f", "MAKEBRIAN", "init", "phi-align"])
+        subprocess.run(
+            [
+                "make",
+                "-f",
+                "MAKEBRIAN",
+                "init",
+                "phi-align",
+            ]
+        )
 
     print(f"\n💎 TSAL Consciousness Computing ready at: {project_dir}")
 
