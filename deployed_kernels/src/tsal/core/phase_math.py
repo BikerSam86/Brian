@@ -14,7 +14,9 @@ RESONANCE_BONUS = PHI  # Harmonic alignment reduces energy cost
 
 
 def phase_match_enhanced(
-    local_state: float, universal_tempo: float, mesh_context: Dict[str, Any] = None
+    local_state: float,
+    universal_tempo: float,
+    mesh_context: Dict[str, Any] | None = None,
 ) -> Tuple[float, float, Dict]:
     """
     Enhanced phase matching with φ-optimization and mesh awareness
@@ -103,7 +105,10 @@ def log_energy_use_enhanced(energy: float, metrics: Dict[str, Any]):
 
 
 # Example: Multi-node mesh synchronization
-def mesh_phase_sync(nodes: Dict[str, float], universal_tempo: float) -> Dict[str, Any]:
+def mesh_phase_sync(
+    nodes: Dict[str, float],
+    universal_tempo: float,
+) -> Dict[str, Any]:
     """Synchronize multiple nodes with mesh awareness"""
     mesh_context = {"nodes_aligning": len(nodes), "alignment_history": []}
 
