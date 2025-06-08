@@ -26,3 +26,18 @@ For a summary of the current revision log:
 ```bash
 tsal-reflect
 ```
+
+## Support the project
+
+[![Ko-Fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/bikersam86)
+
+## Running tests
+
+Example unit tests live under `tests/`. Install deps then run:
+
+```bash
+pip install -r requirements.txt
+pytest -q
+```
+
+Run a single suite with `pytest tests/unit/test_rl/test_madmonkey.py`.
