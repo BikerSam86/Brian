@@ -1,3 +1,24 @@
+import sqlite3
+from pathlib import Path
+from typing import Optional, Sequence, Tuple, Union
+
+DB_PATH = Path("system_io.db")
+
+DEFAULT_GRAMMARS = [
+    ("Python", "syntax", "Indent with spaces"),
+    ("Python", "style", "PEP8"),
+    ("Python", "block", "Colons start blocks"),
+    ("JavaScript", "syntax", "Semicolons optional"),
+    ("JavaScript", "block", "{} for code blocks"),
+    ("Universal", "part_of_speech", "noun"),
+    ("Universal", "part_of_speech", "verb"),
+]
+DEFAULT_POS_RULES = ["noun", "verb", "adjective", "adverb", "preposition", "conjunction", "interjection"]
+DEFAULT_LANGUAGE_GRAMMARS = [
+    ("Python", "Indent with spaces"),
+    ("JavaScript", "Semicolons optional"),
+]
+
 def create_grammar_table(
     db_path: Union[Path, str] = DB_PATH, *, reset: bool = False
 ) -> None:
