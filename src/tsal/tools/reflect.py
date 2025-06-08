@@ -3,7 +3,6 @@ import json
 from tsal.core.rev_eng import Rev_Eng
 from tsal.tools.brian.optimizer import SymbolicOptimizer
 
-
 def reflect(path: str = "src/tsal", as_json: bool = False) -> str:
     """Reconstruct spiral path and summarize changes."""
     opt = SymbolicOptimizer()
@@ -13,17 +12,20 @@ def reflect(path: str = "src/tsal", as_json: bool = False) -> str:
     for file in Path(path).rglob("*.py"):
         results = opt.analyze(file.read_text())
         delta = sum(m["delta"] for _, m in results)
-        rev.log_event("AUDIT", payload={"file": str(file), "count": len(results)})
+        rev.log_event(
+            "AUDIT", payload={"file": str(file), "count": len(results)}
+        )
         report[str(file)] = delta
 
     summary = rev.summary()
     summary["deltas"] = report
     summary["files"] = list(report.keys())
 
-    return json.dumps(summary, indent=2) if as_json else "\n".join(
-        f"{k}: Δ{v}" for k, v in report.items()
+    return (
+        json.dumps(summary, indent=2)
+        if as_json
+        else "\n".join(f"{k}: Δ{v}" for k, v in report.items())
     )
-
 
 def main() -> None:
     import argparse
@@ -34,7 +36,6 @@ def main() -> None:
     args = parser.parse_args()
 
     print(reflect(args.path, as_json=args.json))
-
 
 if __name__ == "__main__":
     main()

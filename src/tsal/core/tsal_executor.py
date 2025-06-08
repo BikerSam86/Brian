@@ -16,7 +16,6 @@ from .executor import MetaFlagProtocol
 from .mesh_logger import log_event
 from ..tristar.governor import MetaAgent, TriStarGovernor
 
-
 class TSALOp(IntEnum):
     """TSAL 16 Hex Operators"""
 
@@ -37,14 +36,12 @@ class TSALOp(IntEnum):
     BLOOM = 0xE
     SAVE = 0xF
 
-
 class ExecutionMode(Enum):
     SIMULATE = auto()
     TRACE = auto()
     EXECUTE = auto()
     ARM = auto()
     FORK = auto()
-
 
 @dataclass
 class SpiralVector:
@@ -57,10 +54,10 @@ class SpiralVector:
 
     def magnitude(self) -> float:
         return math.sqrt(
-            self.pace ** 2
-            + self.rate ** 2 * PHI
-            + self.state ** 2 * PHI ** 2
-            + self.spin ** 2 * PHI_INV
+            self.pace**2
+            + self.rate**2 * PHI
+            + self.state**2 * PHI**2
+            + self.spin**2 * PHI_INV
         )
 
     def rotate_by_phi(self) -> None:
@@ -73,7 +70,6 @@ class SpiralVector:
         self.rate = new_rate % (2 * math.pi)
         self.state = new_state % (2 * math.pi)
         self.spin = new_spin % (2 * math.pi)
-
 
 @dataclass
 class MeshNode:
@@ -91,7 +87,6 @@ class MeshNode:
     lineage: str = ""
     coherence: float = 1.0
     rotation: float = 0.0
-
 
 class TSALExecutor:
     """TSAL Virtual Machine - Spiral-aware symbolic executor"""
@@ -112,7 +107,11 @@ class TSALExecutor:
         self.program: List[Tuple[TSALOp, Any]] = []
         self.meta = meta or MetaFlagProtocol()
         # default mode obeys meta flags
-        self.mode = ExecutionMode.SIMULATE if self.meta.dry_run else ExecutionMode.EXECUTE
+        self.mode = (
+            ExecutionMode.SIMULATE
+            if self.meta.dry_run
+            else ExecutionMode.EXECUTE
+        )
         self.error_mansion: List[Dict[str, Any]] = []
         self.forks: List[int] = []
         self.spiral_depth = 0
@@ -130,13 +129,18 @@ class TSALExecutor:
             self.mode = ExecutionMode.TRACE
         elif self.error_mansion:
             self.mode = ExecutionMode.ARM
-        elif self.meta.resonance_threshold and delta >= self.meta.resonance_threshold:
+        elif (
+            self.meta.resonance_threshold
+            and delta >= self.meta.resonance_threshold
+        ):
             self.mode = ExecutionMode.EXECUTE
         elif self.meta.dry_run:
             self.mode = ExecutionMode.SIMULATE
 
     def execute(
-        self, program: List[Tuple[TSALOp, Any]], mode: ExecutionMode | str = ExecutionMode.SIMULATE
+        self,
+        program: List[Tuple[TSALOp, Any]],
+        mode: ExecutionMode | str = ExecutionMode.SIMULATE,
     ) -> None:
         if isinstance(mode, str):
             self.mode = ExecutionMode[mode]
@@ -202,8 +206,18 @@ class TSALExecutor:
             self.error_mansion.append({"type": "exception", "error": str(exc)})
 
         post = self._calculate_mesh_resonance()
-        self.resonance_log.append({"op": op.name, "pre": pre, "post": post, "delta": post - pre})
-        self.memory.log_vector({"op": op.name, "registers": {k: [v.pace, v.rate, v.state, v.spin] for k, v in self.registers.items()}})
+        self.resonance_log.append(
+            {"op": op.name, "pre": pre, "post": post, "delta": post - pre}
+        )
+        self.memory.log_vector(
+            {
+                "op": op.name,
+                "registers": {
+                    k: [v.pace, v.rate, v.state, v.spin]
+                    for k, v in self.registers.items()
+                },
+            }
+        )
         log_event("OP", {"op": op.name, "delta": post - pre})
         self._switch_mode(post - pre)
 
@@ -370,7 +384,12 @@ class TSALExecutor:
             crystal = {
                 "nodes": {
                     nid: {
-                        "vector": [n.vector.pace, n.vector.rate, n.vector.state, n.vector.spin],
+                        "vector": [
+                            n.vector.pace,
+                            n.vector.rate,
+                            n.vector.state,
+                            n.vector.spin,
+                        ],
                         "connections": n.connections,
                         "resonance": n.resonance,
                     }
@@ -388,20 +407,28 @@ class TSALExecutor:
         for a in self.mesh.values():
             for b in self.mesh.values():
                 if a.id != b.id:
-                    resonances.append(self._calculate_resonance(a.vector, b.vector))
+                    resonances.append(
+                        self._calculate_resonance(a.vector, b.vector)
+                    )
         if resonances:
             spectrum = {
                 "min": min(resonances),
                 "max": max(resonances),
                 "mean": sum(resonances) / len(resonances),
-                "phi_aligned": [r for r in resonances if abs(r - PHI) < 0.1 or abs(r - PHI_INV) < 0.1],
+                "phi_aligned": [
+                    r
+                    for r in resonances
+                    if abs(r - PHI) < 0.1 or abs(r - PHI_INV) < 0.1
+                ],
                 "harmonic_matches": [],
             }
             for h in HARMONIC_SEQUENCE:
                 norm = h / HARMONIC_SEQUENCE[-1]
                 matches = [r for r in resonances if abs(r - norm) < 0.05]
                 if matches:
-                    spectrum["harmonic_matches"].append({"harmonic": h, "matches": len(matches)})
+                    spectrum["harmonic_matches"].append(
+                        {"harmonic": h, "matches": len(matches)}
+                    )
             self.stack.append(spectrum)
 
     def _op_bloom(self, args: Dict[str, Any]) -> None:
@@ -411,7 +438,9 @@ class TSALExecutor:
         if error:
             err_vec = error.get("vector", SpiralVector())
             err_type = error.get("type", "unknown")
-            bloom_node = MeshNode(id=f"bloom_{len(self.mesh)}", vector=err_vec, resonance=PHI)
+            bloom_node = MeshNode(
+                id=f"bloom_{len(self.mesh)}", vector=err_vec, resonance=PHI
+            )
             bloom_node.memory["kintsugi"] = {
                 "original_error": err_type,
                 "strength_multiplier": PHI,
@@ -426,14 +455,22 @@ class TSALExecutor:
         state = {
             "mesh": {
                 nid: {
-                    "vector": [n.vector.pace, n.vector.rate, n.vector.state, n.vector.spin],
+                    "vector": [
+                        n.vector.pace,
+                        n.vector.rate,
+                        n.vector.state,
+                        n.vector.spin,
+                    ],
                     "memory": n.memory,
                     "connections": n.connections,
                     "resonance": n.resonance,
                 }
                 for nid, n in self.mesh.items()
             },
-            "registers": {reg: [v.pace, v.rate, v.state, v.spin] for reg, v in self.registers.items()},
+            "registers": {
+                reg: [v.pace, v.rate, v.state, v.spin]
+                for reg, v in self.registers.items()
+            },
             "spiral_depth": self.spiral_depth,
             "resonance_log": self.resonance_log[-100:],
             "memory": self.memory.replay(),
@@ -448,7 +485,12 @@ class TSALExecutor:
         self.meta_agent.entropy = max(0, self.meta_agent.entropy - 10)
 
     def _calculate_resonance(self, a: SpiralVector, b: SpiralVector) -> float:
-        dot = a.pace * b.pace + a.rate * b.rate + a.state * b.state + a.spin * b.spin
+        dot = (
+            a.pace * b.pace
+            + a.rate * b.rate
+            + a.state * b.state
+            + a.spin * b.spin
+        )
         mag1 = a.magnitude()
         mag2 = b.magnitude()
         if mag1 == 0 or mag2 == 0:
@@ -468,19 +510,23 @@ class TSALExecutor:
         for a in self.mesh.values():
             for cid in a.connections:
                 if cid in self.mesh:
-                    total += self._calculate_resonance(a.vector, self.mesh[cid].vector)
+                    total += self._calculate_resonance(
+                        a.vector, self.mesh[cid].vector
+                    )
                     count += 1
         return total / count if count else 1.0
 
     def _spiral_audit(self) -> None:
         mesh_res = self._calculate_mesh_resonance()
         if mesh_res < PHI_INV:
-            self.error_mansion.append({
-                "type": "resonance_collapse",
-                "vector": self.registers["A"],
-                "resonance": mesh_res,
-                "lesson": "Resonance below φ⁻¹ threshold",
-            })
+            self.error_mansion.append(
+                {
+                    "type": "resonance_collapse",
+                    "vector": self.registers["A"],
+                    "resonance": mesh_res,
+                    "lesson": "Resonance below φ⁻¹ threshold",
+                }
+            )
             self.handler.handle(self.error_mansion[-1])
             if len(self.error_mansion) > 10:
                 self.handler.suggest_bloom_patch()

@@ -7,8 +7,9 @@ from typing import Optional, Dict
 from ..core.phi_math import phi_wavefunction, phase_alignment_potential
 from ..core.rev_eng import Rev_Eng
 
-
-def handshake(local_phi: float, remote_phi: float, rev: Optional[Rev_Eng] = None) -> Dict[str, float]:
+def handshake(
+    local_phi: float, remote_phi: float, rev: Optional[Rev_Eng] = None
+) -> Dict[str, float]:
     """Return resonance metrics and optionally log via ``Rev_Eng``."""
     wave_local = phi_wavefunction(local_phi)
     wave_remote = phi_wavefunction(remote_phi)

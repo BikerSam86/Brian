@@ -9,7 +9,6 @@ in running code.
 
 from typing import Iterable
 
-
 class EthicsEngine:
     """Validate system actions against the Guardian Prime Directive."""
 
@@ -45,6 +44,5 @@ class EthicsEngine:
         """Raise ``ValueError`` if the request violates the directive."""
         if not self.is_permitted(request):
             raise ValueError("Request violates Guardian Prime Directive")
-
 
 __all__ = ["EthicsEngine", "PRIME_DIRECTIVE"]

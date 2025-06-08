@@ -4,13 +4,11 @@ from dataclasses import dataclass
 
 from tsal.core.spiral_vector import phi_alignment
 
-
 @dataclass
 class Change:
     description: str
     complexity: float
     coherence: float
-
 
 def is_aligned(change: Change, threshold: float = 0.76) -> bool:
     """Return True if change clears φ score and keyword filter."""

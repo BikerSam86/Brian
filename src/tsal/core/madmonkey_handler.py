@@ -7,5 +7,4 @@ class MadMonkeyHandler:
     def suggest_bloom_patch(self):
         return "apply_bloom"
 
-
 __all__ = ["MadMonkeyHandler"]

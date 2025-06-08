@@ -7,7 +7,6 @@ import math
 
 from .symbols import PHI, PHI_INV
 
-
 @dataclass
 class FourVector:
     """pace, rate, state, spin representation."""
@@ -20,10 +19,10 @@ class FourVector:
     def magnitude(self) -> float:
         """Return φ-weighted vector magnitude."""
         return math.sqrt(
-            self.pace ** 2
-            + self.rate ** 2 * PHI
-            + self.state ** 2 * PHI ** 2
-            + self.spin ** 2 * PHI_INV
+            self.pace**2
+            + self.rate**2 * PHI
+            + self.state**2 * PHI**2
+            + self.spin**2 * PHI_INV
         )
 
     def rotate_by_phi(self) -> None:

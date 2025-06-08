@@ -4,7 +4,6 @@ from pathlib import Path
 
 ERROR_DIR = Path("errors")
 
-
 def activate_error_dignity(verbose: bool = False) -> None:
     """Activate error dignity protocols.
 

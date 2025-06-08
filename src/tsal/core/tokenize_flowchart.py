@@ -2,7 +2,6 @@ import json
 from typing import List, Tuple, Dict, Optional
 from importlib import resources
 
-
 def tokenize_to_flowchart(
     source_lines: List[str], schema_path: Optional[str] = None
 ) -> Tuple[List[Dict], List[Dict]]:

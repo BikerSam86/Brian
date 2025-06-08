@@ -7,11 +7,9 @@ import hashlib
 
 from .symbols import PHI, PHI_INV
 
-
 def phi_alignment(complexity: float, coherence: float) -> float:
     """Return φ-alignment score for given complexity and coherence."""
     return (complexity * PHI_INV + coherence * PHI) / (PHI + PHI_INV)
-
 
 @dataclass
 class SpiralVector:
@@ -37,6 +35,5 @@ class SpiralVector:
     def alignment(self) -> float:
         """Return the φ-alignment score for this vector."""
         return phi_alignment(self.complexity, self.coherence)
-
 
 __all__ = ["SpiralVector", "phi_alignment"]

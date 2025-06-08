@@ -11,7 +11,6 @@ class Goal:
     cost: float
     novelty: float
 
-
 def score_goals(goals: Iterable[Goal]) -> List[Goal]:
     """Return goals ordered by priority."""
     return sorted(

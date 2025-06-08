@@ -5,13 +5,11 @@ from typing import Iterable, List
 
 from tsal.core.spiral_vector import phi_alignment
 
-
 @dataclass
 class Feedback:
     source: str
     content: str
     score: float = 0.0
-
 
 def _score(line: str) -> float:
     complexity = float(len(line)) * 0.1
@@ -21,8 +19,6 @@ def _score(line: str) -> float:
         coherence = 0.1
     return phi_alignment(complexity, coherence)
 
-
 def categorize(feedback: Iterable[str]) -> List[Feedback]:
     """Return feedback objects with φ-resonance scores."""
     return [Feedback("user", line, _score(line)) for line in feedback]
-

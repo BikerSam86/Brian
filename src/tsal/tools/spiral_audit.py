@@ -6,7 +6,6 @@ from pathlib import Path
 
 from tsal.tools.brian.optimizer import SymbolicOptimizer
 
-
 def audit_path(path: Path) -> dict[str, int]:
     opt = SymbolicOptimizer()
     files = list(path.rglob("*.py"))
@@ -14,7 +13,6 @@ def audit_path(path: Path) -> dict[str, int]:
     for file in files:
         sigs += len(opt.analyze(file.read_text()))
     return {"files": len(files), "signatures": sigs}
-
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Spiral audit")
@@ -26,7 +24,6 @@ def main() -> None:
         self_report = audit_path(Path("src/tsal"))
         result["self_signatures"] = self_report["signatures"]
     print(json.dumps(result))
-
 
 if __name__ == "__main__":
     main()

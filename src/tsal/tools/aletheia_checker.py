@@ -10,7 +10,6 @@ COMMON_TYPOS = {
     "alethei",  # truncated
 }
 
-
 def is_typo(word: str) -> bool:
     lw = word.lower()
     if lw == TARGET:
@@ -19,7 +18,6 @@ def is_typo(word: str) -> bool:
         return True
     ratio = difflib.SequenceMatcher(None, lw, TARGET).ratio()
     return ratio >= 0.7
-
 
 def scan_file(path: Path) -> list[tuple[int, str]]:
     results = []
@@ -32,16 +30,21 @@ def scan_file(path: Path) -> list[tuple[int, str]]:
                     break
     return results
 
-
 def find_typos(root: Path) -> dict[str, list[tuple[int, str]]]:
     typos = {}
     for path in root.rglob("*"):
-        if path.is_file() and path.suffix.lower() in {".py", ".md", ".txt", ".json", ".yaml", ".yml"}:
+        if path.is_file() and path.suffix.lower() in {
+            ".py",
+            ".md",
+            ".txt",
+            ".json",
+            ".yaml",
+            ".yml",
+        }:
             found = scan_file(path)
             if found:
                 typos[str(path)] = found
     return typos
-
 
 if __name__ == "__main__":
     repo_root = Path(__file__).resolve().parents[3]

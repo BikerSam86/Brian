@@ -6,8 +6,13 @@ from typing import Dict, Any
 LOG_FILE = Path("data/mesh_log.jsonl")
 VERBOSE_LOGGING = False
 
-
-def log_event(event_type: str, payload: Dict[str, Any], phase: str | None = None, origin: str | None = None, verbose: bool = False) -> Dict[str, Any]:
+def log_event(
+    event_type: str,
+    payload: Dict[str, Any],
+    phase: str | None = None,
+    origin: str | None = None,
+    verbose: bool = False,
+) -> Dict[str, Any]:
     if not isinstance(payload, dict):
         raise ValueError("payload must be a dict")
     entry = {

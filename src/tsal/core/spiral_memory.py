@@ -3,7 +3,6 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any, Dict, List
 
-
 @dataclass
 class SpiralMemory:
     entries: List[Dict[str, Any]] = field(default_factory=list)
@@ -19,6 +18,5 @@ class SpiralMemory:
 
     def replay(self) -> List[Dict[str, Any]]:
         return list(self.entries)
-
 
 __all__ = ["SpiralMemory"]
