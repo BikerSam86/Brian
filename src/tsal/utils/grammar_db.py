@@ -20,11 +20,20 @@ def create_grammar_table(
     conn = sqlite3.connect(str(db_path))
     if reset:
         cur.execute("DROP TABLE IF EXISTS grammar")
+        cur.execute("DROP TABLE IF EXISTS grammar_rules")
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             context TEXT,
             lens TEXT,
             rule TEXT,
             UNIQUE(context, lens, rule)
+    cur.execute(
+        """
+        CREATE TABLE IF NOT EXISTS grammar_rules (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            rule TEXT UNIQUE
+        )
+        """
+    )
     conn.commit()
     conn.close()
 
