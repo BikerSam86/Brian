@@ -112,6 +112,9 @@ python -m tsal.utils.language_db
 # Populate the grammar database
 python -m tsal.utils.grammar_db
 
+# Example query
+python -m tsal.utils.grammar_db --context Python --lens syntax
+
 # Populate the humour database
 python -m tsal.utils.humour_db
 ```

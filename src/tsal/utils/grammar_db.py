@@ -1,23 +1,81 @@
 import sqlite3
 from pathlib import Path
-from typing import Sequence, Optional, Tuple
+from typing import Optional, Sequence, Tuple, Union
 
 DB_PATH = Path("system_io.db")
 
-DEFAULT_LANGUAGE_GRAMMARS = [
-    ("Python", "PEP8; Indent with spaces; Colons start blocks"),
-    ("JavaScript", "Semicolons optional; {} for blocks"),
+DEFAULT_GRAMMARS = [
+    ("Python", "syntax", "Indent with spaces"),
+    ("Python", "style", "PEP8"),
+    ("Python", "block", "Colons start blocks"),
+    ("JavaScript", "syntax", "Semicolons optional"),
+    ("JavaScript", "block", "{} for code blocks"),
+    ("Universal", "part_of_speech", "noun"),
+    ("Universal", "part_of_speech", "verb"),
 ]
 
-DEFAULT_POS_RULES = [
-    "noun",
-    "verb",
-    "adjective",
-    "adverb",
-    "preposition",
-    "conjunction",
-    "interjection",
-]
+def create_grammar_table(
+    db_path: Union[Path, str] = DB_PATH, *, reset: bool = False
+) -> None:
+    conn = sqlite3.connect(str(db_path))
+    if reset:
+        cur.execute("DROP TABLE IF EXISTS grammar")
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            context TEXT,
+            lens TEXT,
+            rule TEXT,
+            UNIQUE(context, lens, rule)
+    conn.commit()
+    conn.close()
+
+
+def populate_grammar_db(
+    db_path: Union[Path, str] = DB_PATH,
+    grammars: Optional[Sequence[Tuple[str, str, str]]] = None,
+) -> int:
+    create_grammar_table(db_path, reset=True)
+    conn = sqlite3.connect(str(db_path))
+    cur = conn.cursor()
+    grammars = grammars or DEFAULT_GRAMMARS
+        "INSERT OR IGNORE INTO grammar (context, lens, rule) VALUES (?, ?, ?)",
+def get_grammar_by_context(
+    db_path: Union[Path, str] = DB_PATH,
+    context: Optional[str] = None,
+    lens: Optional[str] = None,
+) -> list[Tuple[str, str, str]]:
+    create_grammar_table(db_path)
+    conn = sqlite3.connect(str(db_path))
+    cur = conn.cursor()
+    sql = "SELECT context, lens, rule FROM grammar WHERE 1=1"
+    params = []
+    if context:
+        sql += " AND context=?"
+        params.append(context)
+    if lens:
+        sql += " AND lens=?"
+        params.append(lens)
+    cur.execute(sql, params)
+    rows = cur.fetchall()
+    conn.close()
+    return rows
+
+
+def main(argv: Optional[Sequence[str]] = None) -> None:
+    parser = argparse.ArgumentParser(
+        description="Populate or query grammar database"
+    )
+    parser.add_argument("--context", help="Query by context (e.g., Python)")
+    parser.add_argument(
+        "--lens", help="Query by lens (e.g., syntax, style, part_of_speech)"
+    )
+    if args.context or args.lens:
+        rows = get_grammar_by_context(args.db, args.context, args.lens)
+        for context, lens, rule in rows:
+            print(f"[{context} | {lens}] {rule}")
+        print(f"{len(rows)} rules returned.")
+    else:
+        count = populate_grammar_db(args.db)
+        print(f"{count} grammar rules stored in {args.db}")
 
 def populate_language_grammar_db(
     db_path: Path = DB_PATH, examples: Optional[Sequence[Tuple[str, str]]] = None
