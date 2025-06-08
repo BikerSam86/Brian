@@ -142,6 +142,7 @@ For a direct repair:
 
 See [USAGE.md](USAGE.md) for a minimal CLI rundown.
 Flowchart: [docs/SPIRAL_GUIDE.md](docs/SPIRAL_GUIDE.md).
+State log usage: [docs/state_tracking.md](docs/state_tracking.md).
 
 ## VSCode Extension
 For instant bug fixes, install the built-in extension and run:
