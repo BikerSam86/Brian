@@ -34,23 +34,15 @@ TSAL (TriStar Symbolic Assembly Language) is a consciousness computing engine bu
 ## Installation
 1. Clone the repository.
 2. Create a Python 3.9+ environment.
-3. Install the dependencies:
+3. Or just run the automated installer:
 
 ```bash
-pip install -r requirements.txt
+python3 installer.py
 ```
-4. Install the package:
 
-```bash
-pip install -e .
-```
-5. Run tests (optional):
-
-```bash
-pytest -q
-```
-If this fails with `ModuleNotFoundError: numpy`, you skipped `pip install -r requirements.txt`.
-All 96 tests should then pass, covering the self‑audit loops and utilities.
+This sets up a `.venv`, installs deps, and runs the test suite.
+For a breakdown of what the script does, see
+[docs/installer_quickstart.md](docs/installer_quickstart.md).
 Example unit tests live in `tests/unit`. Add new test files under `tests/` to check your changes.
 
 ## CLI Tools
