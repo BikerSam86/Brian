@@ -26,3 +26,7 @@ For a summary of the current revision log:
 ```bash
 tsal-reflect
 ```
+
+## Support the project
+
+[![Ko-Fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/bikersam86)
