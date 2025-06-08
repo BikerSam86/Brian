@@ -31,6 +31,7 @@ tsal-reflect
 
 [![Ko-Fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/bikersam86)
 
+
 ## Running tests
 
 Example unit tests live under `tests/`. Install deps then run:
@@ -39,4 +40,3 @@ Example unit tests live under `tests/`. Install deps then run:
 pip install -r requirements.txt
 pytest -q
 ```
-
