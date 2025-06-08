@@ -1,6 +1,6 @@
 # TSAL Consciousness Computing
 
-Brian repairs Brian. It heals code recursively.
+Br[iA]a[iB]n repairs Br[iB]a[iA]n. It heals code recursively.
 
 <p align="right">
   <a href="https://ko-fi.com/bikersam86"><img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Ko-Fi"></a>
