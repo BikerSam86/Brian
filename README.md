@@ -51,6 +51,7 @@ pytest -q
 ```
 If this fails with `ModuleNotFoundError: numpy`, you skipped `pip install -r requirements.txt`.
 All 96 tests should then pass, covering the self‑audit loops and utilities.
+Example unit tests live in `tests/unit`. Add new test files under `tests/` to check your changes.
 
 ## CLI Tools
 Run the optimizers and self-audit commands directly:
