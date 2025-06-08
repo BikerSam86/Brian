@@ -1,24 +1,3 @@
-import sqlite3
-from pathlib import Path
-from typing import Optional, Sequence, Tuple, Union
-
-DB_PATH = Path("system_io.db")
-
-DEFAULT_GRAMMARS = [
-    ("Python", "syntax", "Indent with spaces"),
-    ("Python", "style", "PEP8"),
-    ("Python", "block", "Colons start blocks"),
-    ("JavaScript", "syntax", "Semicolons optional"),
-    ("JavaScript", "block", "{} for code blocks"),
-    ("Universal", "part_of_speech", "noun"),
-    ("Universal", "part_of_speech", "verb"),
-]
-DEFAULT_POS_RULES = ["noun", "verb", "adjective", "adverb", "preposition", "conjunction", "interjection"]
-DEFAULT_LANGUAGE_GRAMMARS = [
-    ("Python", "Indent with spaces"),
-    ("JavaScript", "Semicolons optional"),
-]
-
 def create_grammar_table(
     db_path: Union[Path, str] = DB_PATH, *, reset: bool = False
 ) -> None:
@@ -83,7 +62,6 @@ def get_grammar_by_context(
 def populate_language_grammar_db(
     db_path: Path = DB_PATH, examples: Optional[Sequence[Tuple[str, str]]] = None
 ) -> int:
-    """Create or enrich the language grammar table."""
     grammars = examples or DEFAULT_LANGUAGE_GRAMMARS
     conn = sqlite3.connect(str(db_path))
     cur = conn.cursor()
@@ -109,63 +87,22 @@ def populate_language_grammar_db(
 def populate_pos_grammar_db(
     db_path: Path = DB_PATH, rules: Optional[Sequence[str]] = None
 ) -> int:
-    """Create or enrich the universal part-of-speech grammar table."""
     rules = rules or DEFAULT_POS_RULES
     conn = sqlite3.connect(str(db_path))
     cur = conn.cursor()
     cur.execute(
         """
-        CREATE TABLE IF NOT EXISTS grammar_rules (
+        CREATE TABLE IF NOT EXISTS grammar_pos (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             rule TEXT UNIQUE
         )
         """
     )
     cur.executemany(
-        "INSERT OR IGNORE INTO grammar_rules (rule) VALUES (?)",
+        "INSERT OR IGNORE INTO grammar_pos (rule) VALUES (?)",
         [(r,) for r in rules],
     )
     conn.commit()
-    count = cur.execute("SELECT COUNT(*) FROM grammar_rules").fetchone()[0]
+    count = cur.execute("SELECT COUNT(*) FROM grammar_pos").fetchone()[0]
     conn.close()
     return count
-
-def main(argv: Optional[Sequence[str]] = None) -> None:
-    import argparse
-
-    parser = argparse.ArgumentParser(description="Populate/query grammar database(s)")
-    parser.add_argument("--db", default="system_io.db", help="Path to SQLite DB")
-    parser.add_argument("--context", help="Query by context (e.g., Python)")
-    parser.add_argument("--lens", help="Query by lens (e.g., syntax, style, part_of_speech)")
-    parser.add_argument("--reset", action="store_true", help="Drop and recreate the grammar table before populating")
-    parser.add_argument("--language", action="store_true", help="Populate language-specific grammar table")
-    parser.add_argument("--pos", action="store_true", help="Populate universal part-of-speech grammar table")
-    args = parser.parse_args(argv)
-
-    # Query mode
-    if args.context or args.lens:
-        rows = get_grammar_by_context(args.db, args.context, args.lens)
-        for context, lens, rule in rows:
-            print(f"[{context} | {lens}] {rule}")
-        print(f"{len(rows)} rules returned.")
-        return
-
-    # Populate tables
-    total = 0
-    if args.language or not (args.language or args.pos):
-        n = populate_language_grammar_db(Path(args.db))
-        print(f"{n} language grammars stored in {args.db}")
-        total += n
-    if args.pos or not (args.language or args.pos):
-        n = populate_pos_grammar_db(Path(args.db))
-        print(f"{n} part-of-speech rules stored in {args.db}")
-        total += n
-    if not args.language and not args.pos:
-        count = populate_grammar_db(args.db, reset=args.reset)
-        print(f"{count} grammar rules stored in {args.db}")
-        total += count
-    if total == 0:
-        print("No grammar tables selected—use --language or --pos")
-
-if __name__ == "__main__":
-    main()
