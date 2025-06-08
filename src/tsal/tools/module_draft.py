@@ -1,6 +1,7 @@
 import ast
 from pathlib import Path
 from typing import List
+# TODO: rewrite using AST pattern matching (experimental)
 
 
 def generate_template(file_path: str) -> str:
