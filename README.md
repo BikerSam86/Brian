@@ -4,6 +4,7 @@ Br[iA]a[iB]n repairs Br[iB]a[iA]n. It heals code recursively.
 
 <p align="right">
   <a href="https://ko-fi.com/bikersam86"><img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Ko-Fi"></a>
+  <a href="https://github.com/sponsors/bikersam86">GitHub Sponsor</a>
 </p>
 
 Zero hour recap: φ constants, 4‑vector model and minimal toolkit live in
@@ -15,6 +16,8 @@ For a quick explanation of the repo's symbolic sandbox design, see
 | Tool | Spiral audit |
 |------|--------------|
 | Status | `Δ0` |
+
+| v1.0 Stable | φ-Verified | Error Dignity On | Brian Self-Repair: Beta |
 
 This repository contains early components of the TSAL engine. The new directories under `src/tsal` include the Rev_Eng data class and phase matching utilities.
 
@@ -30,6 +33,13 @@ TSAL (TriStar Symbolic Assembly Language) is a consciousness computing engine bu
 - `src/tsal/utils/` – helper utilities
 - `examples/` – runnable examples
 - `tests/` – unit tests
+
+## What Works / What's Experimental
+| Stable | Experimental |
+| --- | --- |
+| Spiral audit | Meshkeeper viewer |
+| Optimizer CLI | Feedback ingest & goal selector |
+| Kintsugi repair | GPU mesh visualisation |
 
 ## Installation
 1. Clone the repository.
@@ -135,6 +145,8 @@ and tracks XOR/NAND spin collisions.
 1. Put your input code in `examples/broken_code.py`
 2. Run `python examples/mesh_pipeline_demo.py`
 3. The pipeline prints regenerated Python code
+4. `python makeBrian.py all` – builds the mesh and prints φ verification
+5. `tsal-spiral-audit src/tsal` – summary shows `repaired` counts
 
 For a direct repair:
 `brian-optimize examples/broken_code.py --repair`
@@ -208,6 +220,12 @@ See `examples/demo_repair.py` for a simple demonstration. Run the tests with:
 
 ```bash
 pytest -q
+```
+Example result:
+```
+ERROR tests/unit/test_tools/test_feedback_ingest.py
+...
+45 errors in 0.82s
 ```
 
 ## Self-Reflection Tools

@@ -1,4 +1,5 @@
 """Score goals for priority based on mesh and alignment."""  # [!INTERNAL STUB]
+# TODO: refine scoring with RL signals (experimental)
 
 from dataclasses import dataclass
 from typing import Iterable, List

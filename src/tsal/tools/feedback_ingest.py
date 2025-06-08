@@ -1,4 +1,5 @@
 """Feedback ingestion and scoring for Rev_Eng logs."""
+# TODO: expand scoring rules (experimental)
 
 from dataclasses import dataclass
 from typing import Iterable, List
