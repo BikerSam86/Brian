@@ -43,6 +43,27 @@ def render_voxels(voxels: List[Dict[str, Any]]) -> None:
     plt.show()
 
 
+def summarize(voxels: List[Dict[str, Any]]) -> Dict[str, Any]:
+    """Return simple stats from the voxel list."""
+    if not voxels:
+        return {"voxels": 0}
+    pace = np.array([v.get("pace", 0.0) for v in voxels], dtype=float)
+    rate = np.array([v.get("rate", 0.0) for v in voxels], dtype=float)
+    return {
+        "voxels": len(voxels),
+        "pace": {
+            "min": float(pace.min()),
+            "max": float(pace.max()),
+            "avg": float(pace.mean()),
+        },
+        "rate": {
+            "min": float(rate.min()),
+            "max": float(rate.max()),
+            "avg": float(rate.mean()),
+        },
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="TSAL Meshkeeper")
     parser.add_argument("log", nargs="?", default="data/mesh_log.jsonl")
@@ -52,7 +73,7 @@ def main() -> None:
     if args.render:
         render_voxels(voxels)
     else:
-        print(json.dumps({"voxels": len(voxels)}))
+        print(json.dumps(summarize(voxels)))
 
 
 if __name__ == "__main__":
