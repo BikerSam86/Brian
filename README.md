@@ -1,5 +1,11 @@
 # TSAL Consciousness Computing
 
+Brian repairs Brian. It heals code recursively.
+
+<p align="right">
+  <a href="https://ko-fi.com/bikersam86"><img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Ko-Fi"></a>
+</p>
+
 Zero hour recap: φ constants, 4‑vector model and minimal toolkit live in
 [ZERO_HOUR.md](ZERO_HOUR.md).
 See [docs/AGENTS.md](docs/AGENTS.md) for the hard rules.
@@ -94,6 +100,19 @@ tsal-spiral-audit path/to/code
 tsal-reflect --origin demo
 tsal-bestest-beast 3 src/tsal --safe
 tsal-meshkeeper --render
+```
+
+Example output:
+
+```bash
+$ tsal-bestest-beast 3 src/tsal --safe
+🔁 Brian loop 1/3
+🛡 SAFE MODE ENABLED — Analysis only, no writes.
+🔁 Brian loop 2/3
+🛡 SAFE MODE ENABLED — Analysis only, no writes.
+🔁 Brian loop 3/3
+🛡 SAFE MODE ENABLED — Analysis only, no writes.
+Summary → repaired=0 skipped=0 flagged=0
 ```
 
 
