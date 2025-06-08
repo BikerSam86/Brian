@@ -1,0 +1,38 @@
+name: Cleanup Merged Branches
+
+on:
+  workflow_dispatch:   # Manual trigger
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const mainBranch = 'main';
+            const branches = await octokit.repos.listBranches({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              protected: false
+            });
+            for (const branch of branches.data) {
+              if (branch.name !== mainBranch) {
+                // Check if merged
+                try {
+                  const pr = await github.search.issuesAndPullRequests({
+                    q: `repo:${context.repo.owner}/${context.repo.repo} is:pr head:${branch.name} is:merged`
+                  });
+                  if (pr.data.total_count > 0) {
+                    await github.git.deleteRef({
+                      owner: context.repo.owner,
+                      repo: context.repo.repo,
+                      ref: `heads/${branch.name}`
+                    });
+                    console.log(`Deleted merged branch: ${branch.name}`);
+                  }
+                } catch (e) {
+                  console.log(`Could not delete branch ${branch.name}: ${e}`);
+                }
+              }
+            }
