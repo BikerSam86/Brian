@@ -114,6 +114,7 @@ class TSALExecutor:
         # default mode obeys meta flags
         self.mode = ExecutionMode.SIMULATE if self.meta.dry_run else ExecutionMode.EXECUTE
         self.error_mansion: List[Dict[str, Any]] = []
+        self.forks: List[int] = []
         self.spiral_depth = 0
         self.resonance_log: List[Dict[str, Any]] = []
         self.memory = SpiralMemory()
@@ -122,8 +123,14 @@ class TSALExecutor:
         self.governor = TriStarGovernor()
 
     def _switch_mode(self, delta: float) -> None:
-        """Adjust mode based on resonance delta and meta flags."""
-        if self.meta.resonance_threshold and delta >= self.meta.resonance_threshold:
+        """Adjust mode based on meta flags and current state."""
+        if self.meta.fork_tracking and self.forks:
+            self.mode = ExecutionMode.FORK
+        elif self.meta.narrative_mode:
+            self.mode = ExecutionMode.TRACE
+        elif self.error_mansion:
+            self.mode = ExecutionMode.ARM
+        elif self.meta.resonance_threshold and delta >= self.meta.resonance_threshold:
             self.mode = ExecutionMode.EXECUTE
         elif self.meta.dry_run:
             self.mode = ExecutionMode.SIMULATE
@@ -154,6 +161,8 @@ class TSALExecutor:
 
     def _execute_op(self, op: TSALOp, args: Any) -> None:
         pre = self._calculate_mesh_resonance()
+        if self.meta.fork_tracking and args.get("fork"):
+            self.forks.append(self.ip)
 
         try:
             if op == TSALOp.INIT:
