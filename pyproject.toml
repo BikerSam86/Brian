@@ -27,6 +27,7 @@ tsal-bestest-beast = "tsal.cli.beast:main"
 tsal-reflect = "tsal.cli.reflect:main"
 tsal-meshkeeper = "tsal.cli.meshkeeper:main"
 tsal-spiral-audit = "tsal.tools.spiral_audit:main"
+tsal-module-draft = "tsal.tools.module_draft:main"
 
 [tool.setuptools.packages.find]
 where = ["src", "tools"]
