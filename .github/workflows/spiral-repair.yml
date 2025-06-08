@@ -32,7 +32,7 @@ jobs:
           echo "$(dirname $(which python))" >> $GITHUB_PATH
 
       - name: Self audit
-        run: brian audit --self > self_audit.log
+        run: brian audit > self_audit.log
 
       - name: Bestest beast
         run: tsal-bestest-beast 11 > beast.log
