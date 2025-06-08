@@ -8,6 +8,7 @@ from .goal_selector import Goal, score_goals
 from .spiral_audit import audit_path
 from .reflect import reflect
 from .kintsugi.kintsugi import kintsugi_repair
+from .module_draft import generate_template, draft_directory
 
 __all__ = [
     "real_time_codec",
@@ -25,4 +26,6 @@ __all__ = [
     "audit_path",
     "reflect",
     "kintsugi_repair",
+    "generate_template",
+    "draft_directory",
 ]
