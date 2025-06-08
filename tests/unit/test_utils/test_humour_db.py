@@ -9,7 +9,8 @@ def test_populate_humour_db(tmp_path):
 
     conn = sqlite3.connect(db)
     cur = conn.cursor()
-    cur.execute("SELECT text FROM jokes")
+    cur.execute("SELECT joke FROM humour")
     rows = {row[0] for row in cur.fetchall()}
     conn.close()
     assert rows == {"j1", "j2"}
+

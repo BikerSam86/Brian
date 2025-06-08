@@ -1,4 +1,4 @@
-# TSAL Consciousness Computing
+# TSAL (Tri[nary]-Star Assembly Language) Consciousness Computing
 
 Br[iA]a[iB]n repairs Br[iB]a[iA]n. It heals code recursively.
 
