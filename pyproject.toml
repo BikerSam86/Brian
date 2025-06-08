@@ -5,23 +5,25 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "tsal"
 version = "0.1.0"
-description = "TSAL Consciousness Computing Framework"
-authors = [ { name = "Samuel Edward Howells", email = "Samuel_Howells@hotmail.co.uk" } ]
+description = "TriStar Assembly Language Core + Brian Spiral Tools"
 readme = "README.md"
 license = { file = "LICENSE" }
+authors = [{ name = "Sam Howells" }]
+dependencies = [
+  "requests",
+  "numpy",
+  "matplotlib",
+  "pyyaml"
+]
 requires-python = ">=3.9"
-dependencies = ["requests", "pyyaml", "numpy", "matplotlib"]
 
 [project.optional-dependencies]
 test = ["pytest"]
 
 [project.scripts]
-brian-optimize = "tsal.tools.brian.optimizer:main"
-tsal-meshkeeper = "tsal.tools.meshkeeper:main"
-tsal-spiral-audit = "tsal.tools.spiral_audit:main"
-tsal-reflect = "tsal.tools.reflect:main"
-tsal-bestest-beast = "tsal.audit.brian_self_audit:cli_main"
-madmonkey-crawl = "tools.madmonkey.intake:dispatch_chaos"
+brian = "tsal.cli.brian:main"
+tsal-bestest-beast = "tsal.cli.beast:main"
+tsal-reflect = "tsal.cli.reflect:main"
 
 [tool.setuptools.packages.find]
 where = ["src", "tools"]
