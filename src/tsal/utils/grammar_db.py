@@ -32,8 +32,10 @@ def create_grammar_table(
 def populate_grammar_db(
     db_path: Union[Path, str] = DB_PATH,
     grammars: Optional[Sequence[Tuple[str, str, str]]] = None,
+    *,
+    reset: bool = False,
 ) -> int:
-    create_grammar_table(db_path, reset=True)
+    create_grammar_table(db_path, reset=reset)
     conn = sqlite3.connect(str(db_path))
     cur = conn.cursor()
     grammars = grammars or DEFAULT_GRAMMARS
@@ -68,13 +70,18 @@ def main(argv: Optional[Sequence[str]] = None) -> None:
     parser.add_argument(
         "--lens", help="Query by lens (e.g., syntax, style, part_of_speech)"
     )
+    parser.add_argument(
+        "--reset",
+        action="store_true",
+        help="Drop and recreate the grammar table before populating",
+    )
     if args.context or args.lens:
         rows = get_grammar_by_context(args.db, args.context, args.lens)
         for context, lens, rule in rows:
             print(f"[{context} | {lens}] {rule}")
         print(f"{len(rows)} rules returned.")
     else:
-        count = populate_grammar_db(args.db)
+        count = populate_grammar_db(args.db, reset=args.reset)
         print(f"{count} grammar rules stored in {args.db}")
 
 def populate_language_grammar_db(

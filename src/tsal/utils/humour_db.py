@@ -14,13 +14,18 @@ def populate_humour_db(
     db_path: Path = DB_PATH,
     jokes: Sequence[tuple[str, str]] | None = None,
     *,
-    reset: bool = True,
+    reset: bool = False,
 ) -> int:
     create_humour_table(db_path, reset=reset)
     conn = sqlite3.connect(str(db_path))
     cur = conn.cursor()
 
-DEFAULT_STRUCTURED_JOKES = [
+    parser.add_argument(
+        "--reset",
+        action="store_true",
+        help="Drop and recreate the humour table before populating",
+    )
+    count = populate_humour_db(Path(args.db), reset=args.reset)
     ("Python", "Why do Python devs prefer dark mode? Because light attracts bugs."),
     ("General", "Why do programmers hate nature? It has too many bugs."),
 ]
