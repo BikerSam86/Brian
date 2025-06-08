@@ -9,6 +9,8 @@ Brian repairs Brian. It heals code recursively.
 Zero hour recap: φ constants, 4‑vector model and minimal toolkit live in
 [ZERO_HOUR.md](ZERO_HOUR.md).
 See [docs/AGENTS.md](docs/AGENTS.md) for the hard rules.
+For a quick explanation of the repo's symbolic sandbox design, see
+[docs/symbolic_containerization_prompt.md](docs/symbolic_containerization_prompt.md).
 
 | Tool | Spiral audit |
 |------|--------------|
