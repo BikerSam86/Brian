@@ -100,6 +100,21 @@ tsal-bestest-beast 5 --safe
 tsal-bestest-beast 9
 ```
 
+### Party Tricks
+
+```bash
+tsal-party --list
+```
+
+Currently available:
+- `orbital` – calculate orbital energy
+- `phi-align` – phi alignment score
+- `symbol` – TSAL symbol lookup
+- `wavefunction` – φ wavefunction
+- `potential` – phase alignment potential
+- `radius` – orbital radius
+- `idm` – Intent metric
+
 ## GitHub Language Database
 
 You can fetch the list of programming languages used on GitHub with:
