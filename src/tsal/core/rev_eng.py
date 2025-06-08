@@ -68,6 +68,14 @@ class Rev_Eng:
             origin=self.origin,
         )
 
+    def log_grammar(self, language: str, rule: str) -> None:
+        """Stub for grammar usage logging; to be expanded for overlay/voxel tracking."""
+        pass
+
+    def log_humour(self, context: str, joke: str) -> None:
+        """Stub for humour event logging; to be expanded for overlay/voxel tracking."""
+        pass
+
     def log_spin(self, direction: str, updown: str = None, I_O: str = None):
         # direction: 'in', 'out', 'clockwise', 'counter', etc.
         now = time.time()
