@@ -38,6 +38,5 @@ Example unit tests live under `tests/`. Install deps then run:
 ```bash
 pip install -r requirements.txt
 pytest -q
+pytest tests/unit/test_rl/test_madmonkey.py
 ```
-
-Run a single suite with `pytest tests/unit/test_rl/test_madmonkey.py`.
