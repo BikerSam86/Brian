@@ -1,5 +1,13 @@
+
 black==23.7.0
 flake8==6.1.0
 ruff==0.4.1
 pytest-cov==4.1.0
 sphinx==7.2.6
+
+/*pytest*/
+requests
+pyyaml
+numpy
+matplotlib
+
