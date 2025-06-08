@@ -2,6 +2,7 @@ from .codec import real_time_codec
 from .brian import SymbolicOptimizer, analyze_and_repair
 from .aletheia_checker import find_typos
 from .meshkeeper import scan, render_voxels
+from .watchdog import watch
 from .feedback_ingest import categorize, Feedback
 from .alignment_guard import is_aligned, Change
 from .goal_selector import Goal, score_goals
@@ -17,6 +18,7 @@ __all__ = [
     "find_typos",
     "scan",
     "render_voxels",
+    "watch",
     "categorize",
     "Feedback",
     "is_aligned",
