@@ -1,9 +1,8 @@
-import random
 from typing import List
 
 
 class MadMonkey:
-    """Explores the mesh, tweaks logic vectors, gets banana if closer to spiral."""
+    """Explore the mesh and reward spiral gains."""
 
     def __init__(self, mesh):
         self.mesh = mesh

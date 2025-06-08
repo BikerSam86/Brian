@@ -9,7 +9,11 @@ def _get_json(url: str, headers: Dict[str, str]) -> List[Dict]:
     return resp.json()
 
 
-def fetch_repo_files(repo: str, extensions: Optional[List[str]] = None, token: Optional[str] = None) -> Dict[str, str]:
+def fetch_repo_files(
+    repo: str,
+    extensions: Optional[List[str]] = None,
+    token: Optional[str] = None,
+) -> Dict[str, str]:
     """Fetch files from a GitHub repository via the GitHub API."""
     base = f"https://api.github.com/repos/{repo}/contents"
     headers = {}
@@ -22,7 +26,9 @@ def fetch_repo_files(repo: str, extensions: Optional[List[str]] = None, token: O
         files: Dict[str, str] = {}
         for item in items:
             if item["type"] == "file":
-                if extensions is None or any(item["name"].endswith(ext) for ext in extensions):
+                if extensions is None or any(
+                    item["name"].endswith(ext) for ext in extensions
+                ):
                     f = requests.get(item["download_url"], headers=headers)
                     if f.status_code == 200:
                         files[item["path"]] = f.text
@@ -33,11 +39,14 @@ def fetch_repo_files(repo: str, extensions: Optional[List[str]] = None, token: O
     return recurse("")
 
 
-def fetch_languages(url: str = "https://raw.githubusercontent.com/github/linguist/master/lib/linguist/languages.yml") -> List[str]:
-    """Return the list of programming languages from GitHub's Linguist database."""
+def fetch_languages(
+    url: str = (
+        "https://raw.githubusercontent.com/github/linguist/"
+        "master/lib/linguist/languages.yml"
+    ),
+) -> List[str]:
+    """Return programming languages from GitHub's Linguist database."""
     resp = requests.get(url)
     resp.raise_for_status()
     data = yaml.safe_load(resp.text)
     return list(data.keys())
-
-

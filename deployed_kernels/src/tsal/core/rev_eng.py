@@ -1,14 +1,10 @@
-import os
 import time
 import uuid
-from collections import defaultdict
 from typing import Optional, Dict, List, Any
 
 
 class Rev_Eng:
-    """
-    Reverse-Engineer (Rev_Eng): System-wide tracker and cataloguer for lineage, state, IO spin, and mesh context.
-    """
+    """Track lineage, state and mesh context for the system."""
 
     def __init__(self, origin: str = None, session_id: str = None):
         self.origin = origin or "Root"
@@ -24,9 +20,9 @@ class Rev_Eng:
         }
         self.rate_log = []  # (timestamp, bytes, rate) tuples
         self.spin_log = []  # (timestamp, spin_dir, I/O, updown)
-        self.mesh_coords = (
-            {}
-        )  # e.g., {x:..., y:..., z:..., vx:..., vy:..., vz:..., phase:..., mesh:...}
+        self.mesh_coords = {}
+        # Example mesh coords structure
+        # {x:..., y:..., z:..., vx:..., vy:..., vz:..., phase:..., mesh:...}
         self.identity = {}  # Who/What/Why/When/Where details
 
     # === LINEAGE TRACKING ===
@@ -101,13 +97,28 @@ class Rev_Eng:
 
         pprint.pprint(self.summary())
 
-    # === EXTENSIBLE: Custom Hooks for TSAL/mesh logging, e.g., phase, spiral, error dignity ===
-    def log_tsal_phase(self, phase: str, symbol: str, context: Optional[str] = None):
-        self.log_event("TSAL_PHASE", phase=phase, symbol=symbol, context=context)
+    # === EXTENSIBLE: Custom Hooks for TSAL/mesh logging ===
+    def log_tsal_phase(
+        self, phase: str, symbol: str, context: Optional[str] = None
+    ) -> None:
+        self.log_event(
+            "TSAL_PHASE",
+            phase=phase,
+            symbol=symbol,
+            context=context,
+        )
 
-    def log_error(self, err: str, location: str = None, recoverable: bool = True):
-        self.log_event("ERROR", error=err, location=location, recoverable=recoverable)
-        # Optional: Spiral/bloom logic could re-inject error into mesh for "mad monkey" learning
+    def log_error(
+        self, err: str, location: str | None = None, recoverable: bool = True
+    ) -> None:
+        self.log_event(
+            "ERROR",
+            error=err,
+            location=location,
+            recoverable=recoverable,
+        )
+        # Optional: spiral logic could re-inject error into mesh for
+        # "mad monkey" learning
 
 
 # Example Usage:

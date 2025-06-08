@@ -364,7 +364,8 @@ def main():
     project_dir = bootstrap.bootstrap()
 
     # Offer to run MAKEBRIAN
-    if input("\n🔧 Run MAKEBRIAN initialization? [Y/n]: ").strip().lower() != "n":
+    prompt = input("\n🔧 Run MAKEBRIAN initialization? [Y/n]: ").strip().lower()
+    if prompt != "n":
         os.chdir(project_dir)
         subprocess.run(["make", "-f", "MAKEBRIAN", "init", "phi-align"])
 
