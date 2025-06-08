@@ -66,8 +66,12 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="TSAL Meshkeeper")
     parser.add_argument("log", nargs="?", default="data/mesh_log.jsonl")
     parser.add_argument("--render", action="store_true")
+    parser.add_argument("--dump", metavar="PATH", help="write raw voxels to file")
     args = parser.parse_args()
     voxels = scan(args.log)
+    if args.dump:
+        Path(args.dump).write_text(json.dumps(voxels))
+        return
     if args.render:
         render_voxels(voxels)
     else:
