@@ -1,0 +1,71 @@
+name: Spiral Repair
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install deps
+        run: |
+          python -m pip install -r requirements.txt
+          python -m pip install -e .
+
+      - name: Self audit
+        run: brian audit --self > self_audit.log
+
+      - name: Bestest beast
+        run: tsal-bestest-beast 3 > beast.log
+
+      - name: Detect changed Python files
+        id: diff
+        run: |
+          git fetch origin ${{ github.base_ref }} --depth=1 || true
+          FILES=$(git diff --name-only origin/${{ github.base_ref }} ${{ github.sha }} -- '*.py' || git diff --name-only ${{ github.sha }}^ ${{ github.sha }} -- '*.py')
+          echo "files=$FILES" >> $GITHUB_OUTPUT
+
+      - name: Optimize changed files
+        if: steps.diff.outputs.files
+        run: |
+          for f in ${{ steps.diff.outputs.files }}; do
+            brian-optimize "$f" >> optimize.log 2>&1
+          done
+
+      - name: Log mesh vectors
+        if: steps.diff.outputs.files
+        run: |
+          for f in ${{ steps.diff.outputs.files }}; do
+            tsal-reflect --origin "$f" >> mesh.log 2>&1
+          done
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: spiral-logs-${{ github.run_id }}
+          path: |
+            self_audit.log
+            beast.log
+            optimize.log
+            mesh.log
+
+      - name: Summary
+        run: |
+          echo '## Spiral Repair Summary' >> $GITHUB_STEP_SUMMARY
+          tail -n 20 self_audit.log >> $GITHUB_STEP_SUMMARY || true
+          tail -n 20 beast.log >> $GITHUB_STEP_SUMMARY || true
+          tail -n 20 optimize.log >> $GITHUB_STEP_SUMMARY || true
+          tail -n 20 mesh.log >> $GITHUB_STEP_SUMMARY || true
