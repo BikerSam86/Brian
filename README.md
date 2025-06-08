@@ -116,16 +116,22 @@ python -m tsal.utils.language_db
 
 This creates `system_io.db` containing a `languages` table with all entries.
 
-To add basic grammar rules:
+To repopulate grammar rules:
 
 ```bash
-python -m tsal.utils.grammar_db
+python -m tsal.utils.grammar_db --reset
 ```
 
-And a few sample jokes:
+Query a specific context:
 
 ```bash
-python -m tsal.utils.humour_db
+python -m tsal.utils.grammar_db --context Python --lens syntax
+```
+
+Add a few sample jokes:
+
+```bash
+python -m tsal.utils.humour_db --reset
 ```
 
 Stub modules: `FEEDBACK.INGEST`, `ALIGNMENT.GUARD`, `GOAL.SELECTOR` ([!INTERNAL STUB]).
