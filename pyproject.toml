@@ -29,6 +29,7 @@ tsal-meshkeeper = "tsal.cli.meshkeeper:main"
 tsal-spiral-audit = "tsal.tools.spiral_audit:main"
 tsal-module-draft = "tsal.tools.module_draft:main"
 tsal-watchdog = "tsal.cli.watchdog:main"
+tsal-state = "tsal.tools.state_tracker:main"
 
 [tool.setuptools.packages.find]
 where = ["src", "tools"]
