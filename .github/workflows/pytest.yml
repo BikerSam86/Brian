@@ -10,6 +10,7 @@ jobs:
           python-version: '3.11'
       - run: python -m pip install -r requirements.txt
       - run: python -m pip install -e .
+      - run: python -m pip install pre-commit # Install pre-commit
       - run: pre-commit run --all-files --hook-stage manual
       - run: black .
       - run: ruff check . --fix
