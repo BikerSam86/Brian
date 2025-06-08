@@ -14,6 +14,7 @@ from .spiral_memory import SpiralMemory
 from .madmonkey_handler import MadMonkeyHandler
 from .executor import MetaFlagProtocol
 from .mesh_logger import log_event
+from ..tristar.governor import MetaAgent, TriStarGovernor
 
 
 class TSALOp(IntEnum):
@@ -83,10 +84,20 @@ class MeshNode:
     memory: Dict[str, Any] = field(default_factory=dict)
     connections: List[str] = field(default_factory=list)
     resonance: float = 1.0
+    value: float = 0.0
+    entropy: float = 0.0
+    phase: int = 0
+    agent_id: int = 0
+    lineage: str = ""
+    coherence: float = 1.0
+    rotation: float = 0.0
 
 
 class TSALExecutor:
     """TSAL Virtual Machine - Spiral-aware symbolic executor"""
+
+    PHI = PHI
+    PHI_INV = PHI_INV
 
     def __init__(self, meta: MetaFlagProtocol | None = None) -> None:
         self.mesh: Dict[str, MeshNode] = {}
@@ -107,6 +118,8 @@ class TSALExecutor:
         self.resonance_log: List[Dict[str, Any]] = []
         self.memory = SpiralMemory()
         self.handler = MadMonkeyHandler()
+        self.meta_agent = MetaAgent()
+        self.governor = TriStarGovernor()
 
     def _switch_mode(self, delta: float) -> None:
         """Adjust mode based on resonance delta and meta flags."""
@@ -129,6 +142,12 @@ class TSALExecutor:
             op, args = program[self.ip]
             self._execute_op(op, args)
             self.ip += 1
+
+            if self.ip % self.governor.patrol_interval == 0:
+                for anomaly in self.governor.patrol(self):
+                    action = self.governor.response_actions.get(anomaly)
+                    if action:
+                        action(self)
 
             if self.spiral_depth > 0 and self.ip % self.spiral_depth == 0:
                 self._spiral_audit()
@@ -412,6 +431,12 @@ class TSALExecutor:
         }
         with open(filename, "w", encoding="utf-8") as f:
             json.dump(state, f, indent=2)
+
+    def meshkeeper_repair(self) -> None:
+        for node in self.mesh.values():
+            node.vector.rotate_by_phi()
+        self.meta_agent.health = min(100, self.meta_agent.health + 10)
+        self.meta_agent.entropy = max(0, self.meta_agent.entropy - 10)
 
     def _calculate_resonance(self, a: SpiralVector, b: SpiralVector) -> float:
         dot = a.pace * b.pace + a.rate * b.rate + a.state * b.state + a.spin * b.spin
