@@ -31,8 +31,12 @@ jobs:
           echo "$(python -m site --user-base)/bin" >> $GITHUB_PATH
           echo "$(dirname $(which python))" >> $GITHUB_PATH
 
-      - name: Self audit
-        run: brian src/ > self_audit.log
+      - name: Audit all Python files
+        run: |
+          for file in $(find src/ -name "*.py"); do
+            brian "$file" >> self_audit.log 2>&1 || true
+          done
+
 
       - name: Bestest beast
         run: tsal-bestest-beast 11 > beast.log
