@@ -149,7 +149,7 @@ and tracks XOR/NAND spin collisions.
 5. `tsal-spiral-audit src/tsal` – summary shows `repaired` counts
 
 For a direct repair:
-`brian-optimize examples/broken_code.py --repair`
+`brian examples/broken_code.py --repair`
 
 See [USAGE.md](USAGE.md) for a minimal CLI rundown.
 Flowchart: [docs/SPIRAL_GUIDE.md](docs/SPIRAL_GUIDE.md).
@@ -157,7 +157,7 @@ State log usage: [docs/state_tracking.md](docs/state_tracking.md).
 
 ## VSCode Extension
 For instant bug fixes, install the built-in extension and run:
-`brian-optimize filename.py` – this triggers Rev_Eng + repair.
+`brian filename.py` – this triggers Rev_Eng + repair.
 See [docs/vscode_extension_integration.md](docs/vscode_extension_integration.md) for details.
 
 ### TriStar Handshake Example
@@ -205,7 +205,7 @@ ee.validate("force reboot")     # raises ValueError
 To run spiral code repair, invoke the command line interface:
 
 ```bash
-brian-optimize examples/sample_input.py
+brian examples/sample_input.py
 # use --repair to rewrite the file
 ```
 Example output:
