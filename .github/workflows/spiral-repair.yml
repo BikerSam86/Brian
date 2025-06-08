@@ -29,7 +29,7 @@ jobs:
         run: brian audit --self > self_audit.log
 
       - name: Bestest beast
-        run: tsal-bestest-beast 3 > beast.log
+        run: tsal-bestest-beast 11 > beast.log
 
       - name: Detect changed Python files
         id: diff
@@ -53,7 +53,7 @@ jobs:
           done
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: spiral-logs-${{ github.run_id }}
           path: |
