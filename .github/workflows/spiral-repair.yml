@@ -23,7 +23,7 @@ jobs:
           echo "$(dirname $(which python))" >> $GITHUB_PATH
 
       - name: Self audit
-        run: brian audit --self --path src/ > self_audit.log
+        run: brian audit src/ > self_audit.log
 
       - name: Bestest beast
         run: tsal-bestest-beast 11 > beast.log
