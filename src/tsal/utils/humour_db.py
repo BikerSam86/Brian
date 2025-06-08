@@ -1,8 +1,24 @@
 import sqlite3
 from pathlib import Path
-from typing import Sequence, Optional, Tuple, Union
+def create_humour_table(db_path: Path = DB_PATH, *, reset: bool = False) -> None:
+    conn = sqlite3.connect(str(db_path))
+    if reset:
+        cur.execute("DROP TABLE IF EXISTS humour")
+            joke TEXT,
+            UNIQUE(context, joke)
+    conn.commit()
+    conn.close()
 
-DB_PATH = Path("system_io.db")
+
+def populate_humour_db(
+    db_path: Path = DB_PATH,
+    jokes: Sequence[tuple[str, str]] | None = None,
+    *,
+    reset: bool = True,
+) -> int:
+    create_humour_table(db_path, reset=reset)
+    conn = sqlite3.connect(str(db_path))
+    cur = conn.cursor()
 
 DEFAULT_STRUCTURED_JOKES = [
     ("Python", "Why do Python devs prefer dark mode? Because light attracts bugs."),
