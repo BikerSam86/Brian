@@ -7,7 +7,13 @@ import inspect
 import random
 from typing import Callable, Dict, Tuple, Any
 
-from tsal.core.phi_math import corrected_energy
+from tsal.core.phi_math import (
+    corrected_energy,
+    phi_wavefunction,
+    phase_alignment_potential,
+    orbital_radius,
+)
+from tsal.core.intent_metric import calculate_idm
 from tsal.core.spiral_vector import phi_alignment
 from tsal.core.symbols import get_symbol
 
@@ -36,10 +42,46 @@ def symbol_trick(symbol: str = "PHI") -> tuple:
     return get_symbol(code) if code is not None else ("?", symbol, "Unknown")
 
 
+def wavefunction_trick(
+    phi: float = 0.0, phi_vacuum: float = 0.0, lam: float = 1.0
+) -> float:
+    """Return φ wavefunction value."""
+    return phi_wavefunction(phi, phi_vacuum, lam)
+
+
+def potential_trick(
+    phi: float = 0.0, phi_vacuum: float = 0.0, lam: float = 1.0
+) -> float:
+    """Return phase alignment potential."""
+    return phase_alignment_potential(phi, phi_vacuum, lam)
+
+
+def radius_trick(n: int = 1, phi: float = 0.0) -> float:
+    """Return orbital radius."""
+    return orbital_radius(n, phi)
+
+
+def idm_trick(
+    info_quality: float = 1.0,
+    info_quantity: float = 1.0,
+    accuracy: float = 1.0,
+    complexity: float = 1.0,
+    time_taken: float = 1.0,
+) -> float:
+    """Return Intent-Driven Metric score."""
+    return calculate_idm(
+        info_quality, info_quantity, accuracy, complexity, time_taken
+    )
+
+
 Func_yTown: Dict[str, Tuple[Callable[..., Any], str]] = {
     "orbital": (orbital_trick, "Calculate orbital energy"),
     "phi-align": (phi_trick, "Phi alignment score"),
     "symbol": (symbol_trick, "TSAL symbol lookup"),
+    "wavefunction": (wavefunction_trick, "φ wavefunction"),
+    "potential": (potential_trick, "Phase alignment potential"),
+    "radius": (radius_trick, "Orbital radius"),
+    "idm": (idm_trick, "Intent metric"),
 }
 
 
