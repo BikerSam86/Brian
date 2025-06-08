@@ -125,8 +125,7 @@ npm install
 code .
 ```
 
-Press `F5` in VS Code and run **Brian: Run Self-Audit Spiral**.
-See [docs/vscode_extension.md](docs/vscode_extension.md) for details.
+Press `F5` in VS Code and run any "Brian" command. Output shows in the *Brian Spiral* panel. Set `brian.autoOptimizeOnSave` to auto-run the optimizer when you save a Python file. Details in [docs/vscode_extension.md](docs/vscode_extension.md).
 
 
 ### How to run Bestest Beast
@@ -187,6 +186,9 @@ print(metrics)
 ```bash
 PYTHONPATH=src python -m tsal.tools.aletheia_checker
 ```
+
+### GitHub Action
+Workflow `.github/workflows/spiral-repair.yml` runs the self audit, bestest beast and optimizes changed files on every push. Logs are attached as artifacts with a short summary in the run.
 
 ## Execution Flags
 `MetaFlagProtocol` controls the VM mode. Set `dry_run` for simulation only or

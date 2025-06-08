@@ -2,7 +2,7 @@
   "name": "brian-spiral-helper",
   "displayName": "Brian Spiral Helper",
   "description": "Run Brian's spiral repair and self-reflection directly from VS Code",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "publisher": "bikersam",
   "engines": { "vscode": "^1.85.0" },
   "activationEvents": [
@@ -18,7 +18,17 @@
       { "command": "brian.runBestestBeast", "title": "\ud83d\udc1d Brian: Full Audit" },
       { "command": "brian.optimizeCurrentFile", "title": "\ud83d\udd27 Brian: Optimize Current File" },
       { "command": "brian.logMeshVectors", "title": "\ud83d\udd0d Brian: Log Mesh Vectors" }
-    ]
+    ],
+    "configuration": {
+      "type": "object",
+      "properties": {
+        "brian.autoOptimizeOnSave": {
+          "type": "boolean",
+          "default": false,
+          "description": "Run brian-optimize on save"
+        }
+      }
+    }
   },
   "scripts": { "compile": "tsc -p ." },
   "categories": ["Other"],
