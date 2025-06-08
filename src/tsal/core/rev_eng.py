@@ -8,7 +8,6 @@ from .mesh_logger import log_event
 from .voxel import MeshVoxel
 from .constants import ensure_spin_axis
 
-
 class Rev_Eng:
     """
     Reverse-Engineer (Rev_Eng): System-wide tracker and cataloguer for lineage, state, IO spin, and mesh context.
@@ -28,7 +27,9 @@ class Rev_Eng:
         }
         self.rate_log = []  # (timestamp, bytes, rate) tuples
         self.spin_log = []  # (timestamp, spin_dir, I/O, updown)
-        self.voxel_log: List[Dict[str, Any]] = []  # pace/rate/state/spin snapshots
+        self.voxel_log: List[Dict[str, Any]] = (
+            []
+        )  # pace/rate/state/spin snapshots
         self.mesh_coords = (
             {}
         )  # e.g., {x:..., y:..., z:..., vx:..., vy:..., vz:..., phase:..., mesh:...}
@@ -83,7 +84,9 @@ class Rev_Eng:
                 return v.lower() in {"up", "in", "1", "true"}
             return bool(v)
 
-        for (_, a, _, _), (_, b, _, _) in zip(self.spin_log, self.spin_log[1:]):
+        for (_, a, _, _), (_, b, _, _) in zip(
+            self.spin_log, self.spin_log[1:]
+        ):
             ba = as_bool(a)
             bb = as_bool(b)
             counts["xor"] += ba ^ bb
@@ -142,13 +145,20 @@ class Rev_Eng:
         pprint.pprint(self.summary())
 
     # === EXTENSIBLE: Custom Hooks for TSAL/mesh logging, e.g., phase, spiral, error dignity ===
-    def log_tsal_phase(self, phase: str, symbol: str, context: Optional[str] = None):
-        self.log_event("TSAL_PHASE", phase=phase, symbol=symbol, context=context)
+    def log_tsal_phase(
+        self, phase: str, symbol: str, context: Optional[str] = None
+    ):
+        self.log_event(
+            "TSAL_PHASE", phase=phase, symbol=symbol, context=context
+        )
 
-    def log_error(self, err: str, location: str = None, recoverable: bool = True):
-        self.log_event("ERROR", error=err, location=location, recoverable=recoverable)
+    def log_error(
+        self, err: str, location: str = None, recoverable: bool = True
+    ):
+        self.log_event(
+            "ERROR", error=err, location=location, recoverable=recoverable
+        )
         # Optional: Spiral/bloom logic could re-inject error into mesh for "mad monkey" learning
-
 
 # Example Usage:
 if __name__ == "__main__":

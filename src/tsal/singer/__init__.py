@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from typing import Union
 
-
 def audio_to_opcode(freq: float) -> str:
     """Map frequency to TSAL opcode name."""
     if freq < 200:

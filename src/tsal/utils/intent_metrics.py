@@ -4,14 +4,12 @@ from dataclasses import dataclass
 import time
 from typing import Callable, Any, Tuple
 
-
 @dataclass
 class MetricInputs:
     quality: float
     quantity: float
     accuracy: float
     complexity: float
-
 
 def calculate_idm(
     quality: float,
@@ -25,7 +23,6 @@ def calculate_idm(
         raise ValueError("complexity and time_taken must be positive")
     info_power = quality * quantity * accuracy
     return info_power / (complexity * time_taken)
-
 
 def timed_idm(
     inputs: MetricInputs,

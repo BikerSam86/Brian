@@ -12,7 +12,6 @@ from tsal.core.optimizer_utils import (
 )
 from tsal.core.spiral_vector import SpiralVector, phi_alignment
 
-
 class SymbolicOptimizer:
     """Walks Python AST, computes signatures, and suggests repairs."""
 
@@ -24,7 +23,6 @@ class SymbolicOptimizer:
         self.target_signatures = target_signatures or {}
         self.rev = rev_eng or Rev_Eng(origin="SymbolicOptimizer")
 
-
     def analyze(self, code: str) -> List[Tuple[SymbolicSignature, Dict]]:
         try:
             tree = ast.parse(code)
@@ -33,7 +31,9 @@ class SymbolicOptimizer:
             raise
         results = []
         for node in ast.walk(tree):
-            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+            if isinstance(
+                node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)
+            ):
                 sig = extract_signature(node, node.name)
                 target_vec = self.target_signatures.get(sig.name, sig.vector)
                 local_state = sig.magnitude()
@@ -42,7 +42,9 @@ class SymbolicOptimizer:
                     local_state, target_state
                 )
                 delta = metrics.get("delta", 0)
-                self.rev.log_event("ANALYZE", name=sig.name, delta=delta, energy=energy)
+                self.rev.log_event(
+                    "ANALYZE", name=sig.name, delta=delta, energy=energy
+                )
                 results.append((sig, metrics))
         return results
 
@@ -61,13 +63,17 @@ class SymbolicOptimizer:
         tree = ast.parse(code)
         signatures = []
         for node in ast.walk(tree):
-            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+            if isinstance(
+                node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)
+            ):
                 sig = extract_signature(node, node.name)
                 signatures.append(sig)
                 target_vec = self.target_signatures.get(sig.name, sig.vector)
                 local_state = sig.magnitude()
                 target_state = sum(target_vec)
-                _, energy, metrics = phase_match_enhanced(local_state, target_state)
+                _, energy, metrics = phase_match_enhanced(
+                    local_state, target_state
+                )
                 comment = ast.Expr(
                     value=ast.Constant(
                         value=f"OPTENERGY {energy:.3f} Δ{metrics['delta']:.3f}"
@@ -108,10 +114,10 @@ class SymbolicOptimizer:
         for idx, name in enumerate(items):
             ideal_idx = ideal.index(name)
             delta = idx - ideal_idx
-            _, energy, metrics = phase_match_enhanced(float(idx), float(ideal_idx))
-            suggestion = (
-                f"{name}: Δ={delta} energy={energy:.3f} φ={metrics['phase_signature']}"
+            _, energy, metrics = phase_match_enhanced(
+                float(idx), float(ideal_idx)
             )
+            suggestion = f"{name}: Δ={delta} energy={energy:.3f} φ={metrics['phase_signature']}"
             suggestions.append(suggestion)
         if items != ideal:
             new_body = []
@@ -129,11 +135,11 @@ class SymbolicOptimizer:
             Path(file_path).write_text(ast.unparse(tree))
         return suggestions
 
-
 from typing import Union
 
-
-def analyze_and_repair(file_path: Union[str, Path], repair: bool = False) -> list:
+def analyze_and_repair(
+    file_path: Union[str, Path], repair: bool = False
+) -> list:
     """Analyze or repair ``file_path``. Directories are processed recursively."""
     path = Path(file_path)
     if path.is_dir():
@@ -163,7 +169,6 @@ def analyze_and_repair(file_path: Union[str, Path], repair: bool = False) -> lis
         for (sig, metrics) in results
     ]
 
-
 def spiral_optimize(functions: List[SpiralVector]) -> List[SpiralVector]:
     """Return ``functions`` sorted by φ-alignment score."""
 
@@ -172,7 +177,6 @@ def spiral_optimize(functions: List[SpiralVector]) -> List[SpiralVector]:
         key=lambda v: phi_alignment(v.complexity, v.coherence),
         reverse=True,
     )
-
 
 def main():
     import argparse
@@ -196,7 +200,6 @@ def main():
         ]
     for line in res:
         print(line)
-
 
 if __name__ == "__main__":
     main()

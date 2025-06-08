@@ -2,7 +2,6 @@
 
 from typing import List, Dict
 
-
 def mesh_to_python(nodes: List[Dict]) -> str:
     """Regenerates code from flowchart nodes."""
     lines: List[str] = []

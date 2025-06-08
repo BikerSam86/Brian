@@ -5,7 +5,6 @@ from typing import Dict, List, Any
 
 from ..core.symbols import PHI, PHI_INV
 
-
 @dataclass
 class MetaAgent:
     """Minimal agent state for TriStar governance."""
@@ -16,7 +15,6 @@ class MetaAgent:
     num_agents: int = 0
     proposals: List[Dict[str, Any]] = field(default_factory=list)
     voting_history: List[Dict[str, Any]] = field(default_factory=list)
-
 
 class TriStarGovernor:
     """Simple governor that reacts to mesh anomalies."""

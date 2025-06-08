@@ -30,7 +30,7 @@ class TSALOp(IntEnum):
 # 16-Symbol TSAL Operation Set (Hex-aligned)
 TSAL_SYMBOLS = {
     0x0: ("⚡", "INIT", "Initialize/Reset"),
-    0x1: ("⧉", "MESH", "Network connection"), 
+    0x1: ("⧉", "MESH", "Network connection"),
     0x2: ("◉", "PHI", "Golden ratio transform"),
     0x3: ("🌀", "ROT", "Rotate perspective"),
     0x4: ("📐", "BOUND", "Set boundaries"),
@@ -44,7 +44,7 @@ TSAL_SYMBOLS = {
     0xC: ("💎", "CRYST", "Crystallize pattern"),
     0xD: ("🌈", "SPEC", "Spectrum analysis"),
     0xE: ("✺", "BLOOM", "Transform error to gift"),
-    0xF: ("💾", "SAVE", "Persist memory")
+    0xF: ("💾", "SAVE", "Persist memory"),
 }
 
 def get_symbol(hex_code):
@@ -54,8 +54,17 @@ def get_symbol(hex_code):
 def phi_signature(value):
     """Calculate φ-signature for any value"""
     import hashlib
+
     content_hash = hashlib.sha256(str(value).encode()).hexdigest()
     phi_factor = (hash(value) % 1000) * PHI_INV
     return f"φ^{phi_factor:.3f}_{content_hash[:8]}"
 
-__all__ = ['PHI', 'PHI_INV', 'HARMONIC_SEQUENCE', 'TSAL_SYMBOLS', 'TSALOp', 'get_symbol', 'phi_signature']
+__all__ = [
+    "PHI",
+    "PHI_INV",
+    "HARMONIC_SEQUENCE",
+    "TSAL_SYMBOLS",
+    "TSALOp",
+    "get_symbol",
+    "phi_signature",
+]

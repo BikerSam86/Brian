@@ -6,7 +6,6 @@ from importlib import resources
 from tsal.core.json_dsl import LanguageMap, SymbolicProcessor
 from tsal.core.rev_eng import Rev_Eng
 
-
 def real_time_codec(
     lines: Iterable[str],
     schema: str | None = None,

@@ -15,7 +15,6 @@ PHASE_CONSTANT = PHI_INV  # Natural resistance follows golden ratio
 QUANTUM_THRESHOLD = 0.001  # Below this, phase lock achieved
 RESONANCE_BONUS = PHI  # Harmonic alignment reduces energy cost
 
-
 def phase_match_enhanced(
     local_state: float,
     universal_tempo: float,
@@ -83,7 +82,6 @@ def phase_match_enhanced(
 
     return final_state, energy_required, phase_metrics
 
-
 def log_energy_use_enhanced(
     energy: float, metrics: Dict[str, Any], verbose: bool = False
 ) -> Dict[str, Any]:
@@ -114,7 +112,6 @@ def log_energy_use_enhanced(
     )
 
     return log_entry
-
 
 # Example: Multi-node mesh synchronization
 def mesh_phase_sync(
@@ -165,7 +162,6 @@ def mesh_phase_sync(
         "φ_signature": f"φ^{mesh_resonance:.3f}_mesh",
     }
 
-
 def mesh_phase_sync_vectorized(
     nodes: Dict[str, float], universal_tempo: float, verbose: bool = False
 ) -> Dict[str, Any]:
@@ -184,7 +180,9 @@ def mesh_phase_sync_vectorized(
     deltas = local_states - universal_tempo
 
     harmonics = np.array(HARMONIC_SEQUENCE)
-    harmonic_mask = (np.abs(deltas[:, None] % harmonics) < QUANTUM_THRESHOLD).any(axis=1)
+    harmonic_mask = (
+        np.abs(deltas[:, None] % harmonics) < QUANTUM_THRESHOLD
+    ).any(axis=1)
     harmonic_factor = np.where(harmonic_mask, PHI_INV, 1.0)
 
     base_energy = np.abs(deltas) * PHASE_CONSTANT * harmonic_factor
@@ -192,8 +190,12 @@ def mesh_phase_sync_vectorized(
         mesh_factor = 1 / math.log(len(nodes), PHI)
         base_energy *= mesh_factor
 
-    energy_required = np.where(np.abs(deltas) < QUANTUM_THRESHOLD, 0.0, base_energy)
-    final_state = np.where(np.abs(deltas) < QUANTUM_THRESHOLD, local_states, universal_tempo)
+    energy_required = np.where(
+        np.abs(deltas) < QUANTUM_THRESHOLD, 0.0, base_energy
+    )
+    final_state = np.where(
+        np.abs(deltas) < QUANTUM_THRESHOLD, local_states, universal_tempo
+    )
     resonance_scores = 1.0 / (1.0 + np.abs(deltas))
 
     results = {}
@@ -228,7 +230,6 @@ def mesh_phase_sync_vectorized(
         "mesh_resonance": mesh_resonance,
         "φ_signature": f"φ^{mesh_resonance:.3f}_mesh",
     }
-
 
 # Example usage showing spiral convergence
 if __name__ == "__main__":

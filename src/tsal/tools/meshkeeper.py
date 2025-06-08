@@ -10,7 +10,6 @@ from typing import List, Dict, Any
 import numpy as np
 import matplotlib.pyplot as plt
 
-
 def scan(log_path: str) -> List[Dict[str, Any]]:
     """Return list of DATA payloads from a mesh log file."""
     entries: List[Dict[str, Any]] = []
@@ -22,10 +21,11 @@ def scan(log_path: str) -> List[Dict[str, Any]]:
             obj = json.loads(line)
         except json.JSONDecodeError:
             continue
-        if obj.get("event_type") == "DATA" and isinstance(obj.get("payload"), dict):
+        if obj.get("event_type") == "DATA" and isinstance(
+            obj.get("payload"), dict
+        ):
             entries.append(obj["payload"])
     return entries
-
 
 def render_voxels(voxels: List[Dict[str, Any]]) -> None:
     """Render voxels using matplotlib."""
@@ -41,7 +41,6 @@ def render_voxels(voxels: List[Dict[str, Any]]) -> None:
     ax.set_ylabel("rate")
     ax.set_zlabel("index")
     plt.show()
-
 
 def summarize(voxels: List[Dict[str, Any]]) -> Dict[str, Any]:
     """Return simple stats from the voxel list."""
@@ -63,7 +62,6 @@ def summarize(voxels: List[Dict[str, Any]]) -> Dict[str, Any]:
         },
     }
 
-
 def main() -> None:
     parser = argparse.ArgumentParser(description="TSAL Meshkeeper")
     parser.add_argument("log", nargs="?", default="data/mesh_log.jsonl")
@@ -78,7 +76,6 @@ def main() -> None:
         render_voxels(voxels)
     else:
         print(json.dumps(summarize(voxels)))
-
 
 if __name__ == "__main__":
     main()

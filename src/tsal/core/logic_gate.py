@@ -7,7 +7,6 @@ from typing import List
 
 from tsal.utils.error_dignity import ERROR_DIR
 
-
 @dataclass
 class DynamicLogicGate:
     """A simple adaptive logic gate."""
@@ -18,7 +17,9 @@ class DynamicLogicGate:
     history: List[int] = field(default_factory=list)
     locked: bool = False
 
-    def process(self, value: float, reward: float = 0.0, simulate: bool = False) -> int:
+    def process(
+        self, value: float, reward: float = 0.0, simulate: bool = False
+    ) -> int:
         """Process a value, optionally updating thresholds if not in simulate mode."""
         try:
             polarity = 1 if value >= 0 else -1
@@ -43,6 +44,9 @@ class DynamicLogicGate:
     def _check_sequence(self, value: int) -> None:
         self.history.append(value)
         if len(self.unlock_sequence) <= len(self.history):
-            if self.history[-len(self.unlock_sequence) :] == self.unlock_sequence:
+            if (
+                self.history[-len(self.unlock_sequence) :]
+                == self.unlock_sequence
+            ):
                 self.locked = not self.locked
                 self.history.clear()

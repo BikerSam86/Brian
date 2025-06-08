@@ -5,7 +5,6 @@ from typing import Any, Dict, List
 
 from .tsal_executor import TSALExecutor, TSALOp
 
-
 class ProgramStack:
     """Simple LIFO stack for execution state."""
 
@@ -18,7 +17,6 @@ class ProgramStack:
     def pop(self) -> Any:
         return self._data.pop()
 
-
 @dataclass
 class SymbolicFrame:
     """Represents a call or loop boundary."""
@@ -26,12 +24,10 @@ class SymbolicFrame:
     return_ip: int
     stack_start: int
 
-
 @dataclass
 class OpcodeInstruction:
     opcode: TSALOp
     args: Dict[str, Any] = field(default_factory=dict)
-
 
 class FlowRouter:
     """Executes OpcodeInstructions using TSALExecutor."""
@@ -45,7 +41,6 @@ class FlowRouter:
         seq = [(inst.opcode, inst.args) for inst in program]
         self.executor.execute(seq, mode="EXECUTE")
         return self.executor
-
 
 def tsal_run(opcodes: List[int]) -> TSALExecutor:
     """Helper for running raw opcode lists."""

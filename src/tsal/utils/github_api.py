@@ -27,21 +27,20 @@ except ModuleNotFoundError:  # pragma: no cover - fallback used in CI
                 text = resp.read().decode()
             return _Response(text, resp.getcode())
 
-
 try:
     import yaml
 except ModuleNotFoundError:  # pragma: no cover - simple parser
     yaml = None
-
 
 def _get_json(url: str, headers: Dict[str, str]) -> List[Dict]:
     resp = requests.get(url, headers=headers)
     resp.raise_for_status()
     return resp.json()
 
-
 def fetch_repo_files(
-    repo: str, extensions: Optional[List[str]] = None, token: Optional[str] = None
+    repo: str,
+    extensions: Optional[List[str]] = None,
+    token: Optional[str] = None,
 ) -> Dict[str, str]:
     """Fetch files from a GitHub repository via the GitHub API."""
     base = f"https://api.github.com/repos/{repo}/contents"
@@ -66,7 +65,6 @@ def fetch_repo_files(
         return files
 
     return recurse("")
-
 
 def fetch_languages(
     url: str = "https://raw.githubusercontent.com/github/linguist/master/lib/linguist/languages.yml",

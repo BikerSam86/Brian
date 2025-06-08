@@ -1,8 +1,12 @@
 """Intent-Driven Metric calculation."""
 
-
-def calculate_idm(info_quality: float, info_quantity: float, accuracy: float,
-                   complexity: float, time_taken: float) -> float:
+def calculate_idm(
+    info_quality: float,
+    info_quantity: float,
+    accuracy: float,
+    complexity: float,
+    time_taken: float,
+) -> float:
     """Return the IDM score.
 
     IDM = (info_quality * info_quantity * accuracy) / (complexity * time_taken)

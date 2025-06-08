@@ -5,7 +5,6 @@ from __future__ import annotations
 from collections import deque
 from typing import Iterable, Set
 
-
 class Node:
     """Simple graph node."""
 
@@ -16,7 +15,6 @@ class Node:
     def connect(self, other: "Node") -> None:
         self.connections.add(other)
         other.connections.add(self)
-
 
 def verify_connectivity(nodes: Iterable[Node]) -> bool:
     """Return True if all nodes are reachable from the first node."""

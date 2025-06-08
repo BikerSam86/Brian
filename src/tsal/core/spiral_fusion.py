@@ -8,7 +8,6 @@ from typing import List
 
 from .spiral_vector import SpiralVector, phi_alignment
 
-
 @dataclass
 class SpiralFusionProtocol:
     """Fuse multiple :class:`SpiralVector` objects into one path."""
@@ -39,6 +38,8 @@ class SpiralFusionProtocol:
     def unified_vector(self) -> SpiralVector:
         if not self.vectors:
             return SpiralVector(self.name, 0.0, 0.0, "fused")
-        complexity = sum(v.complexity for v in self.vectors) / len(self.vectors)
+        complexity = sum(v.complexity for v in self.vectors) / len(
+            self.vectors
+        )
         coherence = sum(v.coherence for v in self.vectors) / len(self.vectors)
         return SpiralVector(self.name, complexity, coherence, "fused")
