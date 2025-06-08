@@ -57,6 +57,7 @@ tsal-reflect --origin demo
 tsal-bestest-beast 3 src/tsal --safe
 tsal-meshkeeper --render
 tsal-meshkeeper --dump mesh.json
+tsal-watchdog src/tsal --repair --interval 5
 ```
 
 Example output:
