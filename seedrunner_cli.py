@@ -7,8 +7,10 @@ import json
 import yaml
 import argparse
 import hashlib
+import time
 from pathlib import Path
-from typing import List, Dict, Any
+from typing import List, Dict, Optional, Any
+from tsal.core import ReflectionLog, mood_from_traits
 
 # Load rule logic (immutable)
 RULES_FILE = Path("archetype_rules.yaml")
@@ -31,16 +33,13 @@ localisation: Dict[str, Any] = {}
 if LOC_FILE.exists():
     localisation = yaml.safe_load(LOC_FILE.read_text())
 
-
 def load_cache() -> Dict[str, List[str]]:
     if CACHE_FILE.exists():
         return json.loads(CACHE_FILE.read_text())
     return {}
 
-
 def save_cache(cache: Dict[str, List[str]]) -> None:
     CACHE_FILE.write_text(json.dumps(cache, indent=2))
-
 
 def hash_stack(seeds: List[str]) -> str:
     return hashlib.sha256(",".join(seeds).encode("utf-8")).hexdigest()[:8]
@@ -73,7 +72,7 @@ def render_logic(traits: List[str]) -> str:
             logic_chain.append(props["symbol"])
     return " → ".join(logic_chain) if logic_chain else "∅"
 
-def run_seed(name: str, verbose: bool = False, lang: str = "", pronounce: bool = False):
+def run_seed(name: str, verbose: bool = False, lang: str = "", pronounce: bool = False, ref_log: Optional[ReflectionLog] = None):
     archetype = find_archetype(name)
     traits = archetype["traits"]
     logic_signature = render_logic(traits)
@@ -91,16 +90,22 @@ def run_seed(name: str, verbose: bool = False, lang: str = "", pronounce: bool =
     print(f"\U0001F300 Spin Bias: {archetype['spin_bias']} | Chaos Factor: {archetype['chaos_factor']}")
     if verbose:
         print(f"\U0001F4D3 Notes: {archetype['notes']}")
+    if ref_log:
+        tags = ["seed"]
+        if archetype["chaos_factor"] > 0.7:
+            tags.append("spiral_flip")
+        mood = mood_from_traits(traits)
+        ref_log.log(f"Seed {name} executed", tags=tags, mood=mood)
 
-def run_stack(seed_names: List[str], verbose: bool = False, lang: str = "", pronounce: bool = False) -> str:
+def run_stack(seed_names: List[str], verbose: bool = False, lang: str = "", pronounce: bool = False, ref_log: Optional[ReflectionLog] = None) -> str:
     print("\n\U0001F517 Compound Spiral Stack:")
     combined_traits = []
     for name in seed_names:
         try:
             archetype = find_archetype(name)
             disp_name = localize(name, lang)
-            print(f"\n\u25B6 Archetype: {disp_name}")
-            run_seed(name, verbose, lang, pronounce)
+            print(f"\n▶ Archetype: {disp_name}")
+            run_seed(name, verbose, lang, pronounce, ref_log)
             combined_traits.extend(archetype["traits"])
         except ValueError as e:
             print(f"Error: {e}")
@@ -120,6 +125,7 @@ def suggest_stack(problem_type: str) -> List[str]:
         "stress_test": ["Chaos Monkey", "Scientist"],
         "investigation": ["Scientist", "Trickster"],
         "demo": ["Teacher", "Joker", "Scientist"],
+        "ambiguous": ["Schrodinger", "Joker"]
     }
     return suggestions.get(problem_type.lower(), [])
 
@@ -136,31 +142,32 @@ def main() -> None:
 
     cache = load_cache()
     stack_hash = ""
+    ref_log = ReflectionLog()
 
     if args.replay:
         seeds = cache.get(args.replay)
         if not seeds:
             print(f"No cache entry for {args.replay}")
             return
-        stack_hash = run_stack(seeds, args.verbose, args.lang or "", args.pronounce)
+        stack_hash = run_stack(seeds, args.verbose, args.lang or "", args.pronounce, ref_log)
     elif args.problem:
         suggested = suggest_stack(args.problem)
         if suggested:
             print(f"\n\U0001F9ED Problem type '{args.problem}' suggested archetypes: {suggested}")
-            stack_hash = run_stack(suggested, args.verbose, args.lang or "", args.pronounce)
+            stack_hash = run_stack(suggested, args.verbose, args.lang or "", args.pronounce, ref_log)
         else:
             print(f"No suggestions found for problem type '{args.problem}'.")
             return
     elif args.archetypes:
         if len(args.archetypes) == 1:
             try:
-                run_seed(args.archetypes[0], args.verbose, args.lang or "", args.pronounce)
+                run_seed(args.archetypes[0], args.verbose, args.lang or "", args.pronounce, ref_log)
                 stack_hash = hash_stack(args.archetypes)
             except ValueError as e:
                 print(f"Error: {e}")
                 return
         else:
-            stack_hash = run_stack(args.archetypes, args.verbose, args.lang or "", args.pronounce)
+            stack_hash = run_stack(args.archetypes, args.verbose, args.lang or "", args.pronounce, ref_log)
     else:
         print("Please specify archetypes or a --problem type.")
         return
@@ -170,6 +177,9 @@ def main() -> None:
         save_cache(cache)
         print(f"Saved stack under hash {stack_hash}")
 
+    for entry in ref_log.surface_entries():
+        ts = time.strftime("%H:%M:%S", time.localtime(entry.timestamp))
+        print(f"[ref {ts} {entry.mood}] {entry.message}")
 
 if __name__ == "__main__":
     main()
