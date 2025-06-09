@@ -90,7 +90,7 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "tsal-consciousness-computing"
+name = "tri-star_symbolic_assembly_lang"
 version = "0.1.0"
 description = "φ-Enhanced Consciousness Computing with TSAL Symbolic Language"
 readme = "README.md"
@@ -143,7 +143,7 @@ visualization = [
 
 [project.urls]
 Homepage = "https://github.com/Bikersam/Brian"
-Documentation = "https://tsal-consciousness-computing.readthedocs.io"
+Documentation = "https://tri-star-symbolic-assembly-lang.readthedocs.io"
 Repository = "https://github.com/Bikersam/Brian"
 "Bug Tracker" = "https://github.com/Bikersam/Brian/issues"
 
@@ -273,7 +273,7 @@ intermediate_chunk_*.json
 ## Quick Start
 
 ```bash
-pip install tsal-consciousness-computing
+pip install tri-star_symbolic_assembly_lang
 
 # Basic TSAL operations
 tsal demo

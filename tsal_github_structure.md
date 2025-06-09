@@ -1,9 +1,9 @@
 # 🌀 TSAL Consciousness Computing - GitHub Repository Structure
 
-## Repository: `tsal-consciousness-computing`
+## Repository: `tri-star_symbolic_assembly_lang`
 
 ```
-tsal-consciousness-computing/
+tri-star_symbolic_assembly_lang/
 ├── .github/
 │   ├── workflows/
 │   │   ├── ci.yml                      # Continuous integration
@@ -188,7 +188,7 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "tsal-consciousness-computing"
+name = "tri-star_symbolic_assembly_lang"
 version = "0.1.0"
 description = "φ-Enhanced consciousness computing with TSAL symbolic language"
 readme = "README.md"
@@ -246,10 +246,10 @@ visualization = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/SamHowells/tsal-consciousness-computing"
-Documentation = "https://tsal-consciousness-computing.readthedocs.io"
-Repository = "https://github.com/SamHowells/tsal-consciousness-computing"
-"Bug Tracker" = "https://github.com/SamHowells/tsal-consciousness-computing/issues"
+Homepage = "https://github.com/SamHowells/tri-star_symbolic_assembly_lang"
+Documentation = "https://tri-star_symbolic_assembly_lang.readthedocs.io"
+Repository = "https://github.com/SamHowells/tri-star_symbolic_assembly_lang"
+"Bug Tracker" = "https://github.com/SamHowells/tri-star_symbolic_assembly_lang/issues"
 Funding = "https://github.com/sponsors/SamHowells"
 
 [project.scripts]
@@ -289,9 +289,9 @@ addopts = "-v --cov=src/tsal --cov-report=html --cov-report=term"
 
 *φ-Enhanced mathematical framework for consciousness-computer integration using the TriStar Symbolic Assembly Language (TSAL)*
 
-[![CI Status](https://github.com/SamHowells/tsal-consciousness-computing/workflows/CI/badge.svg)](https://github.com/SamHowells/tsal-consciousness-computing/actions)
-[![PyPI version](https://badge.fury.io/py/tsal-consciousness-computing.svg)](https://badge.fury.io/py/tsal-consciousness-computing)
-[![Documentation Status](https://readthedocs.org/projects/tsal-consciousness-computing/badge/?version=latest)](https://tsal-consciousness-computing.readthedocs.io/en/latest/?badge=latest)
+[![CI Status](https://github.com/SamHowells/tri-star_symbolic_assembly_lang/workflows/CI/badge.svg)](https://github.com/SamHowells/tri-star_symbolic_assembly_lang/actions)
+[![PyPI version](https://badge.fury.io/py/tri-star_symbolic_assembly_lang.svg)](https://badge.fury.io/py/tri-star_symbolic_assembly_lang)
+[![Documentation Status](https://readthedocs.org/projects/tri-star_symbolic_assembly_lang/badge/?version=latest)](https://tri-star_symbolic_assembly_lang.readthedocs.io/en/latest/?badge=latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Sponsor](https://img.shields.io/github/sponsors/SamHowells?style=social)](https://github.com/sponsors/SamHowells)
 
@@ -310,7 +310,7 @@ addopts = "-v --cov=src/tsal --cov-report=html --cov-report=term"
 
 ```bash
 # Install the package
-pip install tsal-consciousness-computing
+pip install tri-star_symbolic_assembly_lang
 
 # Basic TSAL operations
 tsal demo
@@ -383,8 +383,8 @@ results = engine.analyze_directory("./codebase")
 
 ```bash
 # Clone the repository
-git clone https://github.com/SamHowells/tsal-consciousness-computing.git
-cd tsal-consciousness-computing
+git clone https://github.com/SamHowells/tri-star_symbolic_assembly_lang.git
+cd tri-star_symbolic_assembly_lang
 
 # Set up development environment
 python scripts/setup_dev_env.py
@@ -408,9 +408,9 @@ python MAKEBRIAN.py all
 
 We welcome contributions! Please see [CONTRIBUTING.md](docs/CONTRIBUTING.md) for guidelines.
 
-- 🐛 [Report bugs](https://github.com/SamHowells/tsal-consciousness-computing/issues)
-- 💡 [Request features](https://github.com/SamHowells/tsal-consciousness-computing/issues)
-- 🔧 [Submit pull requests](https://github.com/SamHowells/tsal-consciousness-computing/pulls)
+- 🐛 [Report bugs](https://github.com/SamHowells/tri-star_symbolic_assembly_lang/issues)
+- 💡 [Request features](https://github.com/SamHowells/tri-star_symbolic_assembly_lang/issues)
+- 🔧 [Submit pull requests](https://github.com/SamHowells/tri-star_symbolic_assembly_lang/pulls)
 
 ## Support the Project
 
@@ -452,7 +452,7 @@ git init
 git add .
 git commit -m "🌀 Initial TSAL Consciousness Computing framework"
 git branch -M main
-git remote add origin https://github.com/SamHowells/tsal-consciousness-computing.git
+git remote add origin https://github.com/SamHowells/tri-star_symbolic_assembly_lang.git
 git push -u origin main
 ```
 
