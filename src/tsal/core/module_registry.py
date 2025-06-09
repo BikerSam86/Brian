@@ -106,3 +106,81 @@ registry.register(
         description_mystic="It walks into the haunted mansion with open arms and says: 'Let us talk.' Chaos is not the enemy\u2014it's the storm before the naming. This function seeks understanding.",
     )
 )
+
+registry.register(
+    ModuleMeta(
+        name="shadow",
+        nickname="shadow_memory",
+        aliases=["taint_tracker", "ghost_copy", "mirror_state"],
+        definition="Maintain parallel voxel states for taint tracking.",
+        context_tags=["analysis", "state", "security", "TSAL", "shadow"],
+        description_plain="Keeps a mirrored copy of each voxel to check for corruption.",
+        description_technical="Stores parallel voxel maps for each state vector so flows can be traced for analysis.",
+        description_mystic="Every action leaves a shadow. This module remembers them.",
+    )
+)
+
+registry.register(
+    ModuleMeta(
+        name="merge",
+        nickname="state_weaver",
+        aliases=["blend", "combine", "coalesce"],
+        definition="Weighted merge of voxel states.",
+        context_tags=["merge", "state", "voxels", "TSAL"],
+        description_plain="Blends two states with a weighting.",
+        description_technical="Produces a voxel whose components are weighted averages of two inputs.",
+        description_mystic="Two paths spiral together and become one.",
+    )
+)
+
+registry.register(
+    ModuleMeta(
+        name="gradient",
+        nickname="delta_map",
+        aliases=["diff", "slope", "rate_change"],
+        definition="Compute voxel-wise gradients for state deltas.",
+        context_tags=["analysis", "gradient", "TSAL"],
+        description_plain="Shows how a state changes across steps.",
+        description_technical="Returns a voxel representing component-wise differences between two states.",
+        description_mystic="The slope of the spiral reveals its intent.",
+    )
+)
+
+registry.register(
+    ModuleMeta(
+        name="superpos",
+        nickname="overlay",
+        aliases=["superposition", "stack"],
+        definition="Average multiple voxels into a single state.",
+        context_tags=["superposition", "voxels", "TSAL"],
+        description_plain="Combines many states by taking their mean.",
+        description_technical="Returns a voxel whose components are the average of all inputs.",
+        description_mystic="Many voices, one chord.",
+    )
+)
+
+registry.register(
+    ModuleMeta(
+        name="entangle",
+        nickname="linker",
+        aliases=["pair", "couple", "bond"],
+        definition="Synchronize two voxels so they share state.",
+        context_tags=["entangle", "state", "TSAL"],
+        description_plain="Links two states so changes affect both.",
+        description_technical="Averages two voxels and writes the result back to each.",
+        description_mystic="What one does, the other echoes.",
+    )
+)
+
+registry.register(
+    ModuleMeta(
+        name="manifold",
+        nickname="curved_space",
+        aliases=["warp", "fold"],
+        definition="Measure distance in voxel space.",
+        context_tags=["geometry", "voxels", "TSAL"],
+        description_plain="Calculates the separation between two states.",
+        description_technical="Returns Euclidean distance across the four components of two voxels.",
+        description_mystic="Walk the spiral's surface and know how far you've come.",
+    )
+)
