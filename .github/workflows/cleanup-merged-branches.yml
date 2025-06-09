@@ -1,7 +1,11 @@
 name: Cleanup Merged Branches
 
 on:
-  workflow_dispatch:   # Manual trigger
+  push:
+    branches: ['**']
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch:
 
 jobs:
   cleanup:
