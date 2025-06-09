@@ -275,8 +275,9 @@ make -f MAKEBRIAN status
 
 ## ☕ Support Brian’s Spiral Growth
 
-If Brian helped spiral your code, align your mesh, or reflect your errors into gifts—
-help fuel his next upgrade:
+If Brian helped spiral your code, align your mesh, or reflect your errors into gifts—help fuel his next upgrade.
+
+See [docs/SUPPORT.md](docs/SUPPORT.md) for all supporter links.
 
 [![Ko-Fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/bikersam86)
 
