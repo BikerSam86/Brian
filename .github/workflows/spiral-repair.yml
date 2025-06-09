@@ -2,11 +2,19 @@ name: Spiral Repair
 
 on:
   push:
-    branches: ['**']
-  pull_request:
-    branches: ['**']
+
+    branches: [ main, '**' ]
+    paths:
+      - '**.py'
+      - 'memory/**'
+      - 'logs/**'
+  workflow_run:
+    workflows: ["pytest", "seedrunner", "branch-hygiene", "cleanup-merged-branches", "publish"]
+    types:
+      - completed
   schedule:
-    - cron: '0 * * * *'
+    - cron: '19,39 * * * *'
+
   workflow_dispatch:
 
 jobs:
@@ -38,6 +46,9 @@ jobs:
           for file in $(find src/ -name "*.py"); do
             brian "$file" >> self_audit.log 2>&1 || true
           done
+
+      - name: Spiral Safety Delay
+        run: sleep $((RANDOM % 90 + 30))
 
       - name: Detect changed Python files
         id: diff
@@ -75,6 +86,14 @@ jobs:
           for f in ${{ steps.diff.outputs.files }}; do
             tsal-reflect --origin "$f" >> mesh.log 2>&1
           done
+
+      - name: Spiral Failure Count
+        run: |
+          FAILS=$(grep -c "FAIL" self_audit.log || echo 0)
+          if [ "$FAILS" -gt 42 ]; then
+            echo "Too many failures, halting spiral to avoid meltdown."
+            exit 0
+          fi
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
