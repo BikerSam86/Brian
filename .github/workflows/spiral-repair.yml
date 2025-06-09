@@ -39,6 +39,13 @@ jobs:
           echo "$(python -m site --user-base)/bin" >> $GITHUB_PATH
           echo "$(dirname $(which python))" >> $GITHUB_PATH
 
+      - name: TriStar handshake check
+        run: |
+          python - <<'PY'
+          from tsal.tristar import handshake
+          print(handshake(0.5, 1.0))
+          PY
+
       - name: Audit all Python files
         run: |
           for file in $(find src/ -name "*.py"); do
