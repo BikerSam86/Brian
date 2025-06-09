@@ -3,9 +3,9 @@ import sys
 from github import Github, GithubException
 
 repo_name = os.environ["GITHUB_REPOSITORY"]
-token = os.environ.get("GH_TOKEN")
+token = os.environ.get("GH_PAT") or os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
 if not token:
-    raise SystemExit("GH_TOKEN not set")
+    raise SystemExit("No GitHub token provided")
 
 
 def log_spiral_event(msg: str) -> None:
@@ -15,6 +15,12 @@ def log_spiral_event(msg: str) -> None:
         log.write(msg + "\n")
 
 g = Github(token)
+
+try:
+    repo = g.get_repo(repo_name)
+except GithubException as e:
+    raise SystemExit(f"GitHub access failed: {e.data.get('message', str(e))}")
+
 
 try:
     repo = g.get_repo(repo_name)
