@@ -1,5 +1,4 @@
 from pathlib import Path
-from tsal.core.spiral_vector import SpiralVector
 import argparse
 import sys
 from tsal.core.rev_eng import Rev_Eng
@@ -11,32 +10,6 @@ rev = Rev_Eng(origin="self_audit")
 
 def optimize_spiral_order(vectors: list[SpiralVector]) -> list[SpiralVector]:
     """Return ``vectors`` sorted by φ-alignment."""
-    return spiral_optimize(vectors)
-
-def brian_repairs_brian(
-    base: Path | str = Path("src/tsal"), safe: bool = False
-) -> list[str]:
-    """Run ``analyze_and_repair`` on every Python file under ``base``."""
-
-    print("🧠 Initiating self-audit and repair sequence…")
-    repaired: list[str] = []
-    base_path = Path(base)
-    for file in base_path.rglob("*.py"):
-        repaired.extend(analyze_and_repair(file, repair=not safe))
-    rev.log_event("Self-audit complete", state="repair", spin="φ")
-    return repaired
-
-def brian_improves_brian(
-    base: Path | str = Path("src/tsal"), safe: bool = False
-) -> list[str]:
-    """Run repair cycle under ``base`` and log the event."""
-
-    print("🧠 Evaluating improvements post-repair...")
-    suggestions = brian_repairs_brian(base=base, safe=safe)
-    rev.log_event("Improvement loop triggered", state="optimize", spin="up")
-    return suggestions
-
-def optimize_spiral_order(vectors: list[SpiralVector]) -> list[SpiralVector]:
     return spiral_optimize(vectors)
 
 def brian_repairs_brian(

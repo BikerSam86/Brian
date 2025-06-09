@@ -10,6 +10,7 @@ from enum import IntEnum, Enum, auto
 from typing import Any, Dict, List, Optional, Tuple
 
 from .symbols import PHI, PHI_INV, HARMONIC_SEQUENCE
+from .mesh_ops import calculate_resonance, mesh_resonance
 from .spiral_memory import SpiralMemory
 from .madmonkey_handler import MadMonkeyHandler
 from .executor import MetaFlagProtocol
@@ -204,6 +205,7 @@ class TSALExecutor:
         except Exception as exc:
             self.handler.handle({"error": str(exc), "op": op.name})
             self.error_mansion.append({"type": "exception", "error": str(exc)})
+            raise
 
         post = self._calculate_mesh_resonance()
         self.resonance_log.append(
@@ -485,36 +487,10 @@ class TSALExecutor:
         self.meta_agent.entropy = max(0, self.meta_agent.entropy - 10)
 
     def _calculate_resonance(self, a: SpiralVector, b: SpiralVector) -> float:
-        dot = (
-            a.pace * b.pace
-            + a.rate * b.rate
-            + a.state * b.state
-            + a.spin * b.spin
-        )
-        mag1 = a.magnitude()
-        mag2 = b.magnitude()
-        if mag1 == 0 or mag2 == 0:
-            return 0.0
-        res = dot / (mag1 * mag2)
-        if abs(res - PHI) < 0.1:
-            res *= PHI
-        elif abs(res - PHI_INV) < 0.1:
-            res *= PHI_INV
-        return max(0.0, min(res, PHI))
+        return calculate_resonance(a, b)
 
     def _calculate_mesh_resonance(self) -> float:
-        if not self.mesh:
-            return 1.0
-        total = 0.0
-        count = 0
-        for a in self.mesh.values():
-            for cid in a.connections:
-                if cid in self.mesh:
-                    total += self._calculate_resonance(
-                        a.vector, self.mesh[cid].vector
-                    )
-                    count += 1
-        return total / count if count else 1.0
+        return mesh_resonance(self.mesh)
 
     def _spiral_audit(self) -> None:
         mesh_res = self._calculate_mesh_resonance()
@@ -528,6 +504,6 @@ class TSALExecutor:
                 }
             )
             self.handler.handle(self.error_mansion[-1])
-            if len(self.error_mansion) > 10:
+            if len(self.error_mansion) >= 5:
                 self.handler.suggest_bloom_patch()
                 self._op_bloom({})
