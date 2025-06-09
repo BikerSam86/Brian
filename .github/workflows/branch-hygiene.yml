@@ -16,6 +16,6 @@ jobs:
           python-version: '3.11'
       - run: pip install PyGithub
       - env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: python tools/branch_hygiene.py

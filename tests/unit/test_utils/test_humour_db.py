@@ -28,3 +28,4 @@ def test_populate_no_duplicates(tmp_path):
     rows = {row[0] for row in cur.fetchall()}
     conn.close()
     assert rows == {"j1"}
+    

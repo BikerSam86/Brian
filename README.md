@@ -1,9 +1,10 @@
-# TSAL Consciousness Computing
+# TSAL (Tri[nary]-Star Assembly Language) Consciousness Computing
 
-Brian repairs Brian. It heals code recursively.
+Br[iA]a[iB]n repairs Br[iB]a[iA]n. It heals code recursively.
 
 <p align="right">
   <a href="https://ko-fi.com/bikersam86"><img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Ko-Fi"></a>
+  <a href="https://github.com/sponsors/bikersam86">GitHub Sponsor</a>
 </p>
 
 Zero hour recap: φ constants, 4‑vector model and minimal toolkit live in
@@ -15,6 +16,8 @@ For a quick explanation of the repo's symbolic sandbox design, see
 | Tool | Spiral audit |
 |------|--------------|
 | Status | `Δ0` |
+
+| v1.0 Stable | φ-Verified | Error Dignity On | Brian Self-Repair: Beta |
 
 This repository contains early components of the TSAL engine. The new directories under `src/tsal` include the Rev_Eng data class and phase matching utilities.
 
@@ -31,24 +34,26 @@ TSAL (TriStar Symbolic Assembly Language) is a consciousness computing engine bu
 - `examples/` – runnable examples
 - `tests/` – unit tests
 
+## What Works / What's Experimental
+| Stable | Experimental |
+| --- | --- |
+| Spiral audit | Meshkeeper viewer |
+| Optimizer CLI | Feedback ingest & goal selector |
+| Kintsugi repair | GPU mesh visualisation |
+
 ## Installation
 1. Clone the repository.
 2. Create a Python 3.9+ environment.
-3. Install the dependencies:
+3. Or just run the automated installer:
 
 ```bash
-pip install -r requirements.txt
+python3 installer.py
 ```
-4. Install the package:
 
-```bash
-pip install -e .
-```
-5. Run tests (optional):
-
-```bash
-pytest -q
-```
+This sets up a `.venv`, installs deps, and runs the test suite.
+For a breakdown of what the script does, see
+[docs/installer_quickstart.md](docs/installer_quickstart.md).
+Example unit tests live in `tests/unit`. Add new test files under `tests/` to check your changes.
 
 ## CLI Tools
 Run the optimizers and self-audit commands directly:
@@ -95,6 +100,21 @@ tsal-bestest-beast 5 --safe
 tsal-bestest-beast 9
 ```
 
+### Party Tricks
+
+```bash
+tsal-party --list
+```
+
+Currently available:
+- `orbital` – calculate orbital energy
+- `phi-align` – phi alignment score
+- `symbol` – TSAL symbol lookup
+- `wavefunction` – φ wavefunction
+- `potential` – phase alignment potential
+- `radius` – orbital radius
+- `idm` – Intent metric
+
 ## GitHub Language Database
 
 You can fetch the list of programming languages used on GitHub with:
@@ -125,16 +145,22 @@ python -m tsal.utils.humour_db --reset
 
 This creates `system_io.db` containing a `languages` table with all entries.
 
-To add basic grammar rules:
+To repopulate grammar rules:
 
 ```bash
-python -m tsal.utils.grammar_db
+python -m tsal.utils.grammar_db --reset
 ```
 
-And a few sample jokes:
+Query a specific context:
 
 ```bash
-python -m tsal.utils.humour_db
+python -m tsal.utils.grammar_db --context Python --lens syntax
+```
+
+Add a few sample jokes:
+
+```bash
+python -m tsal.utils.humour_db --reset
 ```
 
 Stub modules: `FEEDBACK.INGEST`, `ALIGNMENT.GUARD`, `GOAL.SELECTOR` ([!INTERNAL STUB]).
@@ -146,16 +172,19 @@ and tracks XOR/NAND spin collisions.
 1. Put your input code in `examples/broken_code.py`
 2. Run `python examples/mesh_pipeline_demo.py`
 3. The pipeline prints regenerated Python code
+4. `python makeBrian.py all` – builds the mesh and prints φ verification
+5. `tsal-spiral-audit src/tsal` – summary shows `repaired` counts
 
 For a direct repair:
-`brian-optimize examples/broken_code.py --repair`
+`brian examples/broken_code.py --repair`
 
 See [USAGE.md](USAGE.md) for a minimal CLI rundown.
 Flowchart: [docs/SPIRAL_GUIDE.md](docs/SPIRAL_GUIDE.md).
+State log usage: [docs/state_tracking.md](docs/state_tracking.md).
 
 ## VSCode Extension
 For instant bug fixes, install the built-in extension and run:
-`brian-optimize filename.py` – this triggers Rev_Eng + repair.
+`brian filename.py` – this triggers Rev_Eng + repair.
 See [docs/vscode_extension_integration.md](docs/vscode_extension_integration.md) for details.
 
 ### TriStar Handshake Example
@@ -203,7 +232,7 @@ ee.validate("force reboot")     # raises ValueError
 To run spiral code repair, invoke the command line interface:
 
 ```bash
-brian-optimize examples/sample_input.py
+brian examples/sample_input.py
 # use --repair to rewrite the file
 ```
 Example output:
@@ -218,6 +247,12 @@ See `examples/demo_repair.py` for a simple demonstration. Run the tests with:
 
 ```bash
 pytest -q
+```
+Example result:
+```
+ERROR tests/unit/test_tools/test_feedback_ingest.py
+...
+45 errors in 0.82s
 ```
 
 ## Self-Reflection Tools

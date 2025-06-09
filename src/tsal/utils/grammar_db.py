@@ -100,6 +100,11 @@ def populate_language_grammar_db(
         "INSERT OR IGNORE INTO grammar_language (language, rules) VALUES (?, ?)",
         grammars,
     )
+    if grammars:
+        cur.executemany(
+            "INSERT OR IGNORE INTO grammar (context, lens, rule) VALUES (?, ?, ?)",
+            list(grammars),
+        )
     conn.commit()
     count = cur.execute("SELECT COUNT(*) FROM grammar_language").fetchone()[0]
     conn.close()
@@ -127,3 +132,24 @@ def populate_pos_grammar_db(
     count = cur.execute("SELECT COUNT(*) FROM grammar_pos").fetchone()[0]
     conn.close()
     return count
+
+def main(argv: Optional[Sequence[str]] = None) -> None:
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Populate or query the grammar database")
+    parser.add_argument("--db", default="system_io.db", help="Path to SQLite database")
+    parser.add_argument("--context", help="Filter by context when querying")
+    parser.add_argument("--lens", help="Filter by lens when querying")
+    parser.add_argument("--reset", action="store_true", help="Drop and recreate tables before populating")
+    args = parser.parse_args(argv)
+
+    if args.context or args.lens:
+        rows = get_grammar_by_context(args.db, context=args.context, lens=args.lens)
+        for row in rows:
+            print("|".join(row))
+    else:
+        count = populate_grammar_db(args.db, reset=args.reset)
+        print(f"{count} entries stored in {args.db}")
+
+if __name__ == "__main__":
+    main()
