@@ -37,6 +37,21 @@ jobs:
             brian "$file" >> self_audit.log 2>&1 || true
           done
 
+      - name: Detect changed Python files
+        id: diff
+        run: |
+          # Determine base ref (for PRs)        
+          BASE_REF="${{ github.base_ref }}"
+          if [ -z "$BASE_REF" ]; then
+            BASE_REF="${{ github.ref_name }}"
+          fi
+
+          git fetch origin $BASE_REF --depth=1 || true
+
+          # Find changed files between base and current commit
+          FILES=$(git diff --name-only origin/$BASE_REF ${{ github.sha }} -- '*.py' || git diff --name-only ${{ github.sha }}^ ${{ github.sha }} -- '*.py')
+          echo "files=$FILES" >> $GITHUB_OUTPUT
+
 
       - name: Bestest beast
         run: tsal-bestest-beast 11 > beast.log
