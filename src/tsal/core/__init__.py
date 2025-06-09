@@ -26,6 +26,14 @@ from .connectivity import Node, verify_connectivity
 from .logic_gate import DynamicLogicGate
 from .module_registry import registry as module_registry, ModuleMeta
 from .reflection import ReflectionLog, mood_from_traits
+from .guardian_constants import (
+    PERCEPTION_THRESHOLD,
+    LEARNING_RATE,
+    CONNECTION_DECAY,
+    MAX_NODES,
+    MAX_AGENTS,
+    MAX_DIMENSIONS,
+)
 
 __all__ = [
     "Rev_Eng",
@@ -57,4 +65,10 @@ __all__ = [
     "ModuleMeta",
     "ReflectionLog",
     "mood_from_traits",
+    "PERCEPTION_THRESHOLD",
+    "LEARNING_RATE",
+    "CONNECTION_DECAY",
+    "MAX_NODES",
+    "MAX_AGENTS",
+    "MAX_DIMENSIONS",
 ]

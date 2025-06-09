@@ -5,6 +5,12 @@ tsal_config:
   version: "0.1.0"
   phi: 1.618033988749895
   harmonic_sequence: [3.8125, 6, 12, 24, 48, 60, 72, 168, 1680]
+  perception_threshold: 0.75
+  learning_rate: 0.05
+  connection_decay: 0.01
+  max_nodes: 8192
+  max_agents: 1024
+  max_dimensions: 8
   sector_count: 6
   specialist_count: 1680
 
