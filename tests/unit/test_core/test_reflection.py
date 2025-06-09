@@ -13,3 +13,9 @@ def test_surface_entries():
 def test_mood_from_traits():
     assert mood_from_traits(["Joker"]) == "playful"
     assert mood_from_traits(["Unknown"]) == "neutral"
+
+
+def test_spiral_hash_changes():
+    log1 = ReflectionLog(state="a", spin="x")
+    log2 = ReflectionLog(state="b", spin="x")
+    assert log1.spiral_hash != log2.spiral_hash
