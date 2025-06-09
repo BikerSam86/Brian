@@ -1,13 +1,16 @@
 import os
-from github import Github
+from github import Github, GithubException
 
 repo_name = os.environ["GITHUB_REPOSITORY"]
-token = os.environ.get("GH_TOKEN")
+token = os.environ.get("GH_PAT") or os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
 if not token:
-    raise SystemExit("GH_TOKEN not set")
+    raise SystemExit("No GitHub token provided")
 
 g = Github(token)
-repo = g.get_repo(repo_name)
+try:
+    repo = g.get_repo(repo_name)
+except GithubException as e:
+    raise SystemExit(f"GitHub access failed: {e.data.get('message', str(e))}")
 
 # Remove merged branches
 for pr in repo.get_pulls(state="closed", sort="updated", direction="desc"):
