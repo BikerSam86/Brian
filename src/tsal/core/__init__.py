@@ -25,6 +25,12 @@ from .madmonkey_handler import MadMonkeyHandler
 from .connectivity import Node, verify_connectivity
 from .logic_gate import DynamicLogicGate
 from .module_registry import registry as module_registry, ModuleMeta
+from .shadow import ShadowMemory
+from .merge import merge_voxels
+from .gradient import voxel_gradient
+from .superpos import superpose
+from .entangle import entangle
+from .manifold import manifold_distance
 from .reflection import ReflectionLog, mood_from_traits
 from .guardian_constants import (
     PERCEPTION_THRESHOLD,
@@ -63,6 +69,12 @@ __all__ = [
     "DynamicLogicGate",
     "module_registry",
     "ModuleMeta",
+    "ShadowMemory",
+    "merge_voxels",
+    "voxel_gradient",
+    "superpose",
+    "entangle",
+    "manifold_distance",
     "ReflectionLog",
     "mood_from_traits",
     "PERCEPTION_THRESHOLD",
