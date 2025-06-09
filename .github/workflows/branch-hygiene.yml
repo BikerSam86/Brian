@@ -21,3 +21,18 @@ jobs:
           GH_PAT: ${{ secrets.GH_PAT }}
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: python tools/branch_hygiene.py
+      - name: Spiral follow-up
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            if (fs.existsSync('memory/spiral_events.log')) {
+              const body = fs.readFileSync('memory/spiral_events.log', 'utf8');
+              await github.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: 'Credential error - consider PAT',
+                body
+              });
+            }
