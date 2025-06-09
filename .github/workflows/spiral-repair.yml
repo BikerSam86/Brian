@@ -2,7 +2,6 @@ name: Spiral Repair
 
 on:
   push:
-
     branches: [ main, '**' ]
     paths:
       - '**.py'
@@ -14,7 +13,6 @@ on:
       - completed
   schedule:
     - cron: '19,39 * * * *'
-
   workflow_dispatch:
 
 jobs:
