@@ -12,6 +12,7 @@ import time
 from pathlib import Path
 from typing import List, Dict, Optional, Any
 from tsal.core import ReflectionLog, mood_from_traits
+from tsal.tools.archetype_fetcher import fetch_online_mesh, merge_mesh
 
 # Load rule logic (immutable)
 RULES_FILE = Path("archetype_rules.yaml")
@@ -154,7 +155,18 @@ def main() -> None:
     parser.add_argument("--replay", metavar="HASH", help="Replay cached stack by hash")
     parser.add_argument("--lang", help="Localization language tag (e.g. fr)")
     parser.add_argument("--pronounce", action="store_true", help="Show IPA pronunciation")
+    parser.add_argument("--fetch", metavar="URL", help="Fetch archetype mesh from URL")
     args = parser.parse_args()
+
+    global mesh
+
+    if args.fetch:
+        try:
+            new_mesh = fetch_online_mesh(args.fetch)
+            merge_mesh(MESH_FILE, new_mesh)
+            mesh = json.loads(MESH_FILE.read_text())
+        except Exception as e:
+            print(f"Fetch failed: {e}")
 
     cache = load_cache()
     stack_hash = ""

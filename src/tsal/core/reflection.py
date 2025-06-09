@@ -79,3 +79,26 @@ class ReflectionLog:
     def surface_entries(self) -> List[ReflectionEntry]:
         return [e for e in self.entries if any(t in SURFACE_TAGS for t in e.tags)]
 
+    def to_markdown(self) -> str:
+        """Return entries formatted as markdown bullet list."""
+        lines = []
+        for e in self.entries:
+            ts = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(e.timestamp))
+            lines.append(f"- {ts} [{e.mood}] {e.message}")
+        return "\n".join(lines)
+
+    def emit_mesh(self) -> None:
+        """Send entries to mesh_logger."""
+        from . import mesh_logger
+
+        for e in self.entries:
+            mesh_logger.log_event(
+                "REFLECTION",
+                {
+                    "message": e.message,
+                    "mood": e.mood,
+                    "tags": e.tags,
+                },
+                origin="ReflectionLog",
+            )
+
