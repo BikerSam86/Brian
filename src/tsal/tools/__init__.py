@@ -12,6 +12,7 @@ from .kintsugi.kintsugi import kintsugi_repair
 from .module_draft import generate_template, draft_directory
 from .state_tracker import update_entry, show_entry
 from .archetype_fetcher import fetch_online_mesh, merge_mesh
+from .issue_agent import create_issue, handle_http_error
 
 __all__ = [
     "real_time_codec",
@@ -37,4 +38,6 @@ __all__ = [
     "show_entry",
     "fetch_online_mesh",
     "merge_mesh",
+    "create_issue",
+    "handle_http_error",
 ]
