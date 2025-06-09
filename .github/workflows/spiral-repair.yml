@@ -56,13 +56,6 @@ jobs:
       - name: Bestest beast
         run: tsal-bestest-beast 11 > beast.log
 
-      - name: Detect changed Python files
-        id: diff
-        run: |
-          git fetch origin ${{ github.base_ref }} --depth=1 || true
-          FILES=$(git diff --name-only origin/${{ github.base_ref }} ${{ github.sha }} -- '*.py' || git diff --name-only ${{ github.sha }}^ ${{ github.sha }} -- '*.py')
-          echo "files=$FILES" >> $GITHUB_OUTPUT
-
       - name: Optimize changed files
         if: steps.diff.outputs.files
         run: |
