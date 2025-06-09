@@ -60,7 +60,7 @@ jobs:
         if: steps.diff.outputs.files
         run: |
           for f in ${{ steps.diff.outputs.files }}; do
-            brian-optimize "$f" >> optimize.log 2>&1
+            brian optimize "$f" >> optimize.log 2>&1
           done
 
       - name: Log mesh vectors
