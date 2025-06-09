@@ -95,16 +95,16 @@ def run_seed(name: str, verbose: bool = False, lang: str = "", pronounce: bool =
     disp_name = localize(archetype["name"], lang)
     trait_list = [localize(t, lang) for t in traits]
 
-    print(f"\n\U0001F331 Seed: {disp_name}")
+    print(f"\n🌱 Seed: {disp_name}")
     if pronounce:
         p = get_pron(archetype["name"])
         if p:
             print(f"  /{p}/")
-    print(f"\U0001F9EC Traits: {trait_list}")
-    print(f"\U0001F501 Logic Chain: {logic_signature}")
-    print(f"\U0001F300 Spin Bias: {archetype['spin_bias']} | Chaos Factor: {archetype['chaos_factor']}")
+    print(f"🧬 Traits: {trait_list}")
+    print(f"🔁 Logic Chain: {logic_signature}")
+    print(f"🌀 Spin Bias: {archetype['spin_bias']} | Chaos Factor: {archetype['chaos_factor']}")
     if verbose:
-        print(f"\U0001F4D3 Notes: {archetype['notes']}")
+        print(f"📓 Notes: {archetype['notes']}")
     maybe_reflect(archetype, logic_signature, verbose)
     if ref_log:
         tags = ["seed"]
@@ -114,7 +114,7 @@ def run_seed(name: str, verbose: bool = False, lang: str = "", pronounce: bool =
         ref_log.log(f"Seed {name} executed", tags=tags, mood=mood)
 
 def run_stack(seed_names: List[str], verbose: bool = False, lang: str = "", pronounce: bool = False, ref_log: Optional[ReflectionLog] = None) -> str:
-    print("\n\U0001F517 Compound Spiral Stack:")
+    print("\n🔗 Compound Spiral Stack:")
     combined_traits = []
     for name in seed_names:
         try:
@@ -127,7 +127,7 @@ def run_stack(seed_names: List[str], verbose: bool = False, lang: str = "", pron
             print(f"Error: {e}")
     unique_traits = list(set(combined_traits))
     logic_signature = render_logic(unique_traits)
-    print("\n\U0001F310 Combined Logic Chain:")
+    print("\n🌐 Combined Logic Chain:")
     trait_list = [localize(t, lang) for t in unique_traits]
     print(f"Traits: {trait_list}")
     print(f"Logic: {logic_signature}")
@@ -169,7 +169,7 @@ def main() -> None:
     elif args.problem:
         suggested = suggest_stack(args.problem)
         if suggested:
-            print(f"\n\U0001F9ED Problem type '{args.problem}' suggested archetypes: {suggested}")
+            print(f"\n🧭 Problem type '{args.problem}' suggested archetypes: {suggested}")
             stack_hash = run_stack(suggested, args.verbose, args.lang or "", args.pronounce, ref_log)
         else:
             print(f"No suggestions found for problem type '{args.problem}'.")
