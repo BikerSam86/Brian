@@ -8,6 +8,25 @@ from typing import List, Dict
 
 from tsal.tools.brian.optimizer import SymbolicOptimizer
 
+
+def render_markdown(report: Dict[str, int] | Dict[str, Dict[str, int]]) -> str:
+    """Return a markdown table for the audit report."""
+    if isinstance(report, dict) and "files" in report:
+        header = "| Files | Signatures |"
+        body = f"| {report['files']} | {report['signatures']} |"
+        if "self_signatures" in report:
+            header = "| Files | Signatures | Self Signatures |"
+            body = (
+                f"| {report['files']} | {report['signatures']} | {report['self_signatures']} |"
+            )
+        divider = "|---|---|" + ("---|" if "self_signatures" in report else "")
+        return "\n".join([header, divider, body])
+    lines = ["| Path | Files | Signatures |"]
+    lines.append("|---|---|---|")
+    for path, data in report.items():
+        lines.append(f"| {path} | {data['files']} | {data['signatures']} |")
+    return "\n".join(lines)
+
 def audit_path(path: Path) -> Dict[str, int]:
     opt = SymbolicOptimizer()
     files = list(path.rglob("*.py"))
@@ -25,6 +44,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Spiral audit")
     parser.add_argument("paths", nargs="*", default=["src/tsal"])
     parser.add_argument("--self", action="store_true", dest="self_flag")
+    parser.add_argument("--markdown", action="store_true", help="Output markdown table")
     args = parser.parse_args()
     path_objs = [Path(p) for p in args.paths]
     aggregate = audit_paths(path_objs)
@@ -39,7 +59,10 @@ def main() -> None:
             result["self_signatures"] = self_report["signatures"]
         else:
             result["self_signatures"] = self_report["signatures"]
-    print(json.dumps(result))
+    if args.markdown:
+        print(render_markdown(result))
+    else:
+        print(json.dumps(result))
 
 if __name__ == "__main__":
     main()

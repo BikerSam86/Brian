@@ -1,4 +1,4 @@
-from tsal.tools.spiral_audit import audit_path, audit_paths
+from tsal.tools.spiral_audit import audit_path, audit_paths, render_markdown
 from pathlib import Path
 
 def test_audit_path(tmp_path):
@@ -19,3 +19,8 @@ def test_audit_paths(tmp_path):
     reports = audit_paths([d1, d2])
     assert reports[str(d1)]["files"] == 1
     assert reports[str(d2)]["files"] == 1
+
+
+def test_render_markdown_single():
+    md = render_markdown({"files": 1, "signatures": 2})
+    assert "| Files |" in md
