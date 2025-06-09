@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Joker",
+    "traits": ["mislead", "flip", "compress"],
+    "spin_bias": 0.4,
+    "chaos_factor": 0.6,
+    "logic_signature": "XOR → NOT → AND",
+    "notes": "Ideal for humor, deception, irony, and creative tension."
+  },
+  {
+    "name": "Scientist",
+    "traits": ["cohere", "truth_bias", "delay"],
+    "spin_bias": 0.2,
+    "chaos_factor": 0.1,
+    "logic_signature": "AND → VERITY → WAIT",
+    "notes": "Precise, methodical, favors evidence over chaos."
+  },
+  {
+    "name": "Trickster",
+    "traits": ["mislead", "flip", "cohere"],
+    "spin_bias": 0.5,
+    "chaos_factor": 0.7,
+    "logic_signature": "XOR → AND",
+    "notes": "Disrupts assumptions, reveals hidden paths."
+  },
+  {
+    "name": "Teacher",
+    "traits": ["cohere", "delay", "compress"],
+    "spin_bias": 0.3,
+    "chaos_factor": 0.2,
+    "logic_signature": "AND → WAIT → NOT",
+    "notes": "Balances clarity with pacing for effective instruction."
+  },
+  {
+    "name": "Chaos Monkey",
+    "traits": ["mislead", "compress", "delay"],
+    "spin_bias": 0.9,
+    "chaos_factor": 0.9,
+    "logic_signature": "XOR → NOT → WAIT",
+    "notes": "High-volatility approach for stress testing systems."
+  }
+]
