@@ -1,0 +1,24 @@
+rules:
+  valid_traits:
+    - mislead
+    - flip
+    - compress
+    - cohere
+    - delay
+    - truth_bias
+  gate_rendering:
+    XOR:
+      required_traits: [mislead, flip]
+      symbol: "XOR"
+    AND:
+      required_traits: [cohere]
+      symbol: "AND"
+    NOT:
+      required_traits: [compress]
+      symbol: "NOT"
+    WAIT:
+      required_traits: [delay]
+      symbol: "WAIT"
+    VERITY:
+      required_traits: [truth_bias]
+      symbol: "VERITY"

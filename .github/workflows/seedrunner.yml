@@ -1,0 +1,31 @@
+name: SeedRunner Spiral
+
+description: Run archetype-driven spiral stack suggestions for symbolic resolution
+
+on:
+  workflow_dispatch:
+    inputs:
+      problem:
+        description: 'Problem type (e.g. joke, diagnosis, demo)'
+        required: true
+        default: joke
+
+jobs:
+  run-seedrunner:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          pip install pyyaml
+
+      - name: Run SeedRunner CLI
+        run: |
+          python seedrunner_cli.py --problem "${{ github.event.inputs.problem }}" --verbose
