@@ -30,6 +30,7 @@ from .core.stack_vm import (
 from .renderer.code_render import mesh_to_python
 from .tristar.handshake import handshake as tristar_handshake
 from .tristar.governor import MetaAgent, TriStarGovernor
+from .agents import PriorityResearchTeamAgent, ThreatReport
 from .utils.github_api import fetch_repo_files, fetch_languages
 from .tools.feedback_ingest import categorize, Feedback
 from .tools.alignment_guard import is_aligned, Change
@@ -82,6 +83,8 @@ __all__ = [
     "tristar_handshake",
     "MetaAgent",
     "TriStarGovernor",
+    "PriorityResearchTeamAgent",
+    "ThreatReport",
     "categorize",
     "Feedback",
     "is_aligned",
