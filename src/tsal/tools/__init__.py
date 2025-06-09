@@ -11,6 +11,7 @@ from .reflect import reflect
 from .kintsugi.kintsugi import kintsugi_repair
 from .module_draft import generate_template, draft_directory
 from .state_tracker import update_entry, show_entry
+from .archetype_fetcher import fetch_online_mesh, merge_mesh
 
 __all__ = [
     "real_time_codec",
@@ -34,4 +35,6 @@ __all__ = [
     "draft_directory",
     "update_entry",
     "show_entry",
+    "fetch_online_mesh",
+    "merge_mesh",
 ]
