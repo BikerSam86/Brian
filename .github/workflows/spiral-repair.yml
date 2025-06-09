@@ -50,8 +50,8 @@ jobs:
 
           # Find changed files between base and current commit
           FILES=$(git diff --name-only origin/$BASE_REF ${{ github.sha }} -- '*.py' || git diff --name-only ${{ github.sha }}^ ${{ github.sha }} -- '*.py')
+          FILES=$(echo "$FILES" | tr '\n' ' ')
           echo "files=$FILES" >> $GITHUB_OUTPUT
-
 
       - name: Bestest beast
         run: tsal-bestest-beast 11 > beast.log
