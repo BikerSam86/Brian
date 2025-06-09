@@ -19,6 +19,21 @@ jobs:
         with:
           python-version: '3.11'
 
+      # 🚩 Patch bump step goes HERE
+      - name: Auto-increment patch version in pyproject.toml
+        run: |
+          python -c "
+import re
+path = 'pyproject.toml'
+s = open(path).read()
+new = re.sub(
+  r'version\s*=\s*\"(\d+)\.(\d+)\.(\d+)\"',
+  lambda m: f'version = \"{m.group(1)}.{m.group(2)}.{int(m.group(3))+1}\"',
+  s
+)
+open(path, 'w').write(new)
+"
+
       - name: Build package
         run: |
           pip install build
