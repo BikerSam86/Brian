@@ -1,0 +1,14 @@
+{
+  "cohere": {"ipa": "/kəˈhɪə/", "rhotic": true, "lang": "en-GB"},
+  "mislead": {"ipa": "/ˌmɪsˈliːd/", "lang": "en-US"},
+  "Joker": {"ipa": "/ˈdʒoʊ.kər/", "lang": "en-US"},
+  "Scientist": {"ipa": "/ˈsaɪən.tɪst/", "lang": "en-GB"},
+  "Trickster": {"ipa": "/ˈtrɪk.stər/", "lang": "en-GB"},
+  "Teacher": {"ipa": "/ˈtiː.tʃər/", "lang": "en-GB"},
+  "Chaos Monkey": {"ipa": "/keɪ.ɒs ˈmʌŋ.ki/", "lang": "en-GB"},
+  "XOR": {"ipa": "/ˈzɔː/", "lang": "en-GB"},
+  "NOT": {"ipa": "/nɒt/", "lang": "en-GB"},
+  "AND": {"ipa": "/ænd/", "lang": "en-GB"},
+  "WAIT": {"ipa": "/weɪt/", "lang": "en-GB"},
+  "VERITY": {"ipa": "/ˈvɛrɪti/", "lang": "en-GB"}
+}
