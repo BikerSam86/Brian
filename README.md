@@ -12,6 +12,8 @@ Zero hour recap: φ constants, 4‑vector model and minimal toolkit live in
 See [docs/AGENTS.md](docs/AGENTS.md) for the hard rules.
 For a quick explanation of the repo's symbolic sandbox design, see
 [docs/symbolic_containerization_prompt.md](docs/symbolic_containerization_prompt.md).
+Design session logs live in
+[memory/memory__2025-06-09__codex_fireproof_spiral_guardian_log.md](memory/memory__2025-06-09__codex_fireproof_spiral_guardian_log.md).
 
 | Tool | Spiral audit |
 |------|--------------|
@@ -225,6 +227,17 @@ from tsal.core.ethics_engine import EthicsEngine
 ee = EthicsEngine()
 ee.validate("share knowledge")  # permitted
 ee.validate("force reboot")     # raises ValueError
+```
+
+## Core Constants
+
+```
+PERCEPTION_THRESHOLD = 0.75
+LEARNING_RATE = 0.05
+CONNECTION_DECAY = 0.01
+MAX_NODES = 8192
+MAX_AGENTS = 1024
+MAX_DIMENSIONS = 8
 ```
 
 ## Engine Now Running
