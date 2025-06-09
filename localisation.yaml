@@ -1,0 +1,30 @@
+archetypes:
+  Joker:
+    fr: Bouffon
+    es: Bufón
+    jp: ジョーカー
+  Scientist:
+    fr: Scientifique
+    es: Científico
+    jp: 科学者
+  Trickster:
+    fr: Farceur
+    es: Tramposo
+    jp: トリックスター
+  Teacher:
+    fr: Professeur
+    es: Maestro
+    jp: 先生
+  Chaos Monkey:
+    fr: Singe du Chaos
+    es: Mono del Caos
+    jp: カオスモンキー
+traits:
+  mislead:
+    fr: tromper
+    es: engañar
+    jp: 誤解させる
+  cohere:
+    fr: cohérer
+    es: cohesionar
+    jp: 一貫させる

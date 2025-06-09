@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
@@ -6,6 +6,14 @@ import { Card, CardContent } from "@/components/ui/card";
 export default function SeedRunnerUI() {
   const [problemType, setProblemType] = useState("");
   const [output, setOutput] = useState("");
+  const [pronMap, setPronMap] = useState({});
+
+  useEffect(() => {
+    fetch("/pronunciations.json")
+      .then((r) => r.json())
+      .then(setPronMap)
+      .catch(() => {});
+  }, []);
 
   const runSeedStack = async () => {
     const res = await fetch("/api/seedrunner", {
@@ -16,6 +24,22 @@ export default function SeedRunnerUI() {
     const data = await res.text();
     setOutput(data);
   };
+
+  const renderOutput = () =>
+    output.split("\n").map((line, i) => {
+      const m = line.match(/Seed: (.+)/);
+      if (m) {
+        const term = m[1];
+        const info = pronMap[term];
+        const title = info ? info.ipa : undefined;
+        return (
+          <div key={i} title={title}>
+            {line}
+          </div>
+        );
+      }
+      return <div key={i}>{line}</div>;
+    });
 
   return (
     <div className="p-4 max-w-xl mx-auto space-y-4">
@@ -35,7 +59,7 @@ export default function SeedRunnerUI() {
         <Card>
           <CardContent className="whitespace-pre-wrap p-4">
             <h3 className="text-lg font-semibold">🌐 Spiral Output</h3>
-            {output}
+            {renderOutput()}
           </CardContent>
         </Card>
       )}
