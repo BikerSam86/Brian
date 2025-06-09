@@ -129,6 +129,18 @@ To save these languages for reuse, populate the local SQLite database with:
 
 ```bash
 python -m tsal.utils.language_db
+# Populate the grammar database
+python -m tsal.utils.grammar_db
+# Drop and repopulate
+python -m tsal.utils.grammar_db --reset
+
+# Example query
+python -m tsal.utils.grammar_db --context Python --lens syntax
+
+# Populate the humour database
+python -m tsal.utils.humour_db
+# Drop and repopulate
+python -m tsal.utils.humour_db --reset
 ```
 
 This creates `system_io.db` containing a `languages` table with all entries.

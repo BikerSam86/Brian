@@ -43,7 +43,7 @@ def populate_humour_db(
     # Prepare list of (context, joke) tuples
     combined: list[Tuple[str, str]] = []
     jokes = jokes or []
-    for entry in (jokes if jokes else []):
+    for entry in jokes:
         if isinstance(entry, tuple) and len(entry) == 2:
             combined.append(entry)
         elif isinstance(entry, str):

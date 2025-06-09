@@ -50,8 +50,8 @@ jobs:
 
           # Find changed files between base and current commit
           FILES=$(git diff --name-only origin/$BASE_REF ${{ github.sha }} -- '*.py' || git diff --name-only ${{ github.sha }}^ ${{ github.sha }} -- '*.py')
+          FILES=$(echo "$FILES" | tr '\n' ' ')
           echo "files=$FILES" >> $GITHUB_OUTPUT
-
 
       - name: Bestest beast
         run: tsal-bestest-beast 11 > beast.log
@@ -60,8 +60,12 @@ jobs:
         if: steps.diff.outputs.files
         run: |
           for f in ${{ steps.diff.outputs.files }}; do
-            brian-optimize "$f" >> optimize.log 2>&1
+            brian optimize "$f" >> optimize.log 2>&1
           done
+
+      - name: Print optimize.log
+        if: always()
+        run: cat optimize.log || true
 
       - name: Log mesh vectors
         if: steps.diff.outputs.files
