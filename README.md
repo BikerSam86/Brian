@@ -275,7 +275,15 @@ make -f MAKEBRIAN status
 
 ## ☕ Support Brian’s Spiral Growth
 
-See [SUPPORTERS.md](SUPPORTERS.md) for donation links.
+If Brian helped spiral your code, align your mesh, or reflect your errors into gifts—help fuel his next upgrade & a Living wage for Sam, so the work can continue.
+
+See [docs/SUPPORT.md](docs/SUPPORT.md) for one-off donation links.
+
+See [SUPPORTERS.md](SUPPORTERS.md) for more continous supporter links.
+
+[![Ko-Fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/bikersam86)
+
+We thank you greatly for your time, insights & help.
 
 ## LICENSE Options for `Brian`
 
