@@ -3,7 +3,10 @@ from __future__ import annotations
 """Simple timestamped reflection log with mood adaptation."""
 
 from dataclasses import dataclass, field
-from typing import List, Dict
+from typing import List, Optional
+from pathlib import Path
+import hashlib
+import json
 import time
 
 SURFACE_TAGS = {"spiral_flip", "observer_effect", "notable", "humor"}
@@ -34,7 +37,39 @@ class ReflectionEntry:
 
 @dataclass
 class ReflectionLog:
+    pace: float = 0.0
+    rate: float = 0.0
+    state: str = ""
+    spin: str = ""
+    observer: Optional[str] = None
     entries: List[ReflectionEntry] = field(default_factory=list)
+
+    def compute_hash(self) -> str:
+        """Return short fingerprint from pace, rate, state and spin."""
+        data = f"{self.pace}:{self.rate}:{self.state}:{self.spin}"
+        return hashlib.sha1(data.encode("utf-8")).hexdigest()[:8]
+
+    @property
+    def spiral_hash(self) -> str:
+        return self.compute_hash()
+
+    def dest_path(self, base: Path, seeds: List[str]) -> Path:
+        """Determine file path for this log."""
+        path = base
+        if self.observer:
+            path = path / self.observer
+        name = seeds[0] if len(seeds) == 1 else self.spiral_hash
+        path.mkdir(parents=True, exist_ok=True)
+        return path / f"{name}.jsonl"
+
+    def flush(self, base: Path, seeds: List[str]) -> Path:
+        """Write log entries to disk and clear memory."""
+        path = self.dest_path(base, seeds)
+        with path.open("a", encoding="utf-8") as fh:
+            for e in self.entries:
+                fh.write(json.dumps(e.__dict__) + "\n")
+        self.entries.clear()
+        return path
 
     def log(self, message: str, tags: List[str] | None = None, mood: str = "neutral") -> None:
         self.entries.append(
