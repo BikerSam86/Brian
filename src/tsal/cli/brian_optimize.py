@@ -1,7 +1,9 @@
+"""CLI wrapper for the Brian optimizer."""
+
 from .brian import main as _main
 
 
-def main():
+def main() -> None:
     _main()
 
 

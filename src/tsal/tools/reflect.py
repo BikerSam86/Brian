@@ -32,10 +32,12 @@ def main() -> None:
 
     parser = argparse.ArgumentParser(description="reflect on repo")
     parser.add_argument("path", nargs="?", default="src/tsal")
+    parser.add_argument("--origin", dest="origin")
     parser.add_argument("--json", action="store_true")
     args = parser.parse_args()
 
-    print(reflect(args.path, as_json=args.json))
+    path = args.origin or args.path
+    print(reflect(path, as_json=args.json))
 
 if __name__ == "__main__":
     main()
