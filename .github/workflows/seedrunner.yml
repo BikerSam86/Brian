@@ -30,6 +30,10 @@ jobs:
         run: |
           pip install pyyaml
 
+      - name: Install project as editable
+        run: |
+          pip install -e .
+
       - name: Run SeedRunner CLI
         run: |
           python seedrunner_cli.py --problem "${{ github.event.inputs.problem }}" --verbose
