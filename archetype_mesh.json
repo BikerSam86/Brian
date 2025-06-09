@@ -38,5 +38,13 @@
     "chaos_factor": 0.9,
     "logic_signature": "XOR → NOT → WAIT",
     "notes": "High-volatility approach for stress testing systems."
+  },
+  {
+    "name": "Schrodinger",
+    "traits": ["mislead", "flip", "compress", "truth_bias"],
+    "spin_bias": 0.5,
+    "chaos_factor": 0.5,
+    "logic_signature": "XOR → NOT → XOR",
+    "notes": "Unstable spin. Collapses identity only under observation."
   }
 ]

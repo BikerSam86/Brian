@@ -7,6 +7,7 @@ import json
 import yaml
 import argparse
 import hashlib
+import random
 import time
 from pathlib import Path
 from typing import List, Dict, Optional, Any
@@ -72,6 +73,20 @@ def render_logic(traits: List[str]) -> str:
             logic_chain.append(props["symbol"])
     return " → ".join(logic_chain) if logic_chain else "∅"
 
+REFLECTIONS = [
+    "Interesting... I resolved before the observer even looked.",
+    "This inversion smells like a Trickster, but it's wearing a Scientist's coat.",
+    "You didn't ask, but this feels like a misdirection loop with no exit."
+]
+
+def maybe_reflect(archetype: Dict, logic_signature: str, verbose: bool) -> None:
+    contrast = abs(archetype["spin_bias"] - archetype["chaos_factor"])
+    if not verbose:
+        return
+    if archetype["chaos_factor"] > 0.4 and contrast > 0.2 and "truth_bias" in archetype["traits"]:
+        comment = random.choice(REFLECTIONS)
+        print(f"⚡ {comment}")
+
 def run_seed(name: str, verbose: bool = False, lang: str = "", pronounce: bool = False, ref_log: Optional[ReflectionLog] = None):
     archetype = find_archetype(name)
     traits = archetype["traits"]
@@ -90,6 +105,7 @@ def run_seed(name: str, verbose: bool = False, lang: str = "", pronounce: bool =
     print(f"\U0001F300 Spin Bias: {archetype['spin_bias']} | Chaos Factor: {archetype['chaos_factor']}")
     if verbose:
         print(f"\U0001F4D3 Notes: {archetype['notes']}")
+    maybe_reflect(archetype, logic_signature, verbose)
     if ref_log:
         tags = ["seed"]
         if archetype["chaos_factor"] > 0.7:
