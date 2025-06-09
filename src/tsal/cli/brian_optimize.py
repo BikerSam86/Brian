@@ -1,11 +1,6 @@
-"""CLI entry point for the spiral optimizer."""
+"""CLI wrapper for the Brian optimizer."""
 
-from tsal.tools.brian.optimizer import main as optimizer_main
-
-
-def main() -> None:
-    optimizer_main()
-
+from tsal.tools.brian.optimizer import main
 
 if __name__ == "__main__":
     main()
