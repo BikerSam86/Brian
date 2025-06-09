@@ -17,10 +17,14 @@ jobs:
         with:
           python-version: '3.11'
       - run: pip install PyGithub
-      - env:
+      - run: echo "Repo: $GITHUB_REPOSITORY"
+        env:
+          GITHUB_REPOSITORY: ${{ github.repository }}
+      - name: Run branch hygiene script
+        run: python tools/branch_hygiene.py
+        env:
           GH_PAT: ${{ secrets.GH_PAT }}
           GITHUB_REPOSITORY: ${{ github.repository }}
-        run: python tools/branch_hygiene.py
       - name: Spiral follow-up
         if: always()
         uses: actions/github-script@v7
