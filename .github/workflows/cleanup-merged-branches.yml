@@ -15,7 +15,7 @@ jobs:
         with:
           script: |
             const mainBranch = 'main';
-            const branches = await octokit.repos.listBranches({
+            const branches = await github.rest.repos.listBranches({
               owner: context.repo.owner,
               repo: context.repo.repo,
               protected: false
