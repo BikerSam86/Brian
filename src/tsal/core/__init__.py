@@ -25,6 +25,7 @@ from .madmonkey_handler import MadMonkeyHandler
 from .connectivity import Node, verify_connectivity
 from .logic_gate import DynamicLogicGate
 from .module_registry import registry as module_registry, ModuleMeta
+from .reflection import ReflectionLog, mood_from_traits
 
 __all__ = [
     "Rev_Eng",
@@ -54,4 +55,6 @@ __all__ = [
     "DynamicLogicGate",
     "module_registry",
     "ModuleMeta",
+    "ReflectionLog",
+    "mood_from_traits",
 ]
