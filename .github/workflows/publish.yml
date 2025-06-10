@@ -21,17 +21,17 @@ jobs:
 
       - name: Auto-increment patch version in pyproject.toml
         run: |
-          path="pyproject.toml"
           python - <<EOF
 import re
-with open("$path") as f:
+path = "pyproject.toml"
+with open(path) as f:
     s = f.read()
 new = re.sub(
     r'version\s*=\s*"(\\d+)\\.(\\d+)\\.(\\d+)"',
     lambda m: f'version = "{m.group(1)}.{m.group(2)}.{int(m.group(3))+1}"',
     s
 )
-with open("$path", "w") as f:
+with open(path, "w") as f:
     f.write(new)
 EOF
 
