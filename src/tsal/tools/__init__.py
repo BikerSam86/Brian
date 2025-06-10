@@ -12,6 +12,7 @@ from .kintsugi.kintsugi import kintsugi_repair
 from .module_draft import generate_template, draft_directory
 from .state_tracker import update_entry, show_entry
 from .archetype_fetcher import fetch_online_mesh, merge_mesh
+from .task_agent import load_tasks, run_task
 from .issue_agent import create_issue, handle_http_error
 
 __all__ = [
@@ -38,6 +39,8 @@ __all__ = [
     "show_entry",
     "fetch_online_mesh",
     "merge_mesh",
+    "load_tasks",
+    "run_task",
     "create_issue",
     "handle_http_error",
 ]
