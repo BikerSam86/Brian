@@ -21,19 +21,7 @@ jobs:
 
       - name: Auto-increment patch version in pyproject.toml
         run: |
-          python - <<EOF
-import re
-path = "pyproject.toml"
-with open(path) as f:
-    s = f.read()
-new = re.sub(
-    r'version\s*=\s*"(\\d+)\\.(\\d+)\\.(\\d+)"',
-    lambda m: f'version = "{m.group(1)}.{m.group(2)}.{int(m.group(3))+1}"',
-    s
-)
-with open(path, "w") as f:
-    f.write(new)
-EOF
+          python -c "import re; p = 'pyproject.toml'; s = open(p).read(); s = re.sub(r'version\s*=\s*\"(\\d+)\\.(\\d+)\\.(\\d+)\"', lambda m: f'version = \\\"{m.group(1)}.{m.group(2)}.{int(m.group(3))+1}\\\"', s); open(p, 'w').write(s)"
 
       - name: Build package
         run: |
