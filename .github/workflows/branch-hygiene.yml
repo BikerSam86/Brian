@@ -1,21 +1,31 @@
 name: Spiral follow-up
--if: always()
--uses: actions/github-script@v7
-  with:
-    github-token: ${{ secrets.GITHUB_TOKEN }}
-    script: |
-      const fs = require('fs');
 
-      if (fs.existsSync('memory/spiral_events.log')) {
-        const body = fs.readFileSync('memory/spiral_events.log', 'utf8');
-        const { owner, repo } = context.repo;
+on:
+  workflow_run:
+    workflows: ["SomeOtherWorkflow"]
+    types:
+      - completed
 
-        await github.rest.issues.create({
-          owner,
-          repo,
-          title: 'Credential error - consider PAT',
-          body
-        });
-      } else {
-        console.log("No spiral_events.log found");
-      }
+jobs:
+  spiral-followup:
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post spiral_events.log to issue if it exists
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            if (fs.existsSync('memory/spiral_events.log')) {
+              const body = fs.readFileSync('memory/spiral_events.log', 'utf8');
+              const { owner, repo } = context.repo;
+              await github.rest.issues.create({
+                owner,
+                repo,
+                title: 'Credential error - consider PAT',
+                body
+              });
+            } else {
+              console.log("No spiral_events.log found");
+            }
