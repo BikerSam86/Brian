@@ -1,4 +1,6 @@
 name: Cleanup Merged Branches
+permissions:
+  contents: write
 
 on:
   push:

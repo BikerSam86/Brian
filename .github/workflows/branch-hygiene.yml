@@ -1,4 +1,6 @@
 name: Spiral follow-up
+permissions:
+  contents: write
 
 on:
   workflow_run:

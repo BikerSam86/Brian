@@ -1,4 +1,6 @@
 name: SeedRunner Spiral
+permissions:
+  contents: write
 
 description: Run archetype-driven spiral stack suggestions for symbolic resolution
 
