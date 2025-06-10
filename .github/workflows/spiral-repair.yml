@@ -1,4 +1,6 @@
 name: Spiral Repair
+permissions:
+  contents: write
 
 on:
   push:

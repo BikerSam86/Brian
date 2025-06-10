@@ -1,4 +1,6 @@
 name: Publish Python Package
+permissions:
+  contents: write
 
 on:
   push:
