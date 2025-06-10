@@ -1,0 +1,38 @@
+name: Agent Tasks
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Task name (repair, improve, overhaul, rebuild, clone, learn, help)'
+        required: true
+        default: 'help'
+
+jobs:
+  run-task:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install -r requirements.txt
+          python -m pip install -e .
+
+      - name: Execute agent task
+        run: python -m tsal.tools.task_agent "${{ github.event.inputs.action }}"
+
+      - name: Upload log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: task-log-${{ github.run_id }}
+          path: task_agent.log

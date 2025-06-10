@@ -1,0 +1,8 @@
+tasks:
+  repair: "tsal-bestest-beast 3 src/tsal --safe"
+  improve: "brian optimize src/tsal"
+  overhaul: "tsal-bestest-beast 9 src/tsal"
+  rebuild: "python makeBrian.py all"
+  clone: "python makeBrian.py init"
+  learn: "python -m tsal.utils.language_db --reset"
+  help: "python makeBrian.py help"
