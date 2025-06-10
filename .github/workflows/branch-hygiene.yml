@@ -1,8 +1,8 @@
-- name: Spiral follow-up
-  if: always()
-  uses: actions/github-script@v7
+name: Spiral follow-up
+-if: always()
+-uses: actions/github-script@v7
   with:
-    github-token: ${{ secrets.GITHUB_TOKEN }}  # Add this line to authenticate
+    github-token: ${{ secrets.GITHUB_TOKEN }}
     script: |
       const fs = require('fs');
 
