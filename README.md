@@ -12,6 +12,7 @@ Zero hour recap: φ constants, 4‑vector model and minimal toolkit live in
 See [docs/AGENTS.md](docs/AGENTS.md) for the hard rules.
 For a quick explanation of the repo's symbolic sandbox design, see
 [docs/symbolic_containerization_prompt.md](docs/symbolic_containerization_prompt.md).
+See [docs/phase_offset_digital_duplicate.md](docs/phase_offset_digital_duplicate.md) for a brief on phase offset and the digital duplicate concept.
 Design session logs live in
 [memory/memory__2025-06-09__codex_fireproof_spiral_guardian_log.md](memory/memory__2025-06-09__codex_fireproof_spiral_guardian_log.md).
 
