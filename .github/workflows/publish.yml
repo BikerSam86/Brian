@@ -21,17 +21,24 @@ jobs:
 
       - name: Auto-increment patch version in pyproject.toml
         run: |
-          python -c "import re; p = 'pyproject.toml'; s = open(p).read(); s = re.sub(r'version\s*=\s*\"(\\d+)\\.(\\d+)\\.(\\d+)\"', lambda m: f'version = \\\"{m.group(1)}.{m.group(2)}.{int(m.group(3))+1}\\\"', s); open(p, 'w').write(s)"
+          python -c "import re; path = 'pyproject.toml'; s = open(path).read(); new = re.sub(r'version\s*=\s*\"(\\d+)\\.(\\d+)\\.(\\d+)\"', lambda m: f'version = \\\"{m.group(1)}.{m.group(2)}.{int(m.group(3))+1}\\\"', s); open(path, 'w').write(new); print('Updated version to:', re.search(r'version\\s*=\\s*\\\"(.+?)\\\"', new).group(1))"
+
+      - name: Commit version bump
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git commit -am "Auto-bump patch version"
+          git push
 
       - name: Build package
         run: |
           pip install build
           python -m build
 
-      - name: Publish to GitHub Packages
+      - name: Publish to PyPI
         run: |
           pip install twine
-          twine upload --repository-url https://upload.pypi.org/legacy/ dist/*
+          twine upload --skip-existing --repository-url https://upload.pypi.org/legacy/ dist/*
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
