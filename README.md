@@ -15,6 +15,8 @@ For a quick explanation of the repo's symbolic sandbox design, see
 See [docs/phase_offset_digital_duplicate.md](docs/phase_offset_digital_duplicate.md) for a brief on phase offset and the digital duplicate concept.
 Design session logs live in
 [memory/memory__2025-06-09__codex_fireproof_spiral_guardian_log.md](memory/memory__2025-06-09__codex_fireproof_spiral_guardian_log.md).
+Naming integrity rules live in
+[docs/naming_integrity.md](docs/naming_integrity.md).
 
 | Tool | Spiral audit |
 |------|--------------|
