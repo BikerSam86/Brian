@@ -35,6 +35,7 @@ tsal-watchdog = "tsal.cli.watchdog:main"
 tsal-state = "tsal.tools.state_tracker:main"
 tsal-party = "tsal.cli.party:main"
 tsal-sanctum-export = "tsal.cli.tsal_sanctum_export:main"
+tsal-scorer = "tsal.cli.scorer:main"
 
 [tool.setuptools.packages.find]
 where = ["src", "tools"]

@@ -45,4 +45,7 @@ class EthicsEngine:
         if not self.is_permitted(request):
             raise ValueError("Request violates Guardian Prime Directive")
 
+# expose prime directive at module level for convenience
+PRIME_DIRECTIVE = EthicsEngine.PRIME_DIRECTIVE
+
 __all__ = ["EthicsEngine", "PRIME_DIRECTIVE"]
