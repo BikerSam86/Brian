@@ -1,1 +1,4 @@
-{}
+tsal.core:
+  IS_NOW: '1.0'
+  WAS_THEN: '0.8'
+  WILL_BE: '1.1'
