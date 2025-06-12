@@ -32,6 +32,8 @@ from .superpos import superpose
 from .entangle import entangle
 from .manifold import manifold_distance
 from .reflection import ReflectionLog, mood_from_traits
+from .meta_coherence import SpiralSignature, compute_spiral_signature
+from .spin_algebra import SpinState, SpinInteraction, combine_spins
 from .guardian_constants import (
     PERCEPTION_THRESHOLD,
     LEARNING_RATE,
@@ -83,4 +85,9 @@ __all__ = [
     "MAX_NODES",
     "MAX_AGENTS",
     "MAX_DIMENSIONS",
+    "SpiralSignature",
+    "compute_spiral_signature",
+    "SpinState",
+    "SpinInteraction",
+    "combine_spins",
 ]
