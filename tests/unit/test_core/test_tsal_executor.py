@@ -1,4 +1,4 @@
-from tsal.core.tsal_executor import TSALExecutor, TSALOp, SpiralVector, ExecutionMode
+from tsal.core.tsal_executor import TSALExecutor, TSALOp, RegisterVector, ExecutionMode
 from tsal.core.executor import MetaFlagProtocol
 
 

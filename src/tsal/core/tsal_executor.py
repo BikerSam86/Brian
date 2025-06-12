@@ -45,8 +45,13 @@ class ExecutionMode(Enum):
     FORK = auto()
 
 @dataclass
-class SpiralVector:
-    """4D vector representation: [pace, rate, state, spin]"""
+class RegisterVector:
+    """Execution-time 4D vector.
+
+    Distinct from :class:`~tsal.core.spiral_vector.SpiralVector` which tracks
+    high level spiral metrics. This class represents the pace, rate, state and
+    spin registers used by the virtual machine.
+    """
 
     pace: float = 0.0
     rate: float = 0.0
@@ -77,7 +82,7 @@ class MeshNode:
     """Node in the execution mesh"""
 
     id: str
-    vector: SpiralVector
+    vector: RegisterVector
     memory: Dict[str, Any] = field(default_factory=dict)
     connections: List[str] = field(default_factory=list)
     resonance: float = 1.0
@@ -98,11 +103,11 @@ class TSALExecutor:
     def __init__(self, meta: MetaFlagProtocol | None = None) -> None:
         self.mesh: Dict[str, MeshNode] = {}
         self.stack: List[Any] = []
-        self.registers: Dict[str, SpiralVector] = {
-            "A": SpiralVector(),
-            "B": SpiralVector(),
-            "C": SpiralVector(),
-            "D": SpiralVector(),
+        self.registers: Dict[str, RegisterVector] = {
+            "A": RegisterVector(),
+            "B": RegisterVector(),
+            "C": RegisterVector(),
+            "D": RegisterVector(),
         }
         self.ip = 0
         self.program: List[Tuple[TSALOp, Any]] = []
@@ -225,7 +230,7 @@ class TSALExecutor:
 
     def _op_init(self, args: Dict[str, Any]) -> None:
         if "register" in args:
-            self.registers[args["register"]] = SpiralVector()
+            self.registers[args["register"]] = RegisterVector()
         elif "mesh" in args:
             self.mesh.clear()
         else:
@@ -233,7 +238,7 @@ class TSALExecutor:
 
     def _op_mesh(self, args: Dict[str, Any]) -> None:
         node_id = args.get("id", f"node_{len(self.mesh)}")
-        vector = args.get("vector", SpiralVector())
+        vector = args.get("vector", RegisterVector())
 
         node = MeshNode(id=node_id, vector=vector)
         self.mesh[node_id] = node
@@ -337,7 +342,7 @@ class TSALExecutor:
         tgt = args.get("target", "C")
         a = self.registers[sa]
         b = self.registers[sb]
-        self.registers[tgt] = SpiralVector(
+        self.registers[tgt] = RegisterVector(
             pace=(a.pace * PHI + b.pace * PHI_INV) / 2,
             rate=(a.rate * PHI_INV + b.rate * PHI) / 2,
             state=(a.state * PHI + b.state * PHI_INV) / 2,
@@ -347,7 +352,7 @@ class TSALExecutor:
     def _op_sync(self, args: Dict[str, Any]) -> None:
         if not self.mesh:
             return
-        avg = SpiralVector()
+        avg = RegisterVector()
         for node in self.mesh.values():
             avg.pace += node.vector.pace
             avg.rate += node.vector.rate
@@ -438,7 +443,7 @@ class TSALExecutor:
             return
         error = self.error_mansion.pop(0)
         if error:
-            err_vec = error.get("vector", SpiralVector())
+            err_vec = error.get("vector", RegisterVector())
             err_type = error.get("type", "unknown")
             bloom_node = MeshNode(
                 id=f"bloom_{len(self.mesh)}", vector=err_vec, resonance=PHI
@@ -486,7 +491,7 @@ class TSALExecutor:
         self.meta_agent.health = min(100, self.meta_agent.health + 10)
         self.meta_agent.entropy = max(0, self.meta_agent.entropy - 10)
 
-    def _calculate_resonance(self, a: SpiralVector, b: SpiralVector) -> float:
+    def _calculate_resonance(self, a: RegisterVector, b: RegisterVector) -> float:
         return calculate_resonance(a, b)
 
     def _calculate_mesh_resonance(self) -> float:
