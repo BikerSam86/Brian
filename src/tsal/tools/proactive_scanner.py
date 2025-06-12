@@ -9,16 +9,28 @@ from typing import Dict, List, Tuple
 from .aletheia_checker import scan_file as _scan_file
 
 
+def scan_todo_file(path: str | Path) -> List[Tuple[int, str]]:
+    """Return TODO lines from ``path``."""
+    file = Path(path)
+    hits: List[Tuple[int, str]] = []
+    with open(file, "r", encoding="utf-8", errors="ignore") as fh:
+        for lineno, line in enumerate(fh, 1):
+            if "TODO" in line:
+                hits.append((lineno, line.strip()))
+    return hits
+
+
+def scan_typos_file(path: str | Path) -> List[Tuple[int, str]]:
+    """Return probable typos from ``path``."""
+    return _scan_file(Path(path))
+
+
 def scan_todos(base: str = "src") -> Dict[str, List[Tuple[int, str]]]:
     """Return TODO comments grouped by file."""
     root = Path(base)
     results: Dict[str, List[Tuple[int, str]]] = {}
     for path in root.rglob("*.py"):
-        hits: List[Tuple[int, str]] = []
-        with open(path, "r", encoding="utf-8", errors="ignore") as fh:
-            for lineno, line in enumerate(fh, 1):
-                if "TODO" in line:
-                    hits.append((lineno, line.strip()))
+        hits = scan_todo_file(path)
         if hits:
             results[str(path)] = hits
     return results
@@ -27,7 +39,7 @@ def scan_todos(base: str = "src") -> Dict[str, List[Tuple[int, str]]]:
 def _scan_root(root: Path) -> Dict[str, List[Tuple[int, str]]]:
     typos: Dict[str, List[Tuple[int, str]]] = {}
     for file in root.rglob("*.py"):
-        hits = _scan_file(file)
+        hits = scan_typos_file(file)
         if hits:
             typos[str(file)] = hits
     return typos
