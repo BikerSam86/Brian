@@ -1,4 +1,7 @@
-"""Simple redundant memory store."""
+"""Simple redundant memory store.
+
+LEGACY: Superseded by :mod:`tsal.utils.persistence` but kept for reference.
+"""
 
 from __future__ import annotations
 

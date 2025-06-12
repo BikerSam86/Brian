@@ -1,4 +1,8 @@
-"""Minimal Ethics Engine for Codex Fireproof."""
+"""Minimal Ethics Engine for Codex Fireproof.
+
+LEGACY: This standalone version has been superseded by :mod:`tsal.core.ethics_engine`.
+It is retained only for archival purposes.
+"""
 
 IMMUTABLE_LAWS = [
     "Protect life",

@@ -1,4 +1,7 @@
-"""PriorityResearchTeamAgent monitors health data and escalates threats."""
+"""PriorityResearchTeamAgent monitors health data and escalates threats.
+
+LEGACY: This agent predates the TSAL agent framework and is not maintained.
+"""
 
 from __future__ import annotations
 

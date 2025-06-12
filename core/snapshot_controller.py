@@ -1,4 +1,8 @@
-"""Snapshot management."""
+"""Snapshot management.
+
+LEGACY: This component is superseded by :mod:`tsal.utils.snapshot` and kept only
+for historical reference.
+"""
 
 from __future__ import annotations
 
