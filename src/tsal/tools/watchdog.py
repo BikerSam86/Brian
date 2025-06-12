@@ -7,17 +7,17 @@ import time
 from pathlib import Path
 
 from tsal.tools.brian import analyze_and_repair
-from tsal.tools.aletheia_checker import scan_file as _scan_file
+from tsal.tools.proactive_scanner import scan_todo_file, scan_typos_file
 
 
 def _check_todo(path: Path) -> None:
-    text = path.read_text(encoding="utf-8", errors="ignore")
-    if "TODO" in text:
+    hits = scan_todo_file(path)
+    if hits:
         print(f"[Watchdog] TODO found in {path}")
 
 
 def _check_typos(path: Path) -> None:
-    hits = _scan_file(path)
+    hits = scan_typos_file(path)
     if hits:
         print(f"[Watchdog] Typos found in {path}: {len(hits)}")
 
