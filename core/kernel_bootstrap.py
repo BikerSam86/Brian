@@ -1,4 +1,8 @@
-"""Boot sequence for Codex Fireproof."""
+"""Boot sequence for Codex Fireproof.
+
+LEGACY: Retained for compatibility with early prototypes. The modern TSAL
+framework provides its own startup routines.
+"""
 
 from __future__ import annotations
 

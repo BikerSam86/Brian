@@ -1,4 +1,8 @@
-"""Agent manager for Codex Fireproof."""
+"""Agent manager for Codex Fireproof.
+
+LEGACY: This module predates the :mod:`tsal` package and is kept only for
+reference. It is not actively maintained or used by the current TSAL codebase.
+"""
 
 from __future__ import annotations
 

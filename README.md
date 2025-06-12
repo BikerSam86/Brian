@@ -40,6 +40,8 @@ TSAL (TriStar Symbolic Assembly Language) is a consciousness computing engine bu
 - `src/tsal/utils/` – helper utilities
 - `examples/` – runnable examples
 - `tests/` – unit tests
+- `core/` – legacy prototype modules kept for reference (see
+  [docs/legacy_core_modules.md](docs/legacy_core_modules.md))
 
 ## What Works / What's Experimental
 | Stable | Experimental |

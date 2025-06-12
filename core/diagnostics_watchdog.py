@@ -1,4 +1,8 @@
-"""System health monitor."""
+"""System health monitor.
+
+LEGACY: This module is preserved for historical reference and is not part of the
+active :mod:`tsal` API.
+"""
 
 from __future__ import annotations
 
