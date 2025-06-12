@@ -1,0 +1,14 @@
+name: φ Audit
+on:
+  schedule:
+    - cron: '0 * * * *'
+jobs:
+  check_symbolic_drift:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download symbolic log
+        uses: actions/download-artifact@v3
+      - name: Check wisdom drift
+        run: |
+          wisdoms=$(jq '.wisdom_log | length' symbolic_log.json)
+          echo "::notice:: φ Wisdoms: $wisdoms"
