@@ -30,7 +30,11 @@ from .core.stack_vm import (
 from .renderer.code_render import mesh_to_python
 from .tristar.handshake import handshake as tristar_handshake
 from .tristar.governor import MetaAgent, TriStarGovernor
-from .agents import PriorityResearchTeamAgent, ThreatReport
+from .agents import (
+    PriorityResearchTeamAgent,
+    ThreatReport,
+    BranchReconciliationAgent,
+)
 from .utils.github_api import fetch_repo_files, fetch_languages
 from .tools.feedback_ingest import categorize, Feedback
 from .tools.alignment_guard import is_aligned, Change
@@ -41,6 +45,17 @@ from .core.constants import AXIS_ZERO, ensure_spin_axis, UndefinedPhaseError
 from .core.oaths import GUARDIAN_OATH, ARC_REACTOR_BOOT_OATH
 from .core.meta_coherence import SpiralSignature, compute_spiral_signature
 from .core.spin_algebra import SpinState, SpinInteraction, combine_spins
+from .tools.entropy_profiler import LiveEntropyProfiler
+from .scoring.voxel_scorer import AgentVoxelScorer
+from .visualization.phase_orbit import PhaseOrbitVisualizer
+from .visualization.dual_track_diff import DualTrackDiffViewer
+from .dashboard.wisdom_bloom import WisdomBloomDashboard
+from .repair.self_forking import SelfForkingRepairBot
+from .ci.symbolic_diff import check_symbolic_diff
+from .translators.tsal_to_python import TSALtoPythonTranslator
+from .kernels.temporal_mirror import TemporalMirrorKernel
+from .quantum.interface import TSALQuantumInterface
+from .paradox import RecursiveParadoxCompiler
 
 PHI = 1.618033988749895
 PHI_INV = 0.618033988749895
@@ -105,4 +120,16 @@ __all__ = [
     "SpinState",
     "SpinInteraction",
     "combine_spins",
+    "BranchReconciliationAgent",
+    "RecursiveParadoxCompiler",
+    "LiveEntropyProfiler",
+    "AgentVoxelScorer",
+    "PhaseOrbitVisualizer",
+    "DualTrackDiffViewer",
+    "WisdomBloomDashboard",
+    "SelfForkingRepairBot",
+    "check_symbolic_diff",
+    "TSALtoPythonTranslator",
+    "TemporalMirrorKernel",
+    "TSALQuantumInterface",
 ]
