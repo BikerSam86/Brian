@@ -14,6 +14,12 @@ from .state_tracker import update_entry, show_entry
 from .archetype_fetcher import fetch_online_mesh, merge_mesh
 from .task_agent import load_tasks, run_task
 from .issue_agent import create_issue, handle_http_error
+from .proactive_scanner import (
+    scan_todos,
+    scan_typos,
+    scan_todo_file,
+    scan_typos_file,
+)
 
 __all__ = [
     "real_time_codec",
@@ -43,4 +49,8 @@ __all__ = [
     "run_task",
     "create_issue",
     "handle_http_error",
+    "scan_todos",
+    "scan_typos",
+    "scan_todo_file",
+    "scan_typos_file",
 ]
