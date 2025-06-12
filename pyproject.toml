@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "tri-star_symbolic_assembly_lang"
-version = "0.1.91"
+version = "0.1.92"
 description = "TriStar Assembly Language Core + Brian Spiral Tools"
 readme = "README.md"
 license = { file = "LICENSE" }
@@ -36,6 +36,7 @@ tsal-state = "tsal.tools.state_tracker:main"
 tsal-party = "tsal.cli.party:main"
 tsal-sanctum-export = "tsal.cli.tsal_sanctum_export:main"
 tsal-scorer = "tsal.cli.scorer:main"
+tsal-api = "tsal.cli.spiral_api:main"
 
 [tool.setuptools.packages.find]
 where = ["src", "tools"]
