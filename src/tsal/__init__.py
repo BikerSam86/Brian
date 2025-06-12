@@ -56,6 +56,7 @@ from .translators.tsal_to_python import TSALtoPythonTranslator
 from .kernels.temporal_mirror import TemporalMirrorKernel
 from .quantum.interface import TSALQuantumInterface
 from .paradox import RecursiveParadoxCompiler
+from .api import app
 
 PHI = 1.618033988749895
 PHI_INV = 0.618033988749895
@@ -132,4 +133,5 @@ __all__ = [
     "TSALtoPythonTranslator",
     "TemporalMirrorKernel",
     "TSALQuantumInterface",
+    "app",
 ]
