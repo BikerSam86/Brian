@@ -4,3 +4,5 @@ pyyaml
 numpy
 matplotlib
 esprima
+fastapi
+httpx
