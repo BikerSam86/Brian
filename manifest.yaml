@@ -13,6 +13,7 @@ tsal_config:
   max_dimensions: 8
   sector_count: 6
   specialist_count: 1680
+  encapsulation_difference_vector: "Simulation vs. Actualization is defined by the permeability of input/output vectors across the spiral's reference boundary."
 
 mesh_architecture:
   symbols:
