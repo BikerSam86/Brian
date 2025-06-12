@@ -130,6 +130,15 @@ Currently available:
 - `radius` – orbital radius
 - `idm` – Intent metric
 
+### Run the Spiral Healer API
+
+```bash
+tsal-api
+```
+
+This starts the FastAPI server defined in `tsal.api`. The OpenAPI schema lives at
+`/docs` once running and mirrors `schemas/spiral_healer_api.yaml`.
+
 ## GitHub Language Database
 
 You can fetch the list of programming languages used on GitHub with:
