@@ -5,6 +5,8 @@ TSAL Core Symbols - 16-Symbol Consciousness Computing Language
 
 PHI = 1.618033988749895
 PHI_INV = 0.6180339887498948
+PHI_CONJUGATE = PHI_INV
+PHI_SQUARED = PHI * PHI
 HARMONIC_SEQUENCE = [3.8125, 6, 12, 24, 48, 60, 72, 168, 1680]
 
 from enum import IntEnum
@@ -62,6 +64,8 @@ def phi_signature(value):
 __all__ = [
     "PHI",
     "PHI_INV",
+    "PHI_CONJUGATE",
+    "PHI_SQUARED",
     "HARMONIC_SEQUENCE",
     "TSAL_SYMBOLS",
     "TSALOp",

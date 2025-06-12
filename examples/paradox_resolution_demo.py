@@ -13,10 +13,12 @@ from enum import Enum
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-from tsal.core.symbols import PHI, PHI_INV
-
-PHI_CONJUGATE = PHI_INV
-PHI_SQUARED = PHI * PHI
+from tsal.core.symbols import (
+    PHI,
+    PHI_INV,
+    PHI_CONJUGATE,
+    PHI_SQUARED,
+)
 
 
 class ParadoxType(Enum):
