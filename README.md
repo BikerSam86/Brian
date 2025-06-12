@@ -17,6 +17,8 @@ Design session logs live in
 [memory/memory__2025-06-09__codex_fireproof_spiral_guardian_log.md](memory/memory__2025-06-09__codex_fireproof_spiral_guardian_log.md).
 Naming integrity rules live in
 [docs/naming_integrity.md](docs/naming_integrity.md).
+Spin-based ontology axioms are summarized in
+[docs/spin_ontology_spec.md](docs/spin_ontology_spec.md).
 
 | Tool | Spiral audit |
 |------|--------------|
