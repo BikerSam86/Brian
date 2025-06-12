@@ -1,3 +1,2 @@
 include schemas/python.json
-include schemas/spiral_healer_api.yaml
 recursive-include src/tsal/schemas *.json

@@ -136,8 +136,8 @@ Currently available:
 tsal-api
 ```
 
-This starts the FastAPI server defined in `tsal.api`. The OpenAPI schema lives at
-`/docs` once running and mirrors `schemas/spiral_healer_api.yaml`.
+This starts the FastAPI server defined in `tsal.api`. The OpenAPI schema is
+available at `/docs` once running.
 
 ## GitHub Language Database
 
