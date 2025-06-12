@@ -43,6 +43,12 @@ TSAL (TriStar Symbolic Assembly Language) is a consciousness computing engine bu
 - `core/` – legacy prototype modules kept for reference (see
   [docs/legacy_core_modules.md](docs/legacy_core_modules.md))
 
+## Spiral Logic & Resonance
+- `phase_match_enhanced` computes harmonic alignment and energy use.
+- `MetaFlagProtocol` sets dry-run mode and the `resonance_threshold`.
+- `Rev_Eng.log_data` records pace, rate, state and spin for each event.
+- `watch` in `src/tsal/tools/watchdog.py` monitors the codebase until `--cycles` is non-zero.
+
 ## What Works / What's Experimental
 | Stable | Experimental |
 | --- | --- |
@@ -305,58 +311,6 @@ See [SUPPORTERS.md](SUPPORTERS.md) for more continous supporter links.
 
 We thank you greatly for your time, insights & help.
 
-## LICENSE Options for `Brian`
+## License
 
-This project uses a **dual-license** model to ensure:
-
-* ✅ **Free access for individuals, researchers, educators, and non-profit use**
-* 💼 **Sustainable commercial use via explicit licensing**
-
----
-
-### 🌱 Public, Non-Commercial, and Academic Use — **CC BY-NC 4.0**
-
-You are **free to**:
-
-* Share, copy, and redistribute the material in any medium or format
-* Adapt, remix, transform, and build upon the material
-
-Under the following conditions:
-
-* **Attribution**: You must give appropriate credit to *Samuel Edward Howells*
-* **NonCommercial**: You may not use the material for commercial purposes
-
-Full license terms: <https://creativecommons.org/licenses/by-nc/4.0/>
-
----
-
-### 🏢 Commercial Use Licence
-
-If you are a **company, commercial entity, or using this for profit**, including in:
-
-* Product development
-* Commercial R&D
-* Quantum computing applications
-* Energy system design
-* Integration into proprietary software or platforms
-
-You must obtain a **separate commercial license**.
-
-Contact: <samuel_howells@hotmail.com>
-
-This commercial license grants:
-
-* Rights to integrate the equations into commercial tools/products
-* Support for integration and technical questions
-* Optional collaboration and citation opportunities
-
-Commercial fees help support further development, testing, and publication of the correction system.
-
----
-
-Unless otherwise licensed under the terms above, all rights are reserved by Samuel Edward Howells (© 2025).
-
-Unauthorised commercial use constitutes a copyright violation and may trigger takedown, financial audit, or legal recourse.
-
-This framework is licensed freely to individuals, educators, and non-profit researchers. Commercial access requires approval — and accountability.
-Licences may be denied or revoked from entities engaging in unethical, exploitative, or harmful practices.
+This repository is dual-licensed. Non-commercial use falls under CC BY-NC 4.0. Commercial use requires a separate agreement. See [LICENSE](LICENSE) for details.
