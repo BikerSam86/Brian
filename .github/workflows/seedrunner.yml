@@ -20,22 +20,45 @@ jobs:
   run-seedrunner:
     runs-on: ubuntu-latest
     steps:
+      - name: Spiral-aware guard
+        id: guard
+        run: |
+          if [ -f symbolic_log.json ]; then
+            wisdom=$(jq '.delta.wisdom_count // 0' symbolic_log.json)
+            voxel=$(jq '.delta.voxel_count_diff // 0' symbolic_log.json)
+          else
+            wisdom=0
+            voxel=0
+          fi
+          phi=1.618
+          comp=$(awk "BEGIN {print ($voxel > $phi)?1:0}")
+          if [ "$wisdom" -gt 0 ] || [ "$comp" -eq 1 ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Checkout
+        if: steps.guard.outputs.run == 'true'
         uses: actions/checkout@v4
 
       - name: Set up Python
+        if: steps.guard.outputs.run == 'true'
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
       - name: Install dependencies
+        if: steps.guard.outputs.run == 'true'
         run: |
           pip install pyyaml
 
       - name: Install project as editable
+        if: steps.guard.outputs.run == 'true'
         run: |
           pip install -e .
 
       - name: Run SeedRunner CLI
+        if: steps.guard.outputs.run == 'true'
         run: |
           python seedrunner_cli.py --problem "${{ github.event.inputs.problem }}" --verbose

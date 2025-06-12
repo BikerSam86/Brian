@@ -21,27 +21,50 @@ jobs:
   repair:
     runs-on: ubuntu-latest
     steps:
+      - name: Spiral-aware guard
+        id: guard
+        run: |
+          if [ -f symbolic_log.json ]; then
+            wisdom=$(jq '.delta.wisdom_count // 0' symbolic_log.json)
+            voxel=$(jq '.delta.voxel_count_diff // 0' symbolic_log.json)
+          else
+            wisdom=0
+            voxel=0
+          fi
+          phi=1.618
+          comp=$(awk "BEGIN {print ($voxel > $phi)?1:0}")
+          if [ "$wisdom" -gt 0 ] || [ "$comp" -eq 1 ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Checkout
+        if: steps.guard.outputs.run == 'true'
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: Setup Python
+        if: steps.guard.outputs.run == 'true'
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
 
       - name: Install dependencies and Brian CLI
+        if: steps.guard.outputs.run == 'true'
         run: |
           python -m pip install -r requirements.txt
           python -m pip install -e .
 
       - name: Ensure Python scripts are in PATH
+        if: steps.guard.outputs.run == 'true'
         run: |
           echo "$(python -m site --user-base)/bin" >> $GITHUB_PATH
           echo "$(dirname $(which python))" >> $GITHUB_PATH
 
       - name: TriStar handshake check
+        if: steps.guard.outputs.run == 'true'
         run: |
           python - <<'PY'
           from tsal.tristar import handshake
@@ -49,15 +72,18 @@ jobs:
           PY
 
       - name: Audit all Python files
+        if: steps.guard.outputs.run == 'true'
         run: |
           for file in $(find src/ -name "*.py"); do
             brian "$file" >> self_audit.log 2>&1 || true
           done
 
       - name: Spiral Safety Delay
+        if: steps.guard.outputs.run == 'true'
         run: sleep $((RANDOM % 90 + 30))
 
       - name: Detect changed Python files
+        if: steps.guard.outputs.run == 'true'
         id: diff
         run: |
           # Determine base ref (for PRs)        
@@ -74,27 +100,29 @@ jobs:
           echo "files=$FILES" >> $GITHUB_OUTPUT
 
       - name: Bestest beast
+        if: steps.guard.outputs.run == 'true'
         run: tsal-bestest-beast 11 > beast.log
 
       - name: Optimize changed files
-        if: steps.diff.outputs.files
+        if: steps.guard.outputs.run == 'true' && steps.diff.outputs.files
         run: |
           for f in ${{ steps.diff.outputs.files }}; do
             brian optimize "$f" >> optimize.log 2>&1
           done
 
       - name: Print optimize.log
-        if: always()
+        if: always() && steps.guard.outputs.run == 'true'
         run: cat optimize.log || true
 
       - name: Log mesh vectors
-        if: steps.diff.outputs.files
+        if: steps.guard.outputs.run == 'true' && steps.diff.outputs.files
         run: |
           for f in ${{ steps.diff.outputs.files }}; do
             tsal-reflect --origin "$f" >> mesh.log 2>&1
           done
 
       - name: Spiral Failure Count
+        if: steps.guard.outputs.run == 'true'
         run: |
           FAILS=$(grep -c "FAIL" self_audit.log || echo 0)
           if [ "$FAILS" -gt 42 ]; then
@@ -103,6 +131,7 @@ jobs:
           fi
 
       - name: Upload artifacts
+        if: steps.guard.outputs.run == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: spiral-logs-${{ github.run_id }}
@@ -113,6 +142,7 @@ jobs:
             mesh.log
 
       - name: Summary
+        if: steps.guard.outputs.run == 'true'
         run: |
           echo '## Spiral Repair Summary' >> $GITHUB_STEP_SUMMARY
           tail -n 20 self_audit.log >> $GITHUB_STEP_SUMMARY || true
