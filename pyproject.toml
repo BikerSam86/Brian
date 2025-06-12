@@ -34,6 +34,7 @@ tsal-module-draft = "tsal.tools.module_draft:main"
 tsal-watchdog = "tsal.cli.watchdog:main"
 tsal-state = "tsal.tools.state_tracker:main"
 tsal-party = "tsal.cli.party:main"
+tsal-sanctum-export = "tsal.cli.tsal_sanctum_export:main"
 
 [tool.setuptools.packages.find]
 where = ["src", "tools"]
