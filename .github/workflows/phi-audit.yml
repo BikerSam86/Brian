@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download symbolic log
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
       - name: Check wisdom drift
         run: |
           wisdoms=$(jq '.wisdom_log | length' symbolic_log.json)
