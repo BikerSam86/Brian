@@ -55,6 +55,8 @@ from .ci.symbolic_diff import check_symbolic_diff
 from .translators.tsal_to_python import TSALtoPythonTranslator
 from .kernels.temporal_mirror import TemporalMirrorKernel
 from .quantum.interface import TSALQuantumInterface
+from .core.jasper_core import JasperCore
+from .tools.code_understanding import summarize_python
 from .paradox import RecursiveParadoxCompiler
 from .api import app
 
@@ -133,5 +135,7 @@ __all__ = [
     "TSALtoPythonTranslator",
     "TemporalMirrorKernel",
     "TSALQuantumInterface",
+    "JasperCore",
+    "summarize_python",
     "app",
 ]

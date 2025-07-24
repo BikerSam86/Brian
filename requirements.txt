@@ -6,3 +6,4 @@ matplotlib
 esprima
 fastapi
 httpx
+jasper-core

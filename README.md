@@ -59,7 +59,13 @@ TSAL (TriStar Symbolic Assembly Language) is a consciousness computing engine bu
 ## Installation
 1. Clone the repository.
 2. Create a Python 3.9+ environment.
-3. Or just run the automated installer:
+3. Run the system setup script:
+
+```bash
+./setup_system.sh
+```
+
+4. Or run the Python installer:
 
 ```bash
 python3 installer.py
@@ -80,6 +86,7 @@ tsal-bestest-beast 3 src/tsal --safe
 tsal-meshkeeper --render
 tsal-meshkeeper --dump mesh.json
 tsal-watchdog src/tsal --repair --interval 5
+codesummary < file.py
 ```
 
 Example output:
