@@ -1,0 +1,45 @@
+author: BikerSam86
+description: Automated golden seam repair and harmonic restoration
+inputs:
+  mode:
+    default: detect-and-patch
+    description: Healing mode (detect, patch, compress)
+    required: false
+  phi_lock:
+    default: 'true'
+    description: "Enable \u03C6-ratio harmonic locking"
+    required: false
+  style:
+    default: poetic
+    description: Repair style (poetic, technical, harmonic)
+    required: false
+name: Kintsugi Mogwai Healer
+runs:
+  steps:
+  - name: Setup Kintsugi Environment
+    run: "\n                        echo \"\U0001F527 Initializing Kintsugi Mogwai...\"\
+      \n                        pip install kintsugi-mogwai-gremlin\n            \
+      \            "
+    shell: bash
+  - name: Scan for Fractures
+    run: "\n                        echo \"\U0001F50D Scanning for harmonic fractures...\"\
+      \n                        python -m kintsugi_mogwai scan --repo . --mode ${{\
+      \ inputs.mode }}\n                        "
+    shell: bash
+  - name: Apply Golden Seam Repairs
+    run: "\n                        echo \"\u2728 Applying golden seam repairs...\"\
+      \n                        python -m kintsugi_mogwai heal --style ${{ inputs.style\
+      \ }} --phi-lock ${{ inputs.phi_lock }}\n                        "
+    shell: bash
+  - name: Commit Kintsugi Repairs
+    run: "\n                        if [[ -n $(git status --porcelain) ]]; then\n\
+      \                          git config --local user.email \"kintsugi-mogwai@github.action\"\
+      \n                          git config --local user.name \"Kintsugi Mogwai\"\
+      \n                          git add .\n                          git commit\
+      \ -m \"\U0001F527\u2728 Kintsugi repair: Golden seams applied with \u03C6-harmonic\
+      \ restoration\"\n                          echo \"\U0001F48E Kintsugi repairs\
+      \ committed\"\n                        else\n                          echo\
+      \ \"\U0001F31F Repository already in perfect harmony\"\n                   \
+      \     fi\n                        "
+    shell: bash
+  using: composite

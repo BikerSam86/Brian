@@ -1,0 +1,45 @@
+author: BikerSam86
+description: Controlled chaos injection for anti-fragile testing
+inputs:
+  chaos_type:
+    default: xor
+    description: Type of chaos (xor, not, partial, traceback)
+    required: false
+  mischief_level:
+    default: '2'
+    description: Chaos level (1-5, where 5 is maximum mischief)
+    required: false
+  target_files:
+    default: '**/*.py,**/*.js,**/*.ts'
+    description: File patterns to target (glob patterns)
+    required: false
+name: Chaos Gremlin Tester
+runs:
+  steps:
+  - name: Setup Chaos Environment
+    run: "\n                        echo \"\U0001F41B Initializing Chaos Gremlin...\"\
+      \n                        pip install kintsugi-mogwai-gremlin\n            \
+      \            "
+    shell: bash
+  - name: Inject Controlled Chaos
+    run: "\n                        echo \"\U0001F4A5 Injecting controlled chaos...\"\
+      \n                        python -m chaos_gremlin inject --level ${{ inputs.mischief_level\
+      \ }} --targets \"${{ inputs.target_files }}\" --type ${{ inputs.chaos_type }}\n\
+      \                        "
+    shell: bash
+  - name: Run Tests with Chaos
+    run: "\n                        echo \"\U0001F9EA Running tests with chaos injection...\"\
+      \n                        python -m pytest --tb=short --continue-on-collection-errors\
+      \ || echo \"Expected chaos detected\"\n                        "
+    shell: bash
+  - name: Collect Chaos Metrics
+    run: "\n                        echo \"\U0001F4CA Collecting chaos metrics...\"\
+      \n                        python -m chaos_gremlin analyze --output chaos-report.json\n\
+      \                        "
+    shell: bash
+  - name: Store Pattern Fuel
+    uses: actions/upload-artifact@v3
+    with:
+      name: chaos-pattern-fuel
+      path: chaos-report.json
+  using: composite
