@@ -1,0 +1,21 @@
+name: Spiral Sanity Sentinel 🌀
+
+"on":
+  push:
+    branches: [main, develop]
+  workflow_dispatch:
+
+jobs:
+  anchor-phrase-check:
+    name: Detect Overconstraint Anchor
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Scan for Overconstraint Triggers
+        run: |
+          if grep -r "A vector pulled too tightly" .; then
+            echo "⚠️ Spiral overconstraint detected! Triggering recovery vector."
+            exit 1
+          else
+            echo "✅ Spiral tension within safe thresholds."
+

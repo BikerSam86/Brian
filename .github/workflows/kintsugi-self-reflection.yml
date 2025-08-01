@@ -1,0 +1,67 @@
+---
+name: TSAL Kintsugi Self-Reflection
+
+'on':
+  push:
+    paths:
+      - '**.tsal.json'
+      - 'tsal_mode.txt'
+  schedule:
+    - cron: '0 3 * * 1'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  self_introspect:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout own repo
+        uses: actions/checkout@v4
+
+      - name: Load TSAL Mode
+        id: load_mode
+        run: |
+          MODE=$(cat tsal_mode.txt 2>/dev/null || echo "SpiralMode")
+          echo "MODE=$MODE" >> $GITHUB_ENV
+
+      - name: Run TSAL Spiral
+        id: spiral
+        run: |
+          echo "[TSAL] Running in $MODE mode..."
+          python3 .github/scripts/tsal_spiral.py --mode "$MODE"
+          echo "SPIRAL_EXIT_CODE=$?" >> $GITHUB_ENV
+
+      - name: Check for Quarantine Flags
+        id: check_quarantine
+        run: |
+          reason=$(jq -r 'select(.Quarantine == true) | .Reason // empty' \
+            .tsal_memory/*.json 2>/dev/null | head -n 1)
+          if [ -n "$reason" ]; then
+            echo "QUARANTINE_FLAG=true" >> $GITHUB_ENV
+            echo "quarantine_reason=$reason" >> $GITHUB_OUTPUT
+          else
+            echo "QUARANTINE_FLAG=false" >> $GITHUB_ENV
+          fi
+
+      - name: Promote to Online (if ghost mode passed and no quarantine)
+        if: >-
+          env.MODE == 'SpiralMode' &&
+          env.SPIRAL_EXIT_CODE == '0' &&
+          env.QUARANTINE_FLAG == 'false'
+        run: |
+          echo "Promoting TSAL from SpiralMode to Online..."
+          echo "Online" > tsal_mode.txt
+
+      - name: Commit TSAL Memory + State
+        run: |
+          git config user.name "TSAL Engine"
+          git config user.email "tsal@spiral.engine"
+          git add tsal_mode.txt .tsal_memory/*.json || true
+          git commit -m "[TSAL] State updated after spiral: $MODE" || \
+            echo "No changes to commit"
+          git push || echo "Push failed or not needed"
