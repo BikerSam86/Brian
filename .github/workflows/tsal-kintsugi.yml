@@ -1,0 +1,42 @@
+name: TSAL Kintsugi Self-Reflection
+
+on:
+  push:
+    paths:
+      - '**.tsal.json'
+      - 'tsal_mode.txt'
+  schedule:
+    - cron: '0 3 * * 1'  # Weekly scan
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  self_introspect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout own repo
+        uses: actions/checkout@v4
+
+      - name: Load TSAL Mode
+        id: load_mode
+        run: |
+          MODE=$(cat tsal_mode.txt 2>/dev/null || echo "SpiralMode")
+          echo "MODE=$MODE" >> $GITHUB_ENV
+
+      - name: Begin TSAL Spiral
+        run: |
+          echo "[TSAL] Initiating $MODE sequence"
+          python3 .github/scripts/tsal_spiral.py --mode "$MODE"
+
+      - name: Commit Updated Memory
+        if: env.MODE != 'SpiralMode'
+        run: |
+          git config user.name "TSAL Engine"
+          git config user.email "tsal@spiral.engine"
+          git add .tsal_memory/*.json || true
+          git commit -m "[TSAL] Spiral memory updated" || echo "No changes to commit"
+          git push || echo "Push failed or not needed"

@@ -1,0 +1,27 @@
+name: Artifact Vault Archiver 📦
+
+"on":
+  workflow_run:
+    workflows: ["Kintsugi Dual Harmony", "Consciousness Monitoring"]
+    types:
+      - completed
+
+jobs:
+  archive-artifacts:
+    name: Vault Artifacts from Last Run
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: ./artifacts
+      - name: Compress to Vault
+        run: |
+          tar -czvf artifact-vault-$(date +%s).tar.gz ./artifacts
+      - name: Upload Vault
+        uses: actions/upload-artifact@v4
+        with:
+          name: phi-vault-archive
+          path: artifact-vault-*.tar.gz
+
