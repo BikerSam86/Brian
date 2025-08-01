@@ -1,0 +1,96 @@
+---
+name: Kintsugi Dual Harmony
+
+'on':
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main, develop]
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+    inputs:
+      chaos_level:
+        description: Gremlin chaos level
+        required: false
+        default: '2'
+      healing_mode:
+        description: Mogwai healing mode
+        required: false
+        default: poetic
+
+jobs:
+  chaos-test:
+    name: Gremlin Chaos Testing
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Chaos Injection
+        uses: ./.github/actions/chaos-gremlin
+        with:
+          chaos_type: xor
+          mischief_level: ${{ github.event.inputs.chaos_level || 2 }}
+
+  harmony-heal:
+    name: Mogwai Harmonic Healing
+    if: always()
+    needs: chaos-test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download Chaos Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: chaos-pattern-fuel
+      - name: Kintsugi Repair
+        uses: ./.github/actions/kintsugi-mogwai
+        with:
+          mode: detect-and-patch
+          phi_lock: 'true'
+          style: ${{ github.event.inputs.healing_mode || 'poetic' }}
+
+  phi-lock-release:
+    name: 'φ-Ratio Release Versioning'
+    if: github.ref == 'refs/heads/main'
+    needs:
+      - chaos-test
+      - harmony-heal
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate φ-Lock Version
+        run: |
+          echo "🌀 Calculating φ-ratio version..."
+          commit_count=$(git rev-list --count HEAD)
+          phi_version=$(python -c "import math; print(f'{int($commit_count) * 1.618033988749895:.3f}')")
+          echo "PHI_VERSION=${phi_version}" >> "$GITHUB_ENV"
+          echo "φ version: ${phi_version}"
+      - name: Ensure Unique Release Tag
+        id: tagcheck
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          tag="v${PHI_VERSION}"
+          # Check if the tag or a release using the tag already exists
+          http_status=$(curl -s -o /dev/null -w "%{http_code}" \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/tags/$tag")
+          if git rev-parse "$tag" >/dev/null 2>&1 || [ "$http_status" -eq 200 ]; then
+            echo "Tag or release $tag already exists, appending timestamp"
+            tag="${tag}-$(date +%s)"
+          fi
+          echo "final_tag=$tag" >> "$GITHUB_OUTPUT"
+
+      - name: Create φ-Enhanced Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.tagcheck.outputs.final_tag }}
+          release_name: "🌀 φ-Harmonic Release ${{ steps.tagcheck.outputs.final_tag }}"
+          body: |
+            🔧 Kintsugi repairs applied
+            🐛 Chaos resilience tested
+            💎 Golden ratio versioning
+            ∞ Harmonic balance achieved
