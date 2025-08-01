@@ -38,7 +38,7 @@ runs:
       \                        "
     shell: bash
   - name: Store Pattern Fuel
-    uses: actions/upload-artifact@v3
+    uses: actions/upload-artifact@v4
     with:
       name: chaos-pattern-fuel
       path: chaos-report.json
